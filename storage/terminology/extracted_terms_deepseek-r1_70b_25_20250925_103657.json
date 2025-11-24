@@ -1,0 +1,5772 @@
+{
+  "metadata": {
+    "extraction_date": "2025-09-25T10:37:16.314096Z",
+    "processed_files": 25,
+    "processed_pages_total": 565,
+    "processed_pages_with_terms": 77,
+    "version": "2.1"
+  },
+  "terms": [
+    {
+      "term": "PFO-BPy",
+      "definition": "A polymer system with pyridine units exhibiting weak conjugation between monomer units.",
+      "category": "ChemicalEntity",
+      "formula": "C5H4N",
+      "formula_validation": {
+        "input": "C5H4N",
+        "canonical": "H4 C5 N1",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "HOMO-LUMO gap",
+          "verified": true
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "The small shift in the spectra between PFO-BPy and Py-PFO-Py systems indicates there is only a weak conju- gation between the single monomer units.",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Py-PFO-Py",
+      "definition": "A dimer system with shortened ethyl side chains used to model polymer-SWNT heterojunctions.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "polymer-SWNT heterojunctions",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "The small shift in the spectra between PFO-BPy and Py-PFO-Py systems indicates there is only a weak conju- gation between the single monomer units.",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "TDDFT-RPA",
+      "definition": "A computational method for studying excited states and electronic properties of materials.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "HOMO-LUMO gap",
+          "verified": true
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Glanzmann et al.: Modelling of Polymers from Oligomers \ufb01ntely long polymer chain using TDDFT-RPA.",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "HOMO-LUMO gap",
+      "definition": "The energy difference between the highest occupied and lowest unoccupied molecular orbitals.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "is_property_of",
+          "related_term": "PFO-BPy",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "6 L. N. Glanzmann et al.: Modelling of Polymers from Oligomers \ufb01ntely long polymer chain using TDDFT-RPA. We \ufb01nd that TDDFT-RPA underestimates the transition more than linear response TDDFT, and the TDDFT-RPA HOMO- LUMO absorption peak coincides precisely with the DFT HOMO-LUMO energy gap. The small shift in the spectra",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "SWNT",
+      "definition": "Single-walled carbon nanotubes, used in polymer heterojunctions for solar cells.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "is_component_of",
+          "related_term": "polymer-SWNT heterojunctions",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Overall, we \ufb01nd the Py-PFO-Py unit with shortened ethyl side chains describes the PFO-BPy polymer su\ufb03- ciently well to be used when modelling electronic and opti- cal absorption properties of a hybrid polymer-SWNT sys- tem.",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:50595",
+        "name": "single-walled carbon nanotube",
+        "definition": "A carbon nanotube consisting of a single graphene cylinder. Different kinds of single-walled carbon nanotube are distinguished by the indices (n,m) which describe the vector along which the graphene is rolled. The chiral angle is the angle between the vector and the origin and can take any value between 0 and 30degree.",
+        "synonyms": [
+          "single-walled carbon nanotubes",
+          "SWNT",
+          "single-wall CNT",
+          "single-walled CNT"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:50594"
+        ],
+        "relationships": {},
+        "xrefs": {},
+        "all_attributes": {
+          "name": "single-walled carbon nanotube",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A carbon nanotube consisting of a single graphene cylinder. Different kinds of single-walled carbon nanotube are distinguished by the indices (n,m) which describe the vector along which the graphene is rolled. The chiral angle is the angle between the vector and the origin and can take any value between 0 and 30degree.\" []",
+          "synonym": [
+            "\"single-walled carbon nanotubes\" RELATED [ChEBI]",
+            "\"SWNT\" RELATED [ChEBI]",
+            "\"single-wall CNT\" RELATED [ChEBI]",
+            "\"single-walled CNT\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:50594"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "polymer-SWNT heterojunctions",
+      "definition": "Composite materials combining polymers and single-walled carbon nanotubes for electronic applications.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "is_application_of",
+          "related_term": "Py-PFO-Py",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "6 L. N. Glanzmann et al.: Modelling of Polymers from Oligomers \ufb01ntely long polymer chain using TDDFT-RPA. We \ufb01nd that TDDFT-RPA underestimates the transition more than linear response TDDFT, and the TDDFT-RPA HOMO- LUMO absorption peak coincides precisely with the DFT HOMO-LUMO energy gap. The small shift in the spectra",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DFT",
+      "definition": "Density Functional Theory, a computational quantum mechanical modeling method.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "is_method_for",
+          "related_term": "HOMO-LUMO gap calculation",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Glanzmann et al.: Modelling of Polymers from Oligomers \ufb01ntely long polymer chain using TDDFT-RPA.",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "HOMO-LUMO gap calculation",
+      "definition": "The process of determining the energy difference between HOMO and LUMO levels in a material.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "is_performed_by",
+          "related_term": "TDDFT-RPA",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "6 L. N. Glanzmann et al.: Modelling of Polymers from Oligomers \ufb01ntely long polymer chain using TDDFT-RPA. We \ufb01nd that TDDFT-RPA underestimates the transition more than linear response TDDFT, and the TDDFT-RPA HOMO- LUMO absorption peak coincides precisely with the DFT HOMO-LUMO energy gap. The small shift in the spectra",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Poly(3-hexylthiophene) (P3HT)",
+      "definition": "A conjugated polymer used in organic electronics.",
+      "category": "ConjugatedPolymer",
+      "formula": "C10H14S",
+      "formula_validation": {
+        "input": "C10H14S",
+        "canonical": "H14 C10 S1",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "organic electronics",
+          "verified": false
+        }
+      ],
+      "pages": [
+        15
+      ],
+      "source_papers": [
+        "10.1002_adma.201501826.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "15 [19] J. Liu, Y. Zhang, H. Phan, A. Sharenko, P. Moonsin, B. Walker, V. Promarak, T.-Q. Nguyen, Adv. Mater. 2013, 25, 3645. [20] Z. Li, X. Zhang, Y. Zhang, C. F. Woellner, M. Kuik, J. H. Liu, T. Q. Nguyen, G. Lu, J. Phys. Chem. C 2013, 117, 6730.",
+          "source_paper": "10.1002_adma.201501826.pdf",
+          "page": 15
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Fullerene",
+      "definition": "A molecule composed of carbon atoms arranged in a spherical shape, often used in organic photovoltaics as an electron acceptor.",
+      "category": "Molecule",
+      "formula": "C60",
+      "formula_validation": {
+        "input": "C60",
+        "canonical": "C60",
+        "mp_hits": 20,
+        "status": "ok",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "used_in",
+          "related_term": "organic photovoltaics",
+          "verified": false
+        }
+      ],
+      "pages": [
+        10
+      ],
+      "source_papers": [
+        "10.1002_macp.200900670.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "10 R. H. Friend, S. C. Moratti, A. B. Holmes, Nature 1995, 376, 498. [5] W. L. Ma, C. Y. Yang, X. Gong, K. Lee, A. J. Heeger, Adv. Funct. Mater. 2005, 15, 1617. [6] S. H. Park, A. Roy, S. Beaupre, S. Cho, N. Coates, J. S. Moon, D.",
+          "source_paper": "10.1002_macp.200900670.pdf",
+          "page": 10
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:33416",
+        "name": "fullerene",
+        "definition": "A compound composed solely of an even number of carbon atoms, which form a cage-like fused-ring polycyclic system with twelve five-membered rings and the rest six-membered rings. The term has been broadened to include any closed cage structure consisting entirely of three-coordinate carbon atoms.",
+        "synonyms": [
+          "fullerenos",
+          "fullerene",
+          "fulerenos",
+          "Fulleren",
+          "fullerenes",
+          "fullereno",
+          "fulereno"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:33415",
+          "CHEBI:33640"
+        ],
+        "relationships": {},
+        "xrefs": {},
+        "all_attributes": {
+          "name": "fullerene",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A compound composed solely of an even number of carbon atoms, which form a cage-like fused-ring polycyclic system with twelve five-membered rings and the rest six-membered rings. The term has been broadened to include any closed cage structure consisting entirely of three-coordinate carbon atoms.\" []",
+          "synonym": [
+            "\"fullerenos\" RELATED [IUPAC]",
+            "\"fullerene\" EXACT [IUPAC]",
+            "\"fulerenos\" RELATED [ChEBI]",
+            "\"Fulleren\" RELATED [ChEBI]",
+            "\"fullerenes\" EXACT IUPAC_NAME [IUPAC]",
+            "\"fullereno\" RELATED [IUPAC]",
+            "\"fulereno\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:33415",
+            "CHEBI:33640"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Polymer",
+      "definition": "A large molecule composed of repeating structural units connected by covalent bonds.",
+      "category": "Material Class",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        10
+      ],
+      "source_papers": [
+        "10.1002_macp.200900670.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "10 R. H. Friend, S. C. Moratti, A. B. Holmes, Nature 1995, 376, 498. [5] W. L. Ma, C. Y. Yang, X. Gong, K. Lee, A. J. Heeger, Adv. Funct. Mater. 2005, 15, 1617. [6] S. H. Park, A. Roy, S. Beaupre, S. Cho, N. Coates, J. S. Moon, D.",
+          "source_paper": "10.1002_macp.200900670.pdf",
+          "page": 10
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:60027",
+        "name": "polymer",
+        "definition": "A polymer is a mixture, which is composed of macromolecules of different kinds and which may be differentiated by composition, length, degree of branching etc..",
+        "synonyms": [
+          "Kunststoff",
+          "Polymer"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:60004"
+        ],
+        "relationships": {
+          "has_part": [
+            "CHEBI:33839"
+          ]
+        },
+        "xrefs": {
+          "Wikipedia": [
+            "Polymer"
+          ]
+        },
+        "all_attributes": {
+          "name": "polymer",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A polymer is a mixture, which is composed of macromolecules of different kinds and which may be differentiated by composition, length, degree of branching etc..\" []",
+          "synonym": [
+            "\"Kunststoff\" RELATED [ChEBI]",
+            "\"Polymer\" EXACT [ChEBI]"
+          ],
+          "xref": [
+            "Wikipedia:Polymer"
+          ],
+          "is_a": [
+            "CHEBI:60004"
+          ],
+          "relationship": [
+            "has_part CHEBI:33839"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "organic photovoltaics",
+      "definition": "A device that converts light energy into electrical energy.",
+      "category": "PhotovoltaicCell",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "uses_material",
+          "related_term": "Poly(3-hexylthiophene) (P3HT)",
+          "verified": false
+        }
+      ],
+      "pages": [
+        31
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "31 [81] X. Liu, Z. Yang, C. C. Chueh, A. Rajagopal, S. T. Williams, Y. Sun, A. K. Y. Jen, J. Mater. Chem. A 2016, 4, 17939. [82] J. Kangsabanik, V. Sugathan, A. Yadav, A. Yella, A. Alam, Phys. Rev. Mater. 2018, 2, 1. [83] S. Zou, Y. Liu, J.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 31
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "2,5-bis[(5-bromo-1-hexadecyl-3,3-dimethyl-2,3-dihydroindole-2-ylidene)methyl]-cyclobutendiylium-1,3-diolate",
+      "definition": "A diolate compound used in polymer synthesis.",
+      "category": "Monomer",
+      "formula": "C58H86Br2N2O2",
+      "formula_validation": {
+        "input": "C58H86Br2N2O2",
+        "canonical": "H86 C58 Br2 N2 O2",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "used_to_synthesize",
+          "related_term": "Polymer 5",
+          "verified": false
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_macp.200900670.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "9 parison to a calibrated photodiode. After calculating the total photocurrent of this cell, the light intensity was adjusted to reach this value with a calibrated silicon reference diode and therefore simulate an illumination which is in good agreement with the AM 1.5 spectrum.[55] For comparison, we also pro- cessed",
+          "source_paper": "10.1002_macp.200900670.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Polymer 5",
+      "definition": "A polymer synthesized using nickel catalysts and used in organic photovoltaics.",
+      "category": "Polymer",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "organic photovoltaics",
+          "verified": false
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_macp.200900670.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "\u2206= 0.8 ppm Synthesis of the polymer 5: A mixture of Ni(1,5- cyclooctadiene)2 (160 mg, 598 mmol), 2,2?-bipyridine (93.4 mg, 598 mmol), 1,5-cyclooctadiene (64.0 mg, 598 mmol), degassed toluene (1.0 ml) and degassed dimethyl formamide (DMF) (2.0 ml) was stirred at rt under an nitrogen atmosphere for 30 min.",
+          "source_paper": "10.1002_macp.200900670.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Nickel catalysts",
+      "definition": "Catalysts used in the synthesis of polymer 5.",
+      "category": "Catalyst",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "used_in_synthesis_of",
+          "related_term": "Polymer 5",
+          "verified": false
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_macp.200900670.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "9 parison to a calibrated photodiode. After calculating the total photocurrent of this cell, the light intensity was adjusted to reach this value with a calibrated silicon reference diode and therefore simulate an illumination which is in good agreement with the AM 1.5 spectrum.[55] For comparison, we also pro- cessed",
+          "source_paper": "10.1002_macp.200900670.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "2,5-bis[(5-bromo-1-hexadecyl-3,3-dimethyl-2-methylene-2,3-dihydroindole-2-ylidene)methyl]-cyclobutendiylium-1,3-diolate",
+      "definition": "A diolate intermediate in the synthesis of polymer 5.",
+      "category": "Monomer",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "used_to_synthesize",
+          "related_term": "Polymer 5",
+          "verified": false
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_macp.200900670.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "9 parison to a calibrated photodiode. After calculating the total photocurrent of this cell, the light intensity was adjusted to reach this value with a calibrated silicon reference diode and therefore simulate an illumination which is in good agreement with the AM 1.5 spectrum.[55] For comparison, we also pro- cessed",
+          "source_paper": "10.1002_macp.200900670.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Ni(1,5-cyclooctadiene)2",
+      "definition": "A nickel complex used as a catalyst in polymer synthesis.",
+      "category": "Catalyst",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "used_in_synthesis_of",
+          "related_term": "Polymer 5",
+          "verified": false
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_macp.200900670.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "9 parison to a calibrated photodiode. After calculating the total photocurrent of this cell, the light intensity was adjusted to reach this value with a calibrated silicon reference diode and therefore simulate an illumination which is in good agreement with the AM 1.5 spectrum.[55] For comparison, we also pro- cessed",
+          "source_paper": "10.1002_macp.200900670.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "trichlorobenzene",
+      "definition": "A chemical solvent used in high-temperature SEC analysis.",
+      "category": "ChemicalEntity",
+      "formula": "C6H3Cl3",
+      "formula_validation": {
+        "input": "C6H3Cl3",
+        "canonical": "H3 C6 Cl3",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "process_parameters",
+          "related_term": "150\u00b0C",
+          "verified": true
+        }
+      ],
+      "pages": [
+        15
+      ],
+      "source_papers": [
+        "10.1002_adfm.201903936.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure 1: HT-SEC of samples 1-7 in trichlorobenzene at 150 \u25e6C.",
+          "source_paper": "10.1002_adfm.201903936.pdf",
+          "page": 15
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:27096",
+        "name": "trichlorobenzene",
+        "definition": "Any member of the class of chlorobenzenes carrying three chloro substituents at unspecified positions.",
+        "synonyms": [
+          "trichlorobenzene",
+          "Trichlorbenzol"
+        ],
+        "formula": "C6H3Cl3",
+        "mass": "181.447",
+        "charge": "0",
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:23132"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "Wikipedia": [
+            "Trichlorobenzene"
+          ]
+        },
+        "all_attributes": {
+          "name": "trichlorobenzene",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"Any member of the class of chlorobenzenes carrying three chloro substituents at unspecified positions.\" []",
+          "synonym": [
+            "\"trichlorobenzene\" EXACT IUPAC_NAME [IUPAC]",
+            "\"Trichlorbenzol\" RELATED [ChEBI]"
+          ],
+          "property_value": [
+            "http://purl.obolibrary.org/obo/chebi/formula \"C6H3Cl3\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/mass \"181.447\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/charge \"0\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/monoisotopicmass \"179.93003\" xsd:string"
+          ],
+          "xref": [
+            "Wikipedia:Trichlorobenzene"
+          ],
+          "is_a": [
+            "CHEBI:23132"
+          ]
+        }
+      },
+      "charge": "0",
+      "mass": "181.447",
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "homocoupled copolymer",
+      "definition": "A type of conjugated polymer where monomer units are coupled in a specific pattern to form the polymer chain.",
+      "category": "ConjugatedPolymer",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "conjugated polymer",
+          "verified": true
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adfm.201903936.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "An e\ufb00ective mass of a homocoupled copolymer (corresponding to the e\ufb00ective conjugation length) can roughly be estimated with N \u00b7 Munit \u2248Mn.",
+          "source_paper": "10.1002_adfm.201903936.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "chromophore",
+      "definition": "A segment of a polymer chain responsible for its electronic and optical properties, related to effective conjugation length.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "effective_conjugation_length",
+          "related_term": "Ne\ufb00",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adfm.201903936.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "In the example, the chain with N0 = 8 units (6\u00d7AB, 2\u00d7ABB) consists of three chromophores with N = 2 \u21d2Ne\ufb00= 2.",
+          "source_paper": "10.1002_adfm.201903936.pdf",
+          "page": 14
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:23240",
+        "name": "chromophore",
+        "definition": "The part (atom or group of atoms) of a molecular entity in which the electronic transition responsible for a given spectral band is approximately localized.",
+        "synonyms": [
+          "chromophores",
+          "chromophore"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:52215"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "Wikipedia": [
+            "Chromophore"
+          ]
+        },
+        "all_attributes": {
+          "name": "chromophore",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"The part (atom or group of atoms) of a molecular entity in which the electronic transition responsible for a given spectral band is approximately localized.\" []",
+          "synonym": [
+            "\"chromophores\" RELATED [ChEBI]",
+            "\"chromophore\" EXACT IUPAC_NAME [IUPAC]"
+          ],
+          "xref": [
+            "Wikipedia:Chromophore"
+          ],
+          "is_a": [
+            "CHEBI:52215"
+          ]
+        }
+      },
+      "properties": [
+        {
+          "property": "density",
+          "value": null,
+          "unit": null,
+          "uncertainty": null,
+          "context": "The chromophore density Ccr was simulated as de-\nscribed in the paper.",
+          "verified": true
+        }
+      ],
+      "importance": "low"
+    },
+    {
+      "term": "PCDTBT",
+      "definition": "A conjugated polymer used in organic photovoltaics.",
+      "category": "ConjugatedPolymer",
+      "formula": "C26H16S2",
+      "formula_validation": {
+        "input": "C26H16S2",
+        "canonical": "H16 C26 S2",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "homocoupling_concentration",
+          "related_term": "Neff [CDTBT units]",
+          "verified": false
+        },
+        {
+          "relation": "molecular_weight",
+          "related_term": "Mn [kg mol-1]",
+          "verified": true
+        },
+        {
+          "relation": "short_circuit_current",
+          "related_term": "JSC / mA cm-2",
+          "verified": false
+        }
+      ],
+      "pages": [
+        18
+      ],
+      "source_papers": [
+        "10.1002_adfm.201903936.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "14 12 10 8 6 JSC / mA cm -2 0.30 0.25 0.20 0.15 0.10 0.05 0.00 Ccr [nm -3] Figure 8: Short circuit current of PCDTBT:PCBM solar cells with di\ufb00erent homocoupling concentrations and molecular weights.",
+          "source_paper": "10.1002_adfm.201903936.pdf",
+          "page": 18
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "molecular weight (Mn)",
+      "definition": "The number-average molecular weight of a polymer, measured in g/mol.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "quantifiable",
+          "related_term": "true",
+          "verified": true
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adfm.201903936.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "hc = 2/17 \u224812 %. In the example, the chain with N0 = 8 units (6\u00d7AB, 2\u00d7ABB) consists of three chromophores with N = 2 \u21d2Ne\ufb00= 2. The amount of ABB units Nhc can be estimated with Nhc \u22482hcN0. The chain is divided Nhc times and the segments available for",
+          "source_paper": "10.1002_adfm.201903936.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PCBM",
+      "definition": "A fullerene derivative commonly used in organic photovoltaics.",
+      "category": "ChemicalEntity",
+      "formula": "C60H28O2",
+      "formula_validation": {
+        "input": "C60H28O2",
+        "canonical": "H28 C60 O2",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "organic photovoltaics",
+          "verified": false
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "400 500 600 700 0.4 0.6 0.8 1.0 400 500 600 700 0 50 100 150 200 250 300 Distance from cathode [nm] Wavelength [nm] 400 500 600 700 0 1 2 3 4 5 6 7 Absorption [10 -3 nm -1] Illumination through cathode anode Change in EQE Wavelength",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "monomer unit (Munit)",
+      "definition": "The molecular weight of a single repeating monomer unit in the polymer chain.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "quantifiable",
+          "related_term": "true",
+          "verified": true
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adfm.201903936.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "hc = 2/17 \u224812 %. In the example, the chain with N0 = 8 units (6\u00d7AB, 2\u00d7ABB) consists of three chromophores with N = 2 \u21d2Ne\ufb00= 2. The amount of ABB units Nhc can be estimated with Nhc \u22482hcN0. The chain is divided Nhc times and the segments available for",
+          "source_paper": "10.1002_adfm.201903936.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "SchNet",
+      "definition": "A deep learning architecture designed for atomistic systems that uses continuous-filter convolutional layers to model molecular interactions.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "technique_type",
+          "related_term": "graph processing technique",
+          "verified": true
+        },
+        {
+          "relation": "measured_property",
+          "related_term": "molecular structure",
+          "verified": true
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_pssb.202200553.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Molecular Structure Graph Processing (SchNet) MLP \u2193 Aggregation Prediction 1 MLP \u2193 Aggregation Prediction 2 .",
+          "source_paper": "10.1002_pssb.202200553.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "MPGVAE",
+      "definition": "A method for generating small organic molecules using message passing neural networks.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "molecule generation",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssb.202200553.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "\u201cMPGVAE: Improved Generation of Small Organic Molecules using Message Passing Neural Nets\u201d.",
+          "source_paper": "10.1002_pssb.202200553.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "GraphVAE",
+      "definition": "A method for generating small graphs using variational autoencoders.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "graph generation",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssb.202200553.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "\u201cGraphVAE: Towards Generation of Small Graphs Using Variational Autoencoders\u201d.",
+          "source_paper": "10.1002_pssb.202200553.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Grammar VAE",
+      "definition": "A method for generating molecules with specific grammars.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "molecule generation",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssb.202200553.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[35] D. Flam-Shepherd, A. Zhigalin, and A. Aspuru-Guzik. \u201cScalable Fragment-Based 3D Molecular Design with Reinforcement Learning\u201d. arXiv abs/2202.00658 (2022). eprint: 2202.00658. [36] M. J. Kusner, B. Paige, and J. M. Hern\u00b4andez-Lobato. \u201cGrammar Variational Autoencoder\u201d. In: Proceedings of the 34th International Conference on Machine Learning. Ed. by D. Precup and Y.",
+          "source_paper": "10.1002_pssb.202200553.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "SchNetPack",
+      "definition": "A deep learning toolbox for atomistic systems.",
+      "category": "SoftwareTool",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "atomistic simulations",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssb.202200553.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "\u201cSchNetPack: A Deep Learning Toolbox For Atomistic Systems\u201d.",
+          "source_paper": "10.1002_pssb.202200553.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "ASE",
+      "definition": "A Python library for working with atoms.",
+      "category": "SoftwareTool",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "atomic simulations",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssb.202200553.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "\u201cScalable Fragment-Based 3D Molecular Design with Reinforcement Learning\u201d.",
+          "source_paper": "10.1002_pssb.202200553.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Pb-perovskite",
+      "definition": "A lead-based perovskite material exhibiting temperature-dependent bandgap behavior.",
+      "category": "ChemicalEntity",
+      "formula": "CH3NH3PbI3",
+      "formula_validation": {
+        "input": "CH3NH3PbI3",
+        "canonical": "H6 Pb1 C1 I3 N1",
+        "mp_hits": 6,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "perovskite",
+          "verified": true
+        },
+        {
+          "relation": "energy_level",
+          "related_term": "bandgap",
+          "verified": true
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "The moderate overall increase of the bandgap in the Pb-perovskite is due to the compensation between the static and dynamic contributions from 10 K to 340 K.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PbSn-perovskite",
+      "definition": "A lead-tin perovskite material showing distinct bandgap shifts under varying excitation densities.",
+      "category": "ChemicalEntity",
+      "formula": "CH3NH3Pb0.5Sn0.5I3",
+      "formula_validation": {
+        "input": "CH3NH3Pb0.5Sn0.5I3",
+        "canonical": "Sn0.5 H6 Pb0.5 C1 I3 N1",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "perovskite",
+          "verified": true
+        },
+        {
+          "relation": "energy_level",
+          "related_term": "bandgap",
+          "verified": true
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure 5a,b shows the shift of PL spectra at 10 K as a function of the pump fluence for the Pb- and PbSn-perovskites (from 3 nJ cm-2 to 5 \u00b5J cm-2 for the Pb- perovskite, and from 129 nJ cm-2 to 15 \u00b5J cm-2 for the PbSn-perovskite).",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "halide perovskites",
+      "definition": "A class of materials with a perovskite crystal structure incorporating halide ions, widely used in solar cells.",
+      "category": "Material",
+      "formula": "ABX3",
+      "formula_validation": {
+        "input": "ABX3",
+        "canonical": "A1 X3 B1",
+        "mp_hits": 20,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "solar cells",
+          "verified": false
+        }
+      ],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "22 Reference 1. Wang, R. et al. Prospects for metal halide perovskite-based tandem solar cells. Nat. Photonics 15, 411\u2013425 (2021). 2. Gu, S. et al. Tin and Mixed Lead\u2013Tin Halide Perovskite Solar Cells: Progress and their Application in Tandem Solar Cells. Advanced Materials 32, 1907392 (2020). 3. Lee, J.-W., Tan,",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "perovskite-perovskite tandem photovoltaics",
+      "definition": "A type of solar cell architecture utilizing two perovskite layers with optimized band gaps to enhance energy conversion efficiency.",
+      "category": "PhotovoltaicCell",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "optimized_band_gaps",
+          "related_term": "band gaps",
+          "verified": false
+        }
+      ],
+      "pages": [
+        23
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Perovskite-perovskite tandem photovoltaics with optimized band gaps.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 23
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Methyl Ammonium Lead Iodide",
+      "definition": "A hybrid perovskite material with the formula CH3NH3PbI3, known for its structural phase transitions and electronic properties.",
+      "category": "ChemicalEntity",
+      "formula": "CH3NH3PbI3",
+      "formula_validation": {
+        "input": "CH3NH3PbI3",
+        "canonical": "H6 Pb1 C1 I3 N1",
+        "mp_hits": 6,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "has_property",
+          "related_term": "electronic structure",
+          "verified": false
+        },
+        {
+          "relation": "has_property",
+          "related_term": "charge transport",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Structures, Phase Transitions and Tricritical Behavior of the Hybrid Perovskite Methyl Ammonium Lead Iodide.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "band gaps",
+      "definition": "The energy range where a material does not conduct electrons, crucial for determining electronic properties.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "optimized_band_gaps",
+          "related_term": "perovskite-perovskite tandem photovoltaics",
+          "verified": false
+        }
+      ],
+      "pages": [
+        23
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Perovskite-perovskite tandem photovoltaics with optimized band gaps.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 23
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "CH3NH3PbI3",
+      "definition": "The chemical formula for Methyl Ammonium Lead Iodide, a hybrid perovskite material.",
+      "category": "ChemicalEntity",
+      "formula": "CH3NH3PbI3",
+      "formula_validation": {
+        "input": "CH3NH3PbI3",
+        "canonical": "H6 Pb1 C1 I3 N1",
+        "mp_hits": 6,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "has_property",
+          "related_term": "band filling",
+          "verified": false
+        },
+        {
+          "relation": "has_property",
+          "related_term": "free charge carriers",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Temperature-dependent structural fluctuation and its effect on the electronic structure and charge transport in hybrid perovskite CH3NH3PbI3.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Sn\u2013Pb organohalide perovskites",
+      "definition": "A class of hybrid perovskites with mixed tin and lead halides, investigated for their electronic and optical properties.",
+      "category": "ChemicalEntity",
+      "formula": "CH3NH3Sn0.5Pb0.5I3",
+      "formula_validation": {
+        "input": "CH3NH3Sn0.5Pb0.5I3",
+        "canonical": "Sn0.5 H6 Pb0.5 C1 I3 N1",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "HOMO and LUMO levels",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "29 63. Mosconi, E., Umari, P. & Angelis, F. D. Electronic and optical properties of mixed Sn\u2013Pb organohalide perovskites: a first principles investigation. J. Mater. Chem. A 3, 9208\u20139215 (2015). 64. Hamberg, I., Granqvist, C. G., Berggren, K.-F., Sernelius, B. E. & Engstr\u00f6m, L. Band-gap widening in heavily Sn-doped In2O3.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "In2O3",
+      "definition": "Indium oxide, a transparent conducting oxide with applications in optoelectronics.",
+      "category": "ChemicalEntity",
+      "formula": "In2O3",
+      "formula_validation": {
+        "input": "In2O3",
+        "canonical": "In2 O3",
+        "mp_hits": 9,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "band_gap_widening",
+          "related_term": "Sn-doped In2O3",
+          "verified": false
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Band-gap widening in heavily Sn-doped In2O3.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "GaN",
+      "definition": "Gallium nitride, a wide bandgap semiconductor used in optoelectronic devices.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "band_gap_renormalization",
+          "related_term": "silicon- and germanium-doped GaN",
+          "verified": false
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Electronic and optical properties of mixed Sn\u2013Pb organohalide perovskites: a first principles investigation.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DFT-D",
+      "definition": "Density Functional Theory with dispersion correction, a computational method for material simulations.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "method_type",
+          "related_term": "ab initio total-energy calculations",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adfm.202302214.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "A consistent and accurate ab initio parametrization of density functional dispersion correction (DFT-D) for the 94 elements H- Pu.",
+          "source_paper": "10.1002_adfm.202302214.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Tc",
+      "definition": "A chemical entity involved in a van-der-Waals interface with crystalline Si.",
+      "category": "ChemicalEntity",
+      "formula": "Tc",
+      "formula_validation": {
+        "status": "from_chebi"
+      },
+      "relations": [
+        {
+          "relation": "interface_with",
+          "related_term": "Si",
+          "verified": false
+        }
+      ],
+      "pages": [
+        3
+      ],
+      "source_papers": [
+        "10.1002_adts.202200413.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(a) (b) (c) Figure 2: Atomic structure of the van-der-Waals interface between the crystalline Si with the 1x2 reconstructed (100) sur- face and Tc a) before and b) after atomic relaxation.",
+          "source_paper": "10.1002_adts.202200413.pdf",
+          "page": 3
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:33353",
+        "name": "technetium atom",
+        "definition": "\u2014",
+        "synonyms": [
+          "Tc",
+          "tecnecio",
+          "technetium",
+          "43Tc",
+          "Technetium",
+          "technetium",
+          "technetium"
+        ],
+        "formula": "Tc",
+        "mass": "98.00000",
+        "charge": "0",
+        "inchi": "InChI=1S/Tc",
+        "inchikey": "GKLVYJBZJHMRIY-UHFFFAOYSA-N",
+        "smiles": "[Tc]",
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:33352"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "CAS": [
+            "7440-26-8",
+            "7440-26-8"
+          ],
+          "Gmelin": [
+            "16310"
+          ],
+          "WebElements": [
+            "Tc"
+          ]
+        },
+        "all_attributes": {
+          "name": "technetium atom",
+          "subset": [
+            "3_STAR"
+          ],
+          "synonym": [
+            "\"Tc\" RELATED [IUPAC]",
+            "\"tecnecio\" RELATED [ChEBI]",
+            "\"technetium\" EXACT IUPAC_NAME [IUPAC]",
+            "\"43Tc\" RELATED [IUPAC]",
+            "\"Technetium\" RELATED [ChEBI]",
+            "\"technetium\" RELATED [ChEBI]",
+            "\"technetium\" RELATED [ChEBI]"
+          ],
+          "property_value": [
+            "http://purl.obolibrary.org/obo/chebi/monoisotopicmass \"97.00000\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/mass \"98.00000\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/charge \"0\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/formula \"Tc\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchikey \"GKLVYJBZJHMRIY-UHFFFAOYSA-N\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchi \"InChI=1S/Tc\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/smiles \"[Tc]\" xsd:string"
+          ],
+          "xref": [
+            "CAS:7440-26-8",
+            "CAS:7440-26-8",
+            "Gmelin:16310",
+            "WebElements:Tc"
+          ],
+          "is_a": [
+            "CHEBI:33352"
+          ]
+        }
+      },
+      "smiles": "[Tc]",
+      "charge": "0",
+      "inchi": "InChI=1S/Tc",
+      "inchikey": "GKLVYJBZJHMRIY-UHFFFAOYSA-N",
+      "mass": "98.00000",
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Silicon (Si)",
+      "definition": "Crystalline Si with a 1x2 reconstructed (100) surface used in heterostructures.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "interface_with",
+          "related_term": "Tc",
+          "verified": false
+        }
+      ],
+      "pages": [
+        3
+      ],
+      "source_papers": [
+        "10.1002_adts.202200413.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(a) (b) (c) Figure 2: Atomic structure of the van-der-Waals interface between the crystalline Si with the 1x2 reconstructed (100) sur- face and Tc a) before and b) after atomic relaxation. c) Alignment of the Si and Tc unit cells at the interface. Numbers in blue color (aSi, aT c,",
+          "source_paper": "10.1002_adts.202200413.pdf",
+          "page": 3
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DFT (Density Functional Theory)",
+      "definition": "A computational quantum mechanical modeling method used to investigate the electronic structure of materials.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "used_for",
+          "related_term": "Tc/Si interface analysis",
+          "verified": false
+        },
+        {
+          "relation": "employed_in",
+          "related_term": "Quantum Espresso",
+          "verified": false
+        }
+      ],
+      "pages": [
+        3
+      ],
+      "source_papers": [
+        "10.1002_adts.202200413.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(a) (b) (c) Figure 2: Atomic structure of the van-der-Waals interface between the crystalline Si with the 1x2 reconstructed (100) sur- face and Tc a) before and b) after atomic relaxation. c) Alignment of the Si and Tc unit cells at the interface. Numbers in blue color (aSi, aT c,",
+          "source_paper": "10.1002_adts.202200413.pdf",
+          "page": 3
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Local Density of States (LDOS)",
+      "definition": "A measure of the density of electronic states at a given energy level, used to analyze material interactions and charge distribution.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_property",
+          "related_term": "orbital hybridization effect",
+          "verified": false
+        },
+        {
+          "relation": "has_property",
+          "related_term": "charge transfer",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "10.1002_adts.202200413.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "-3 -2 -1 0 1 2 3 z (nm) Energy(eV) -14 -12 -10 -8 -6 -4 Figure 5: In-plane averaged change of the local density of states in the Tc/Si slab relative to isolated Si and Tc slabs com- puted via Eq. (3). The grey shaded area indicates the band",
+          "source_paper": "10.1002_adts.202200413.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "electronic properties at interfaces",
+      "definition": "Properties related to charge transfer and electronic behavior at material interfaces.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "MaterialHasProperty",
+          "related_term": "charge transfer",
+          "verified": false
+        },
+        {
+          "relation": "MaterialHasProperty",
+          "related_term": "organic interfaces",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adts.202200413.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[15] T. Ihn, Semiconductor Nanostructures: Quantum States and Electronic Transport, OUP Oxford, 2010. [16] J. H. Davies, The Physics of Low-dimensional Semiconductors: An Introduction, Cambridge Univer- sity Press, 1997. [17] G. Onida, L. Reining, A. Rubio, Rev. Mod. Phys. 2002, 74 601. [18] D. Golze, M. Dvorak, P. Rinke, Front.",
+          "source_paper": "10.1002_adts.202200413.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "a-Si",
+      "definition": "Amorphous silicon, a material used in thin-film photovoltaic devices and absorber structures.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "Embedded Metal Nanopattern (EMN)",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Sketch of embedded metal nanopattern (EMN) scheme, with cross-section of idealized absorber structure having integrated Ag (gray) EMN in a-Si (red), with cross EMN.",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 14
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:133352",
+        "name": "amorphous silicon",
+        "definition": "The non-crystalline allotrope of elemental silicon. It is used as semiconductor material in thin-film transistors.",
+        "synonyms": [
+          "silicon (amorphous)",
+          "a-Si"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:37763"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "PMID": [
+            "26523743",
+            "23581344",
+            "26028125",
+            "24922389",
+            "26621791",
+            "23898166",
+            "24577075"
+          ],
+          "Wikipedia": [
+            "Amorphous_silicon"
+          ]
+        },
+        "all_attributes": {
+          "name": "amorphous silicon",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"The non-crystalline allotrope of elemental silicon. It is used as semiconductor material in thin-film transistors.\" []",
+          "synonym": [
+            "\"silicon (amorphous)\" RELATED [ChEBI]",
+            "\"a-Si\" RELATED [ChEBI]"
+          ],
+          "xref": [
+            "PMID:26523743",
+            "PMID:23581344",
+            "PMID:26028125",
+            "PMID:24922389",
+            "PMID:26621791",
+            "PMID:23898166",
+            "Wikipedia:Amorphous_silicon",
+            "PMID:24577075"
+          ],
+          "is_a": [
+            "CHEBI:37763"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "EMN",
+      "definition": "Embedded metal nanopattern within an optical absorber to enhance absorbance.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "absorbance_enhancement_factor",
+          "related_term": "~175% at \u03bb = 700 nm",
+          "verified": false
+        },
+        {
+          "relation": "absorbance_enhancement_factor",
+          "related_term": "~325% at \u03bb = 800 nm",
+          "verified": false
+        }
+      ],
+      "pages": [
+        7
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Significant below-gap (i.e., above \u03bb=hc/eEg~700 nm, where Eg~1.7 eV is the nominal band gap of a-Si) absorption can be seen for EMN depths near the vertical middle of the structure, as opposed to those near the top FTO and bottom Ag surfaces.",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 7
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Drude formalism",
+      "definition": "A model describing the optical properties of metals, particularly in relation to surface plasmon polaritons.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        13
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[48] Note that the conventional Drude formalism \u03bbSPP = \u03bbbulk(1+\u03b5a-Si)1/2 which, using \u03bbbulk = 137 nm for the bulk plasma wavelength would yield \u03bbSPP ~ 490 nm, can not be employed in this case, since the Drude model breaks down in the wavelength regime of interest.",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 13
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "surface plasmon polaritons (SPPs)",
+      "definition": "Collective oscillations of electrons at the interface between two materials, often a metal and a dielectric.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        13
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Phys. Status Solidi A, DOI 10.1002/pssa.201228459 (2012) 13 [34] K. Zhu, Y. Yang, W. Wang, E. A. Schiff, J. Liang, and S. Guha, Mater. Res. Soc. Symp. 762, A3.2.1\u22126 (2003). [35] K. Kempa, M. J. Naughton, Z. F. Ren, A. Herczynski, T. Kirkpatrick, J. Rybczynski, and Y. Gao, Appl. Phys.",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 13
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Ag",
+      "definition": "Silver, a chemical element used in embedded metal nanopatterns (EMNs) to enhance light absorption in amorphous silicon (a-Si).",
+      "category": "ChemicalEntity",
+      "formula": "Ag",
+      "formula_validation": {
+        "status": "from_chebi"
+      },
+      "relations": [
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "Embedded Metal Nanopattern (EMN)",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Sketch of embedded metal nanopattern (EMN) scheme, with cross-section of idealized absorber structure having integrated Ag (gray) EMN in a-Si (red), with cross EMN.",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 14
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:30512",
+        "name": "silver atom",
+        "definition": "\u2014",
+        "synonyms": [
+          "silver",
+          "Ag",
+          "argentum",
+          "47Ag",
+          "Silber",
+          "argent",
+          "plata",
+          "silver"
+        ],
+        "formula": "Ag",
+        "mass": "107.86820",
+        "charge": "0",
+        "inchi": "InChI=1S/Ag",
+        "inchikey": "BQCADISMDOOEFD-UHFFFAOYSA-N",
+        "smiles": "[Ag]",
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:33366"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "WebElements": [
+            "Ag"
+          ],
+          "CAS": [
+            "7440-22-4"
+          ]
+        },
+        "all_attributes": {
+          "name": "silver atom",
+          "subset": [
+            "3_STAR"
+          ],
+          "synonym": [
+            "\"silver\" RELATED [ChEBI]",
+            "\"Ag\" RELATED [IUPAC]",
+            "\"argentum\" RELATED [IUPAC]",
+            "\"47Ag\" RELATED [IUPAC]",
+            "\"Silber\" RELATED [ChemIDplus]",
+            "\"argent\" RELATED [ChEBI]",
+            "\"plata\" RELATED [ChEBI]",
+            "\"silver\" EXACT IUPAC_NAME [IUPAC]"
+          ],
+          "property_value": [
+            "http://purl.obolibrary.org/obo/chebi/monoisotopicmass \"106.90509\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/mass \"107.86820\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/charge \"0\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/formula \"Ag\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchi \"InChI=1S/Ag\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchikey \"BQCADISMDOOEFD-UHFFFAOYSA-N\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/smiles \"[Ag]\" xsd:string"
+          ],
+          "xref": [
+            "WebElements:Ag",
+            "CAS:7440-22-4"
+          ],
+          "is_a": [
+            "CHEBI:33366"
+          ]
+        }
+      },
+      "smiles": "[Ag]",
+      "charge": "0",
+      "inchi": "InChI=1S/Ag",
+      "inchikey": "BQCADISMDOOEFD-UHFFFAOYSA-N",
+      "mass": "107.86820",
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "bulk plasma wavelength",
+      "definition": "The wavelength in bulk material where plasma oscillations occur, given as 137 nm for the bulk plasma wavelength.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        13
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[48] Note that the conventional Drude formalism \u03bbSPP = \u03bbbulk(1+\u03b5a-Si)1/2 which, using \u03bbbulk = 137 nm for the bulk plasma wavelength would yield \u03bbSPP ~ 490 nm, can not be employed in this case, since the Drude model breaks down in the wavelength regime of interest.",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 13
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "FTO",
+      "definition": "Fluorine-doped tin oxide, a transparent conductive oxide used as a substrate in photovoltaic devices.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "Embedded Metal Nanopattern (EMN)",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Simulated absorbance A within a-Si while tuning the embedding depth d of a Ag cross EMN for normally-incident, linearly polarized light (50 nm FTO, 60 nm a-Si and 20 nm EMN thicknesses).",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Embedded Metal Nanopattern (EMN)",
+      "definition": "A structure integrating metal nanoparticles (e.g., Ag) into a-Si to enhance light absorption and device performance.",
+      "category": "Device",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "Ag",
+          "verified": false
+        },
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "a-Si",
+          "verified": false
+        },
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "FTO",
+          "verified": false
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_pssa.201228459.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Sketch of embedded metal nanopattern (EMN) scheme, with cross-section of idealized absorber structure having integrated Ag (gray) EMN in a-Si (red), with cross EMN.",
+          "source_paper": "10.1002_pssa.201228459.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "halide perovskite materials",
+      "definition": "Stable and non-toxic materials used for high-efficiency solar cells.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "high-efficiency solar cells",
+          "verified": false
+        }
+      ],
+      "pages": [
+        33
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "33 Supplementary Information: Materials discovery of stable and non-toxic halide perovskite materials for high-efficiency solar cells Ryan Jacobs1, Guangfu Luo1,2, Dane Morgan1,* 1 Department of Materials Science and Engineering, University of Wisconsin-Madison, Madison, WI 53706, USA 2 Department of Materials Science and Engineering, Southern University of Science and Technology, Shenzhen",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 33
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Organic Field-Effect Transistor (OFET)",
+      "definition": "A transistor that uses an organic semiconductor in its channel.",
+      "category": "Device",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "device_type",
+          "related_term": "organic semiconductor",
+          "verified": true
+        }
+      ],
+      "pages": [
+        32
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "32 2011, 110. [111] Y. H. J. T. Li-Chuan, C. Chen-Shiung, T. Li-Chuan, J. Phys. Condens. Matter 2000, 12. [112] I. A. M. Ahmad, G. Rehman, L. Ali, M. Shafiq, R. Iqbal, R. Ahmad, T. Khan, S. Jalali- Asadabadi, M. Maqbool, J. Alloys Compd. 2017, 705. [113] I. A. G.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 32
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "halide perovskite",
+      "definition": "A class of materials with ABX3 structure, used in solar cell applications.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "solar cell materials",
+          "verified": false
+        }
+      ],
+      "pages": [
+        34
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Composition space explored In this study, a number of pure and alloyed inorganic, organic, and mixed inorganic-organic halide perovskites were examined.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 34
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "perovskite materials",
+      "definition": "Materials with a perovskite structure, known for their potential in various applications such as solar cells due to their structural properties.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "1.1-1.7 eV",
+          "verified": true
+        }
+      ],
+      "pages": [
+        37
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Number of perovskite materials passing the estimated HSE bandgap criterion as a function of the range of bandgaps considered.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 37
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Photovoltaic Cell",
+      "definition": "A device that converts light energy into electrical energy.",
+      "category": "Device",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "device_type",
+          "related_term": "light energy conversion",
+          "verified": true
+        }
+      ],
+      "pages": [
+        32
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "32 2011, 110. [111] Y. H. J. T. Li-Chuan, C. Chen-Shiung, T. Li-Chuan, J. Phys. Condens. Matter 2000, 12. [112] I. A. M. Ahmad, G. Rehman, L. Ali, M. Shafiq, R. Iqbal, R. Ahmad, T. Khan, S. Jalali- Asadabadi, M. Maqbool, J. Alloys Compd. 2017, 705. [113] I. A. G.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 32
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "GaAs",
+      "definition": "Gallium arsenide, a semiconductor material used in solar cells.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "power_conversion_efficiency",
+          "related_term": "\u03b7 (power conversion efficiency)",
+          "verified": true
+        }
+      ],
+      "pages": [
+        43
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Our tests show that the power efficiency of bulk GaAs with and without excitonic effects differ only by 1%.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 43
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "C",
+      "definition": "Carbon is a chemical element with atomic number 6.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        46
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Yantara, C.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 46
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:36369",
+        "name": "charm quark",
+        "definition": "A second-generation quark with a charge of +2/3.",
+        "synonyms": [
+          "c",
+          "c-quark"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:36346"
+        ],
+        "relationships": {},
+        "xrefs": {},
+        "all_attributes": {
+          "name": "charm quark",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A second-generation quark with a charge of +2/3.\" []",
+          "synonym": [
+            "\"c\" RELATED [ChEBI]",
+            "\"c-quark\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:36346"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "H",
+      "definition": "Hydrogen is a chemical element with atomic number 1.",
+      "category": "ChemicalEntity",
+      "formula": "H",
+      "formula_validation": {
+        "status": "from_chebi"
+      },
+      "relations": [],
+      "pages": [
+        46
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Koh, T.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 46
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:49637",
+        "name": "hydrogen atom",
+        "definition": "\u2014",
+        "synonyms": [
+          "hydrogen",
+          "hidrogeno",
+          "hydrogen",
+          "H",
+          "hydrogene",
+          "Wasserstoff",
+          "1H"
+        ],
+        "formula": "H",
+        "mass": "1.00794",
+        "charge": "0",
+        "inchi": "InChI=1S/H",
+        "inchikey": "YZCKVEUIGOORGS-UHFFFAOYSA-N",
+        "smiles": "[H]",
+        "roles": [
+          "CHEBI:33937"
+        ],
+        "parents": [
+          "CHEBI:24835",
+          "CHEBI:25585",
+          "CHEBI:33559"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "WebElements": [
+            "H"
+          ]
+        },
+        "all_attributes": {
+          "name": "hydrogen atom",
+          "alt_id": [
+            "CHEBI:24634",
+            "CHEBI:49636"
+          ],
+          "subset": [
+            "3_STAR"
+          ],
+          "synonym": [
+            "\"hydrogen\" RELATED [ChEBI]",
+            "\"hidrogeno\" RELATED [ChEBI]",
+            "\"hydrogen\" EXACT IUPAC_NAME [IUPAC]",
+            "\"H\" RELATED [IUPAC]",
+            "\"hydrogene\" RELATED [ChEBI]",
+            "\"Wasserstoff\" RELATED [ChEBI]",
+            "\"1H\" RELATED [IUPAC]"
+          ],
+          "property_value": [
+            "http://purl.obolibrary.org/obo/chebi/monoisotopicmass \"1.00783\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/formula \"H\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/charge \"0\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/mass \"1.00794\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/smiles \"[H]\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchi \"InChI=1S/H\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchikey \"YZCKVEUIGOORGS-UHFFFAOYSA-N\" xsd:string"
+          ],
+          "xref": [
+            "WebElements:H"
+          ],
+          "is_a": [
+            "CHEBI:24835",
+            "CHEBI:25585",
+            "CHEBI:33559"
+          ],
+          "relationship": [
+            "has_role CHEBI:33937"
+          ]
+        }
+      },
+      "smiles": "[H]",
+      "charge": "0",
+      "inchi": "InChI=1S/H",
+      "inchikey": "YZCKVEUIGOORGS-UHFFFAOYSA-N",
+      "mass": "1.00794",
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "S",
+      "definition": "Sulfur is a chemical element with atomic number 16.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        46
+      ],
+      "source_papers": [
+        "10.1002_adfm.201804354.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Krishnamoorthy, N.",
+          "source_paper": "10.1002_adfm.201804354.pdf",
+          "page": 46
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:36368",
+        "name": "strange quark",
+        "definition": "A second-generation quark with a charge of -1/3 and a strangeness of -1.",
+        "synonyms": [
+          "s",
+          "s-quark"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:36346"
+        ],
+        "relationships": {},
+        "xrefs": {},
+        "all_attributes": {
+          "name": "strange quark",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A second-generation quark with a charge of -1/3 and a strangeness of -1.\" []",
+          "synonym": [
+            "\"s\" RELATED [ChEBI]",
+            "\"s-quark\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:36346"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "P3HT",
+      "definition": "A conjugated polymer used in organic electronics.",
+      "category": "ConjugatedPolymer",
+      "formula": "C10H14S",
+      "formula_validation": {
+        "input": "C10H14S",
+        "canonical": "H14 C10 S1",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "channel_material",
+          "related_term": "OFET",
+          "verified": true
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "400 500 600 700 0.4 0.6 0.8 1.0 400 500 600 700 0 50 100 150 200 250 300 Distance from cathode [nm] Wavelength [nm] 400 500 600 700 0 1 2 3 4 5 6 7 Absorption [10 -3 nm -1] Illumination through cathode anode Change in EQE Wavelength",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 9
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:60619",
+        "name": "poly(3-hexylthiophene-2,5-diyl) polymer",
+        "definition": "A poly(2,5-thiophene) polymer, composed of poly(3-hexylthiophene-2,5-diyl) macromolecules.",
+        "synonyms": [
+          "poly(3-hexylthiophene-2,5-diyl)",
+          "poly-3-hexylthiophene",
+          "poly(3-hexylthiophene)",
+          "P3HT",
+          "poly(3-hexyl thiophene)"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:60618"
+        ],
+        "relationships": {
+          "has_part": [
+            "CHEBI:53386"
+          ]
+        },
+        "xrefs": {},
+        "all_attributes": {
+          "name": "poly(3-hexylthiophene-2,5-diyl) polymer",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A poly(2,5-thiophene) polymer, composed of poly(3-hexylthiophene-2,5-diyl) macromolecules.\" []",
+          "synonym": [
+            "\"poly(3-hexylthiophene-2,5-diyl)\" RELATED [ChEBI]",
+            "\"poly-3-hexylthiophene\" RELATED [ChEBI]",
+            "\"poly(3-hexylthiophene)\" RELATED [ChEBI]",
+            "\"P3HT\" RELATED [ChEBI]",
+            "\"poly(3-hexyl thiophene)\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:60618"
+          ],
+          "relationship": [
+            "has_part CHEBI:53386"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PbS NCs",
+      "definition": "Lead sulfide nanocrystals used in hybrid composites.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Conversely, upon selective excitation of PbS NCs, PIA spectrum of the hybrid composite shows little, if any, P3HT delocalized polaron signal superimposed to PbS NC photo-induced absorption feature (compare black and red spectra in panel a of Figure 6, respectively) implying that hole transfer from PbS NCs to P3HT is",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Hybrid composite",
+      "definition": "A material system combining P3HT and PbS NCs for electronic applications.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "contains_material",
+          "related_term": "P3HT",
+          "verified": false
+        },
+        {
+          "relation": "contains_material",
+          "related_term": "PbS NCs",
+          "verified": false
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "9 induced absorption (PIA) spectroscopy: besides P3HT and PbS NC bleaching (at around 610 and 920 nm, respectively), PIA spectrum of the hybrid composite displays a strong broad feature reminiscent of P3HT delocalized polarons,37 which gives a positive contribution to the differential absorbance signal centered around 700 nm displaying TA",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 9
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Conjugated polymer",
+      "definition": "A polymer used in organic electronics.",
+      "category": "ConjugatedPolymer",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        24
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[52] Y. Wang, M. Chang, B. Kan, X. Wan, C. Li, Y. Chen, ACS Appl. Energy Mater. 2018, 1, 2150. [53] N. Liang, D. Meng, Z. Ma, B. Kan, X. Meng, Z. Zheng, W. Jiang, Y. Li, X. Wan, J. Hou, W. Ma, Y. Chen, Z. Wang, Adv. Energy Mater.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 24
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:61422",
+        "name": "conjugated polymer",
+        "definition": "A polymer, composed of conjugated macromolecules.",
+        "synonyms": [
+          "conjugated polymers"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:60027"
+        ],
+        "relationships": {
+          "has_part": [
+            "CHEBI:53710"
+          ]
+        },
+        "xrefs": {},
+        "all_attributes": {
+          "name": "conjugated polymer",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A polymer, composed of conjugated macromolecules.\" []",
+          "synonym": [
+            "\"conjugated polymers\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:60027"
+          ],
+          "relationship": [
+            "has_part CHEBI:53710"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "hybrid composites",
+      "definition": "Materials combining different components to enhance properties.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "morphology",
+          "related_term": "structural arrangement",
+          "verified": false
+        }
+      ],
+      "pages": [
+        20
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Morphology of the as-deposited hybrid composites.",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 20
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PbS-ArS NCs",
+      "definition": "Lead sulfide nanocrystals with aryl sulfide ligands.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "associations",
+          "related_term": "P3HT",
+          "verified": false
+        }
+      ],
+      "pages": [
+        33
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "TEM image of the composite P3HT/PbS-ArS NCs 50:50 w/w.",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 33
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PbS-Ol NCs",
+      "definition": "Lead sulfide (PbS) nanocrystals capped with oleate ligands, commonly used as quantum dots in optoelectronic devices.",
+      "category": "ChemicalEntity",
+      "formula": "PbS with C17H33COO- ligands",
+      "formula_validation": {
+        "input": "PbS with C17H33COO- ligands",
+        "canonical": null,
+        "mp_hits": -1,
+        "status": "invalid",
+        "error": "parse\u2011error: could not convert string to float: '-'"
+      },
+      "relations": [
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "composite P3HT/PbS-Ol NCs 10:90 w/w",
+          "verified": false
+        }
+      ],
+      "pages": [
+        30
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "TEM image of the composite P3HT/PbS-Ol NCs 20:80 w/w.",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 30
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PbS-ArS NC",
+      "definition": "Lead sulfide nanocrystals with ArS modification, used in composite materials.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "type",
+          "related_term": "nanocrystal",
+          "verified": true
+        }
+      ],
+      "pages": [
+        45
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Absorption spectrum of the P3HT/PbS-ArS NC composite (solid line) and sum spectrum of pure P3HT and PbS-ArS NC solid (dashed line).",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 45
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "P3HT/PbS-ArS NC composite",
+      "definition": "A composite material combining P3HT and PbS-ArS nanocrystals for optoelectronic applications.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "device_type",
+          "related_term": "organic photovoltaic cell",
+          "verified": true
+        }
+      ],
+      "pages": [
+        42
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Pin for device comprising P3HT/PbS-ArS NC composite.",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 42
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Colloidal PbS Nanocrystals",
+      "definition": "Semiconductor nanocrystals with size-tunable near-infrared emission.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "near-infrared emission",
+          "verified": true
+        }
+      ],
+      "pages": [
+        47
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "D., Colloidal PbS Nanocrystals with Size-Tunable Near-Infrared Emission: Observation of Post-Synthesis Self-Narrowing of the Particle Size Distribution.",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 47
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Arenethiolate-Capped PbS Quantum Dots",
+      "definition": "Colloidal quantum dots used in solution-cast photovoltaics.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "application",
+          "related_term": "solution-cast photovoltaics",
+          "verified": false
+        }
+      ],
+      "pages": [
+        47
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "D.; Rizzo, A.; Gigli, G., Colloidal Arenethiolate-Capped PbS Quantum Dots: Optoelectronic Properties, Self-Assembly, and Application in Solution-Cast Photovoltaics.",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 47
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Spectroscopy",
+      "definition": "Experimental technique used to measure material properties through absorption and transient absorption spectra.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "absorption spectrum",
+          "verified": true
+        },
+        {
+          "relation": "measured_property",
+          "related_term": "transient absorption spectrum",
+          "verified": true
+        }
+      ],
+      "pages": [
+        45
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "45 Spectroscopic measurements of P3HT/PbS NC composites and their components Figure S30. Absorption spectrum of the P3HT/PbS-ArS NC composite (solid line) and sum spectrum of pure P3HT and PbS-ArS NC solid (dashed line). Figure S31. TA spectrum of P3HT/PbS-ArS NC composite (\uf06c pump = 400 nm at a pulse irradiance",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 45
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Cadmium Sulfide (CdS) Nanocrystals",
+      "definition": "II\u2013VI semiconductor nanocrystals formed in noncoordinating solvents.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "formation_method",
+          "related_term": "noncoordinating solvents",
+          "verified": false
+        }
+      ],
+      "pages": [
+        47
+      ],
+      "source_papers": [
+        "10.1002_adfm.201401841.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "47 Supporting References. 1. Hines, M. A.; Scholes, G. D., Colloidal PbS Nanocrystals with Size-Tunable Near-Infrared Emission: Observation of Post-Synthesis Self-Narrowing of the Particle Size Distribution. Adv. Mater. 2003, 15 (21), 1844-1849. 2. Giansante, C.; Carbone, L.; Giannini, C.; Altamura, D.; Ameer, Z.; Maruccio, G.; Loiudice, A.; Belviso, M. R.;",
+          "source_paper": "10.1002_adfm.201401841.pdf",
+          "page": 47
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PCBM elongated nanostructures",
+      "definition": "Nanostructured form of PCBM controlled by annealing conditions.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "MaterialProcessedBy",
+          "related_term": "annealing temperature, annealing time, and PCBM concentration",
+          "verified": false
+        }
+      ],
+      "pages": [
+        11
+      ],
+      "source_papers": [
+        "0704.3734v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "11 4. Conclusion Our experimental results show that the formation and morphology of PCBM elongated nanostructures can be controlled using, annealing temperature, annealing time, and the PCBM concentration. Further, the formation of the crystalline PCBM elongated nanostructures favors polymer crystallization without inducing the abrupt phase segregation that is, in general,",
+          "source_paper": "0704.3734v1.pdf",
+          "page": 11
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PBTTT-PC71BM",
+      "definition": "A chemical entity used in organic electronics.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "device with PBTTT-PC71BM",
+          "verified": false
+        }
+      ],
+      "pages": [
+        28
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S4 Sub-bandgap spectral line-shape of the active layer absorption for different thicknesses in devices with PCE12-ITIC (left) and PBTTT-PC71BM (right).",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 28
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PCE12-ITIC",
+      "definition": "A chemical entity used in organic electronics.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "DeviceContainsMaterial",
+          "related_term": "device with PCE12-ITIC",
+          "verified": false
+        }
+      ],
+      "pages": [
+        28
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S4 Sub-bandgap spectral line-shape of the active layer absorption for different thicknesses in devices with PCE12-ITIC (left) and PBTTT-PC71BM (right).",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 28
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PCE12",
+      "definition": "A chemical entity used in organic solar cells and photodiodes.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Supporting Information Determining Ultra-low Absorption Coefficients from the Sub-bandgap External Quantum Efficiency in Organic Solar Cells and Photodiodes Christina Kaiser, Stefan Zeiske, Paul Meredith *, Ardalan Armin * Content: Scheme S1: Molecular structures of PCE12, ITIC, PBTTT and PC71BM Figure S1: Active layer absorption and IQE of PCE12-ITIC devices in",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "ITIC",
+      "definition": "A chemical entity used in organic solar cells and photodiodes.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Supporting Information Determining Ultra-low Absorption Coefficients from the Sub-bandgap External Quantum Efficiency in Organic Solar Cells and Photodiodes Christina Kaiser, Stefan Zeiske, Paul Meredith *, Ardalan Armin * Content: Scheme S1: Molecular structures of PCE12, ITIC, PBTTT and PC71BM Figure S1: Active layer absorption and IQE of PCE12-ITIC devices in",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PBTTT",
+      "definition": "A chemical entity used in organic solar cells and photodiodes.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Supporting Information Determining Ultra-low Absorption Coefficients from the Sub-bandgap External Quantum Efficiency in Organic Solar Cells and Photodiodes Christina Kaiser, Stefan Zeiske, Paul Meredith *, Ardalan Armin * Content: Scheme S1: Molecular structures of PCE12, ITIC, PBTTT and PC71BM Figure S1: Active layer absorption and IQE of PCE12-ITIC devices in",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PC71BM",
+      "definition": "A chemical entity used in organic solar cells and photodiodes.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Supporting Information Determining Ultra-low Absorption Coefficients from the Sub-bandgap External Quantum Efficiency in Organic Solar Cells and Photodiodes Christina Kaiser, Stefan Zeiske, Paul Meredith *, Ardalan Armin * Content: Scheme S1: Molecular structures of PCE12, ITIC, PBTTT and PC71BM Figure S1: Active layer absorption and IQE of PCE12-ITIC devices in",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "EQE spectra",
+      "definition": "Electrochemical measurement of a material's quantum efficiency.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "optical interference fringes",
+          "verified": true
+        },
+        {
+          "relation": "measured_property",
+          "related_term": "wavelengths above 1000 nm",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S5 Left: EQE spectra measured for PCE12-ITIC devices showing optical interference fringes as the result of the device acting as a low-finesse cavity for wavelengths above 1000 nm.",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "low-finesse cavity",
+      "definition": "A device architecture that exhibits optical interference effects.",
+      "category": "Device",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "architecture",
+          "related_term": "optical interference fringes",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S5 Left: EQE spectra measured for PCE12-ITIC devices showing optical interference fringes as the result of the device acting as a low-finesse cavity for wavelengths above 1000 nm.",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "longpass filters",
+      "definition": "Optical filters used to eliminate higher incident light order harmonics.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "higher incident light order harmonics",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S5 Left: EQE spectra measured for PCE12-ITIC devices showing optical interference fringes as the result of the device acting as a low-finesse cavity for wavelengths above 1000 nm. Right: EQE of the PCE12-ITIC device with a 215 nm active layer. Different longpass filters were placed in front of sample",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "transfer matrix method",
+      "definition": "A numerical technique used to simulate absorption in materials.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "absorption",
+          "verified": true
+        }
+      ],
+      "pages": [
+        28
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Colored lines represent the simulated absorption obtained from the transfer matrix method and the numerical \u03b1.",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 28
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "noise-equivalent EQE",
+      "definition": "The minimum detectable signal level for EQE measurements.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "fully blocking the light beam",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "The noise-equivalent EQE of a 105 nm thick PCE12-ITIC cell was recorded by fully blocking the light beam.",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "numerical \u03b1",
+      "definition": "A parameter used in absorption calculations.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "absorption",
+          "verified": true
+        }
+      ],
+      "pages": [
+        28
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Colored lines represent the simulated absorption obtained from the transfer matrix method and the numerical \u03b1.",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 28
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "sub-bandgap spectral line-shape",
+      "definition": "A property describing the absorption characteristics of a material.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "absorption",
+          "verified": true
+        }
+      ],
+      "pages": [
+        28
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S4 Sub-bandgap spectral line-shape of the active layer absorption for different thicknesses in devices with PCE12-ITIC (left) and PBTTT-PC71BM (right).",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 28
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "active layer",
+      "definition": "The functional part of a device where energy conversion occurs.",
+      "category": "Device",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "contains_material",
+          "related_term": "PCE12-ITIC",
+          "verified": false
+        },
+        {
+          "relation": "contains_material",
+          "related_term": "PBTTT-PC71BM",
+          "verified": false
+        }
+      ],
+      "pages": [
+        28
+      ],
+      "source_papers": [
+        "10.1002_adom.201901542.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S4 Sub-bandgap spectral line-shape of the active layer absorption for different thicknesses in devices with PCE12-ITIC (left) and PBTTT-PC71BM (right).",
+          "source_paper": "10.1002_adom.201901542.pdf",
+          "page": 28
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Ternary Organic Solar Cells",
+      "definition": "A type of photovoltaic device that incorporates three components (typically two donors and one acceptor) to enhance energy conversion efficiency.",
+      "category": "PhotovoltaicCell",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "associations",
+          "related_term": "Energy Level Alignment",
+          "verified": true
+        }
+      ],
+      "pages": [
+        1
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "1 Energy Level Alignment in Ternary Organic Solar Cells Vincent Lami1, Yvonne J. Hofstetter1,2, Julian F. Butscher1, Yana Vaynzof1,2* 1 Kirchhoff Institute for Physics and Centre for Advanced Materials, Ruprecht-Karls-Universit\u00e4t Heidelberg, Im Neuenheimer Feld 227, 69120 Heidelberg, Germany 2 Integrated Centre for Applied Physics and Photonic Materials and Centre for",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 1
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Energy Level Alignment",
+      "definition": "The positioning of energy levels (HOMO, LUMO) in materials relative to each other, critical for charge transport and efficiency in electronic devices.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "associations",
+          "related_term": "Ternary Organic Solar Cells",
+          "verified": false
+        }
+      ],
+      "pages": [
+        1
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "1 Energy Level Alignment in Ternary Organic Solar Cells Vincent Lami1, Yvonne J.",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 1
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "non-fullerene electron acceptors",
+      "definition": "Materials used as alternatives to fullerene-based acceptors in organic photovoltaics, offering potential for high-efficiency solar cells.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "organic photovoltaics",
+          "verified": false
+        },
+        {
+          "relation": "has_application",
+          "related_term": "high-efficiency solar cells",
+          "verified": false
+        }
+      ],
+      "pages": [
+        20
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(2017) N -Heteroacenes as a New Class of Non-Fullerene Electron Acceptors for Organic Bulk-Heterojunction Photovoltaic Devices.",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 20
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Poly[3-hexylthiophene] (P3HT)",
+      "definition": "A conjugated polymer used in organic photovoltaics.",
+      "category": "ConjugatedPolymer",
+      "formula": "C10H14S",
+      "formula_validation": {
+        "input": "C10H14S",
+        "canonical": "H14 C10 S1",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "organic photovoltaics",
+          "verified": false
+        },
+        {
+          "relation": "backbone_structure",
+          "related_term": "thiophene backbone",
+          "verified": true
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "26 Directed Spinodal Decomposition in Poly[3-hexylthiophene] and C61-Butyric Acid Methyl Ester Blends. ACS Nano, 5 (1), 329\u2013336. 47. Sevinchan, Y., Hopkinson, P.E., Bakulin, A.A., Herz, J., Motzkus, M., and Vaynzof, Y. (2016) Improving charge separation across a hybrid oxide/polymer interface by Cs doping of the metal oxide. Adv. Mater. Interfaces,",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "C61-Butyric Acid Methyl Ester (PCBM)",
+      "definition": "A fullerene derivative commonly used as an acceptor material in organic photovoltaics.",
+      "category": "ChemicalEntity",
+      "formula": "C76H38O2",
+      "formula_validation": {
+        "input": "C76H38O2",
+        "canonical": "H38 C76 O2",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "organic photovoltaics",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "26 Directed Spinodal Decomposition in Poly[3-hexylthiophene] and C61-Butyric Acid Methyl Ester Blends. ACS Nano, 5 (1), 329\u2013336. 47. Sevinchan, Y., Hopkinson, P.E., Bakulin, A.A., Herz, J., Motzkus, M., and Vaynzof, Y. (2016) Improving charge separation across a hybrid oxide/polymer interface by Cs doping of the metal oxide. Adv. Mater. Interfaces,",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Cs doping",
+      "definition": "A processing method involving the introduction of cesium to improve charge separation at hybrid oxide/polymer interfaces.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "improves_property",
+          "related_term": "charge separation",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(2016) Improving charge separation across a hybrid oxide/polymer interface by Cs doping of the metal oxide.",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "hybrid oxide/polymer interface",
+      "definition": "An interface between hybrid oxide materials and polymers, critical for charge separation in photovoltaic devices.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "processed_by",
+          "related_term": "Cs doping",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(2016) Improving charge separation across a hybrid oxide/polymer interface by Cs doping of the metal oxide.",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "inorganic interfacial modification",
+      "definition": "A method to enhance device performance by modifying the inorganic interface in hybrid organic-inorganic photovoltaics.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "enhances_property",
+          "related_term": "open circuit voltage",
+          "verified": false
+        },
+        {
+          "relation": "enhances_property",
+          "related_term": "short circuit current",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(2016) Simultaneous enhancement in open circuit voltage and short circuit current of hybrid organic-inorganic photovoltaics by inorganic interfacial modification.",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "open circuit voltage",
+      "definition": "The maximum voltage generated by a photovoltaic device under illumination when no current flows.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_by",
+          "related_term": "current-voltage measurement",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(2016) Simultaneous enhancement in open circuit voltage and short circuit current of hybrid organic-inorganic photovoltaics by inorganic interfacial modification.",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "short circuit current",
+      "definition": "The maximum current generated by a photovoltaic device under illumination when the voltage is zero.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_by",
+          "related_term": "current-voltage measurement",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_aelm.202000213.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(2016) Simultaneous enhancement in open circuit voltage and short circuit current of hybrid organic-inorganic photovoltaics by inorganic interfacial modification.",
+          "source_paper": "10.1002_aelm.202000213.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "polythiophene",
+      "definition": "A conjugated polymer used in organic electronics.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "band gap",
+          "verified": true
+        }
+      ],
+      "pages": [
+        7
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[19] J. Clark, C. Silva, R. H. Friend, and F. C. Spano, Physical Review Letters 98, 206406 (2007), we have estimated the band gap as the onset energy of the absorption spectrum of polythio- phene in solution (Fig. 1 therein). [20] K. Sakurai, H. Tachibana, N. Shiga, C. Terakura, M.",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 7
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:60616",
+        "name": "polythiophene polymer",
+        "definition": "A homopolymer, composed of polythiophene macromolecules.",
+        "synonyms": [
+          "polythiophenes",
+          "poly(thiophene)s",
+          "Polythiophene",
+          "polythiophene",
+          "Thiophene, homopolymer"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:60029"
+        ],
+        "relationships": {
+          "has_part": [
+            "CHEBI:53222"
+          ]
+        },
+        "xrefs": {},
+        "all_attributes": {
+          "name": "polythiophene polymer",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A homopolymer, composed of polythiophene macromolecules.\" []",
+          "synonym": [
+            "\"polythiophenes\" RELATED [ChEBI]",
+            "\"poly(thiophene)s\" RELATED [ChEBI]",
+            "\"Polythiophene\" RELATED [ChEBI]",
+            "\"polythiophene\" RELATED [ChEBI]",
+            "\"Thiophene, homopolymer\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:60029"
+          ],
+          "relationship": [
+            "has_part CHEBI:53222"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "pDPP",
+      "definition": "A conjugated polymer with theoretical LUMO levels comparable to PCBM.",
+      "category": "ConjugatedPolymer",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "LUMO level",
+          "verified": true
+        },
+        {
+          "relation": "material_type",
+          "related_term": "polymer",
+          "verified": false
+        },
+        {
+          "relation": "processed_by",
+          "related_term": "GWA corrections",
+          "verified": false
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "In isolated pDPP chain, the almost 0.6 eV DFT-LDA band gap is evaluated 1.284 eV in GWA.",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PT",
+      "definition": "A polymer with a direct band gap calculated using GWA.",
+      "category": "ConjugatedPolymer",
+      "formula": "Pt",
+      "formula_validation": {
+        "status": "from_chebi"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "direct band gap",
+          "verified": true
+        },
+        {
+          "relation": "processed_by",
+          "related_term": "GWA",
+          "verified": false
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "We also found three polymers with LUCO energies even lower, which could even- tually be used as electron acceptor.",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:33364",
+        "name": "platinum",
+        "definition": "\u2014",
+        "synonyms": [
+          "Platin",
+          "78Pt",
+          "platinum",
+          "Pt",
+          "platino",
+          "platine"
+        ],
+        "formula": "Pt",
+        "mass": "195.078",
+        "charge": "0",
+        "inchi": "InChI=1S/Pt",
+        "inchikey": "BASFCYQUMIYNBI-UHFFFAOYSA-N",
+        "smiles": "[Pt]",
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:33362",
+          "CHEBI:33365"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "WebElements": [
+            "Pt"
+          ],
+          "CAS": [
+            "7440-06-4",
+            "7440-06-4"
+          ]
+        },
+        "all_attributes": {
+          "name": "platinum",
+          "subset": [
+            "3_STAR"
+          ],
+          "synonym": [
+            "\"Platin\" RELATED [ChEBI]",
+            "\"78Pt\" RELATED [IUPAC]",
+            "\"platinum\" EXACT IUPAC_NAME [IUPAC]",
+            "\"Pt\" RELATED [IUPAC]",
+            "\"platino\" RELATED [ChEBI]",
+            "\"platine\" RELATED [ChEBI]"
+          ],
+          "property_value": [
+            "http://purl.obolibrary.org/obo/chebi/monoisotopicmass \"194.96479\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/formula \"Pt\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/charge \"0\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/mass \"195.078\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchikey \"BASFCYQUMIYNBI-UHFFFAOYSA-N\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/smiles \"[Pt]\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchi \"InChI=1S/Pt\" xsd:string"
+          ],
+          "xref": [
+            "WebElements:Pt",
+            "CAS:7440-06-4",
+            "CAS:7440-06-4"
+          ],
+          "is_a": [
+            "CHEBI:33362",
+            "CHEBI:33365"
+          ]
+        }
+      },
+      "smiles": "[Pt]",
+      "charge": "0",
+      "inchi": "InChI=1S/Pt",
+      "inchikey": "BASFCYQUMIYNBI-UHFFFAOYSA-N",
+      "mass": "195.078",
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "GWA (GW Approximation)",
+      "definition": "An experimental technique for calculating electronic properties of materials.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "electronic properties",
+          "verified": true
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "between the two methods is 1.1 eV. Moreover, the intensi\ufb01cation of the correlation e\ufb00ects produce the lowering of the core valence bands from 0.2 eV up to 1 eV. In contrast, the GWA corrections result in \u03c0\u2217LUCO conduction band almost rigidly shifted. In isolated pDPP chain, the almost 0.6 eV",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DFT-LDA",
+      "definition": "A density functional theory method for calculating electronic properties.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "electronic properties",
+          "verified": true
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "In isolated pDPP chain, the almost 0.6 eV DFT-LDA band gap is evaluated 1.284 eV in GWA.",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [
+        {
+          "property": "band_gap",
+          "value": 0.6,
+          "unit": "eV",
+          "uncertainty": null,
+          "context": "In isolated pDPP\nchain, the almost 0.6 eV DFT-LDA band gap is evaluated 1.284 eV in GWA.",
+          "verified": true
+        },
+        {
+          "property": "band_gap",
+          "value": 1.284,
+          "unit": "eV",
+          "uncertainty": null,
+          "context": "In isolated pDPP\nchain, the almost 0.6 eV DFT-LDA band gap is evaluated 1.284 eV in GWA.",
+          "verified": true
+        }
+      ],
+      "importance": "low"
+    },
+    {
+      "term": "HOCO",
+      "definition": "The highest occupied crystal orbital in a material.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "highest occupied energy level",
+          "verified": true
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Whereas now the dispersion of HOCO band is almost unmodi\ufb01ed, the GWA corrections for LUCO band vary from 0.4 eV at \u0393 to 0.8 eV at X point.",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "LUCO",
+      "definition": "The lowest unoccupied crystal orbital in a material.",
+      "category": "MaterialProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "lowest unoccupied energy level",
+          "verified": true
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "In contrast, the GWA corrections result in \u03c0\u2217LUCO conduction band almost rigidly shifted.",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PPM",
+      "definition": "A method or parameter used in electronic property calculations.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "process_parameters",
+          "related_term": "electronic property calculations",
+          "verified": true
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "GWA calculations for PT show the direct band gaps equal to 2.38 eV (PPM).",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "B3LYP",
+      "definition": "A hybrid functional method used in quantum chemistry calculations.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "electronic properties",
+          "verified": true
+        }
+      ],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "0911.0224v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "In pDPP, the GWA band gap is calculated 1.28 eVGW results are in good agreement with the B3LYP ones.",
+          "source_paper": "0911.0224v1.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "photocurrent",
+      "definition": "The current generated by light in a photovoltaic device.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "influenced_by",
+          "related_term": "mobility of the slower carrier (\u00b5s)",
+          "verified": false
+        },
+        {
+          "relation": "influenced_by",
+          "related_term": "permittivity of the active layer (\u03b5)",
+          "verified": false
+        },
+        {
+          "relation": "influenced_by",
+          "related_term": "voltage across the device (V0 - V)",
+          "verified": false
+        }
+      ],
+      "pages": [
+        4
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "As shown by Goodman and Rose,[24] and later adapted to OPVs by Mihailetchi et al.,[21] the photocurrent in the SCR will be space-charge-limited, taking the form jph = \u2212qG3/4(9\u00b5s\u03b5\u03b50/8q)1/4(V0 \u2212 V )1/2, where \u00b5s is the mobility of the slower carrier, \u03b5\u03b50 is the permittivity of the active layer, q",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 4
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Au",
+      "definition": "Gold, a metal used in electrodes.",
+      "category": "ChemicalEntity",
+      "formula": "Au",
+      "formula_validation": {
+        "status": "from_chebi"
+      },
+      "relations": [
+        {
+          "relation": "electrode_material",
+          "related_term": "organic electronics",
+          "verified": true
+        }
+      ],
+      "pages": [
+        9
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "the generation pro\ufb01le is particularly inhomogeneous because the majority of photons are absorbed near the transparent cathode.",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 9
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:29287",
+        "name": "gold atom",
+        "definition": "\u2014",
+        "synonyms": [
+          "79Au",
+          "or",
+          "gold",
+          "oro",
+          "gold",
+          "Au",
+          "aurum",
+          "Gold"
+        ],
+        "formula": "Au",
+        "mass": "196.96655",
+        "charge": "0",
+        "inchi": "InChI=1S/Au",
+        "inchikey": "PCHJSUWPFVWCPO-UHFFFAOYSA-N",
+        "smiles": "[Au]",
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:33366"
+        ],
+        "relationships": {},
+        "xrefs": {
+          "WebElements": [
+            "Au"
+          ],
+          "CAS": [
+            "7440-57-5"
+          ]
+        },
+        "all_attributes": {
+          "name": "gold atom",
+          "subset": [
+            "3_STAR"
+          ],
+          "synonym": [
+            "\"79Au\" RELATED [IUPAC]",
+            "\"or\" RELATED [ChEBI]",
+            "\"gold\" RELATED [ChEBI]",
+            "\"oro\" RELATED [ChEBI]",
+            "\"gold\" EXACT IUPAC_NAME [IUPAC]",
+            "\"Au\" RELATED [IUPAC]",
+            "\"aurum\" RELATED [IUPAC]",
+            "\"Gold\" RELATED [ChEBI]"
+          ],
+          "property_value": [
+            "http://purl.obolibrary.org/obo/chebi/monoisotopicmass \"196.96657\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/mass \"196.96655\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/formula \"Au\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/charge \"0\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchi \"InChI=1S/Au\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/inchikey \"PCHJSUWPFVWCPO-UHFFFAOYSA-N\" xsd:string",
+            "http://purl.obolibrary.org/obo/chebi/smiles \"[Au]\" xsd:string"
+          ],
+          "xref": [
+            "WebElements:Au",
+            "CAS:7440-57-5"
+          ],
+          "is_a": [
+            "CHEBI:33366"
+          ]
+        }
+      },
+      "smiles": "[Au]",
+      "charge": "0",
+      "inchi": "InChI=1S/Au",
+      "inchikey": "PCHJSUWPFVWCPO-UHFFFAOYSA-N",
+      "mass": "196.96655",
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Organic Solar Cell",
+      "definition": "A photovoltaic cell that converts light into electrical energy using organic semiconductors.",
+      "category": "PhotovoltaicCell",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "MaterialHasProperty",
+          "related_term": "Space Charge Build-up",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Supporting information for: Watching Space Charge Build up in an Organic Solar Cell Sebastian Wilken,\u2217,\u2020,\u2021 Oskar J. Sandberg,\u00b6 Dorothea Scheunemann,\u2020,\u2021 and Ronald \u00a8Osterbacka\u2020 \u2020Physics, \u02da Abo Akademi University, Porthansgatan 3, 20500 Turku, Finland \u2021Institute of Physics, Carl von Ossietzky University of Oldenburg, 26111 Oldenburg, Germany \u00b6Department of Physics, Swansea University,",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Space Charge Build-up",
+      "definition": "The accumulation of charges within a material that affects its electronic properties and device performance.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "MaterialHasProperty",
+          "related_term": "Organic Solar Cell",
+          "verified": false
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Supporting information for: Watching Space Charge Build up in an Organic Solar Cell Sebastian Wilken,\u2217,\u2020,\u2021 Oskar J. Sandberg,\u00b6 Dorothea Scheunemann,\u2020,\u2021 and Ronald \u00a8Osterbacka\u2020 \u2020Physics, \u02da Abo Akademi University, Porthansgatan 3, 20500 Turku, Finland \u2021Institute of Physics, Carl von Ossietzky University of Oldenburg, 26111 Oldenburg, Germany \u00b6Department of Physics, Swansea University,",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Polymer Solar Cells",
+      "definition": "A type of photovoltaic device that converts light into electrical energy using polymers as the active material.",
+      "category": "PhotovoltaicCell",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_property",
+          "related_term": "Power Conversion Efficiency",
+          "verified": false
+        }
+      ],
+      "pages": [
+        33
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "E\ufb03cient, Air-Stable Bulk Heterojunction Polymer Solar Cells Using MoOx as the Anode Interfacial Layer.",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 33
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Power Conversion Efficiency",
+      "definition": "The efficiency of converting input light energy to electrical energy, expressed as a percentage.",
+      "category": "ElectronicProperty",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "power_conversion_efficiency",
+          "related_term": "11%",
+          "verified": true
+        }
+      ],
+      "pages": [
+        33
+      ],
+      "source_papers": [
+        "10.1002_solr.201900505.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Yang, Y. An E\ufb03cient Triple-Junction Polymer Solar Cell Having a Power Conversion E\ufb03ciency Exceeding 11%. Adv. Mater. 2014, 26, 5670\u20135677. (S5) Sun, Y.; Takacs, C. J.; Cowan, S. R.; Seo, J. H.; Gong, X.; Roy, A.; Heeger, A. J. E\ufb03cient, Air-Stable Bulk Heterojunction Polymer Solar Cells Using MoOx as the",
+          "source_paper": "10.1002_solr.201900505.pdf",
+          "page": 33
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PCE10",
+      "definition": "A chemical entity with donor-like transition at 1.72 eV.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "1.72 eV",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_smll.202505063.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S4b shows the temporal dynamics obtained at the pump photon energy of 1.75 eV with a fluence of 220 \u00b5J/cm2 and at the probe photon energy of 1.72 eV for PCE10 and of 1.45 eV for FOIC, namely at the energies of the PB signal minima.",
+          "source_paper": "10.1002_smll.202505063.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "FOIC",
+      "definition": "A chemical entity with acceptor-like transition at 1.45 eV.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "1.45 eV",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_smll.202505063.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Figure S4b shows the temporal dynamics obtained at the pump photon energy of 1.75 eV with a fluence of 220 \u00b5J/cm2 and at the probe photon energy of 1.72 eV for PCE10 and of 1.45 eV for FOIC, namely at the energies of the PB signal minima.",
+          "source_paper": "10.1002_smll.202505063.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Transient Absorption (TA) Spectroscopy",
+      "definition": "An experimental technique used to study temporal dynamics of photobleaching signals.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "photobleaching (PB) signal dynamics",
+          "verified": true
+        }
+      ],
+      "pages": [
+        29
+      ],
+      "source_papers": [
+        "10.1002_smll.202505063.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "29 strong PB signal at 1.72 eV, associated with a donor-like transition; a less intense PB signal at 1.45 eV, associated with an acceptor-like transition. The different intensity of the PB signals since the energy of the pump (1.72 eV) is almost resonant with the donor-like optical transition, inducing a",
+          "source_paper": "10.1002_smll.202505063.pdf",
+          "page": 29
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "computational details",
+      "definition": "Details regarding computational methods used in materials science analysis.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        5
+      ],
+      "source_papers": [
+        "10.1002_aelm.201900887.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "5 putational details. [18] J. M. Luttinger, Phys. Rev. 81, 1015 (1951). [19] J. M. Luttinger and L. Tisza, Phys. Rev. 70, 954 (1946). [20] Belorizky, E., Casalegno, R., Fries, P., and Niez, J.J., J. Phys. France 39, 776 (1978). [21] M. Methfessel, M. van Schilfgaarde, and R. A. Casali,",
+          "source_paper": "10.1002_aelm.201900887.pdf",
+          "page": 5
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "W.W.",
+      "definition": "An author holding shares in Nanomatch GmbH.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_affiliation",
+          "related_term": "Nanomatch GmbH",
+          "verified": false
+        }
+      ],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_aelm.202400988.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Conflict of Interest Statement W.W.",
+          "source_paper": "10.1002_aelm.202400988.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Nanomatch GmbH",
+      "definition": "A company marketing software including methods developed by KIT.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_affiliation",
+          "related_term": "W.W.",
+          "verified": false
+        },
+        {
+          "relation": "uses_methods_from",
+          "related_term": "KIT",
+          "verified": false
+        }
+      ],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_aelm.202400988.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "holds shares of a KIT spinoff, Nanomatch GmbH, which markets software including methods developed by KIT.",
+          "source_paper": "10.1002_aelm.202400988.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "KIT",
+      "definition": "Karlsruhe Institute of Technology, developer of methods used by Nanomatch GmbH.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "develops_methods_for",
+          "related_term": "Nanomatch GmbH",
+          "verified": false
+        }
+      ],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_aelm.202400988.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "holds shares of a KIT spinoff, Nanomatch GmbH, which markets software including methods developed by KIT.",
+          "source_paper": "10.1002_aelm.202400988.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DRCN5T",
+      "definition": "A conjugated polymer used in organic electronics.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "PC70BM",
+          "verified": false
+        }
+      ],
+      "pages": [
+        13
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Normalised spectra (a) and kinetics (b) for the three contributions to the TA spectrum of DRCN5T:PC70BM after 250 nm excitation (150 nJ): acceptor exciton (blue), donor exciton (red), and free charges (green).",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 13
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PC70BM",
+      "definition": "A fullerene derivative commonly used as an acceptor material in organic photovoltaics.",
+      "category": "ChemicalEntity",
+      "formula": "C71H14",
+      "formula_validation": {
+        "input": "C71H14",
+        "canonical": "H14 C71",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "DRCN5T",
+          "verified": false
+        }
+      ],
+      "pages": [
+        13
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Normalised spectra (a) and kinetics (b) for the three contributions to the TA spectrum of DRCN5T:PC70BM after 250 nm excitation (150 nJ): acceptor exciton (blue), donor exciton (red), and free charges (green).",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 13
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DRCN5T:PC70BM blend",
+      "definition": "A material blend of DRCN5T and PC70BM, showing enhanced stability against degradation.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "blend",
+          "verified": true
+        }
+      ],
+      "pages": [
+        11
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Normalised decay in amplitude of (a) neat PC70BM and (b) DRCN5T:PC70BM blend spectra excited with a 350 nm pump pulse (150 nJ) at the selected wavelength of 1300 nm at increasing extents of degradation.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 11
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DRCN5T:PC70BM",
+      "definition": "A material system combining DRCN5T and PC70BM used in organic photovoltaics.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "organic photovoltaic blend",
+          "verified": true
+        }
+      ],
+      "pages": [
+        14
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Additionally, long-range energy transfer can assist in current generation by directed exciton transport to a donor:acceptor interface in contrast to range-limited, random exciton diffusion.[64] The combination of the energy transfer from the acceptor with an ultra-stable donor, like in DRCN5T:PC70BM results in both the charge generation and transport/extraction mechanisms remaining",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 14
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "OFET",
+      "definition": "Organic Field-Effect Transistor - a transistor that uses an organic semiconductor in its channel.",
+      "category": "Device",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "device_type",
+          "related_term": "organic field-effect transistor",
+          "verified": true
+        }
+      ],
+      "pages": [
+        24
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[52] Y. Wang, M. Chang, B. Kan, X. Wan, C. Li, Y. Chen, ACS Appl. Energy Mater. 2018, 1, 2150. [53] N. Liang, D. Meng, Z. Ma, B. Kan, X. Meng, Z. Zheng, W. Jiang, Y. Li, X. Wan, J. Hou, W. Ma, Y. Chen, Z. Wang, Adv. Energy Mater.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 24
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PhotovoltaicCell",
+      "definition": "A device that converts light energy into electrical energy.",
+      "category": "Device",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        24
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "[52] Y. Wang, M. Chang, B. Kan, X. Wan, C. Li, Y. Chen, ACS Appl. Energy Mater. 2018, 1, 2150. [53] N. Liang, D. Meng, Z. Ma, B. Kan, X. Meng, Z. Zheng, W. Jiang, Y. Li, X. Wan, J. Hou, W. Ma, Y. Chen, Z. Wang, Adv. Energy Mater.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 24
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "J. Phys. Chem. C",
+      "definition": "A journal focused on physical chemistry research.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "physical_chemistry",
+          "verified": true
+        }
+      ],
+      "pages": [
+        25
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "A 2014, 2, 20189. [62] I. Fraga Dom\u00ednguez, P. D. Topham, P.-O. Bussi\u00e8re, D. B\u00e9gu\u00e9, A. Rivaton, J. Phys. Chem. C 2015, 119, 2166. [63] M. Manceau, A. Rivaton, J.-L. Gardette, S. Guillerez, N. Lema\u00eetre, Sol. Energy Mater. Sol. Cells 2011, 95, 1315. [64] G. J. Hedley, A. Ruseckas, I.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 25
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Sol. Energy Mater. Sol. Cells",
+      "definition": "A journal covering solar energy materials and solar cells.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "solar_energy_materials",
+          "verified": true
+        }
+      ],
+      "pages": [
+        25
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "A 2014, 2, 20189. [62] I. Fraga Dom\u00ednguez, P. D. Topham, P.-O. Bussi\u00e8re, D. B\u00e9gu\u00e9, A. Rivaton, J. Phys. Chem. C 2015, 119, 2166. [63] M. Manceau, A. Rivaton, J.-L. Gardette, S. Guillerez, N. Lema\u00eetre, Sol. Energy Mater. Sol. Cells 2011, 95, 1315. [64] G. J. Hedley, A. Ruseckas, I.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 25
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Chem. Rev.",
+      "definition": "A journal publishing comprehensive reviews in chemistry.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "chemistry_reviews",
+          "verified": true
+        }
+      ],
+      "pages": [
+        25
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "A 2014, 2, 20189. [62] I. Fraga Dom\u00ednguez, P. D. Topham, P.-O. Bussi\u00e8re, D. B\u00e9gu\u00e9, A. Rivaton, J. Phys. Chem. C 2015, 119, 2166. [63] M. Manceau, A. Rivaton, J.-L. Gardette, S. Guillerez, N. Lema\u00eetre, Sol. Energy Mater. Sol. Cells 2011, 95, 1315. [64] G. J. Hedley, A. Ruseckas, I.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 25
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Adv. Energy Mater.",
+      "definition": "A journal focused on advanced energy materials research.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "energy_materials",
+          "verified": true
+        }
+      ],
+      "pages": [
+        25
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "A 2014, 2, 20189. [62] I. Fraga Dom\u00ednguez, P. D. Topham, P.-O. Bussi\u00e8re, D. B\u00e9gu\u00e9, A. Rivaton, J. Phys. Chem. C 2015, 119, 2166. [63] M. Manceau, A. Rivaton, J.-L. Gardette, S. Guillerez, N. Lema\u00eetre, Sol. Energy Mater. Sol. Cells 2011, 95, 1315. [64] G. J. Hedley, A. Ruseckas, I.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 25
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Nat. Rev. Mater.",
+      "definition": "A journal publishing reviews on materials science.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "materials_science_reviews",
+          "verified": true
+        }
+      ],
+      "pages": [
+        25
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "A 2014, 2, 20189. [62] I. Fraga Dom\u00ednguez, P. D. Topham, P.-O. Bussi\u00e8re, D. B\u00e9gu\u00e9, A. Rivaton, J. Phys. Chem. C 2015, 119, 2166. [63] M. Manceau, A. Rivaton, J.-L. Gardette, S. Guillerez, N. Lema\u00eetre, Sol. Energy Mater. Sol. Cells 2011, 95, 1315. [64] G. J. Hedley, A. Ruseckas, I.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 25
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Chem. Mater.",
+      "definition": "A journal covering chemistry of materials research.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "chemistry_of_materials",
+          "verified": true
+        }
+      ],
+      "pages": [
+        25
+      ],
+      "source_papers": [
+        "10.1002_adfm.201907432.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "A 2014, 2, 20189. [62] I. Fraga Dom\u00ednguez, P. D. Topham, P.-O. Bussi\u00e8re, D. B\u00e9gu\u00e9, A. Rivaton, J. Phys. Chem. C 2015, 119, 2166. [63] M. Manceau, A. Rivaton, J.-L. Gardette, S. Guillerez, N. Lema\u00eetre, Sol. Energy Mater. Sol. Cells 2011, 95, 1315. [64] G. J. Hedley, A. Ruseckas, I.",
+          "source_paper": "10.1002_adfm.201907432.pdf",
+          "page": 25
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Perovskites",
+      "definition": "Materials with an ABX3 type structure where cation 'A' occupies corner positions, cation 'B' is at the center, and anion 'X' is at the faces. They can be classified as conductors, insulators/dielectrics, or semiconductors (band gap < 3eV), and by symmetry (centrosymmetric, asymmetric, non-centrosymmetric).",
+      "category": "ChemicalEntity",
+      "formula": "ABX3",
+      "formula_validation": {
+        "input": "ABX3",
+        "canonical": "A1 X3 B1",
+        "mp_hits": 20,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "ABX3 structure with symmetric and non-centrosymmetric arrangements",
+          "verified": true
+        }
+      ],
+      "pages": [
+        3
+      ],
+      "source_papers": [
+        "10.1002_adma.201807376.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Among these materials perovskites have gained significant research interest in recent years because of their low cost and ease of production via soft chemistry4-9.",
+          "source_paper": "10.1002_adma.201807376.pdf",
+          "page": 3
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "BaTiO3",
+      "definition": "A ferroelectric material exhibiting BPVE/APVE effects due to surface space-charge layers.",
+      "category": "ChemicalEntity",
+      "formula": "BaTiO3",
+      "formula_validation": {
+        "input": "BaTiO3",
+        "canonical": "Ba1 Ti1 O3",
+        "mp_hits": 11,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "has_property",
+          "related_term": "surface space-charge layers",
+          "verified": false
+        }
+      ],
+      "pages": [
+        16
+      ],
+      "source_papers": [
+        "10.1002_adma.201807376.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "However, the first evidence of the BPVE/APVE effect was reported in paraelectric BaTiO3123, non-ferroelectric cadmium telluride124-126 and zinc sulfide thin films127.",
+          "source_paper": "10.1002_adma.201807376.pdf",
+          "page": 16
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Cadmium Telluride (CdTe)",
+      "definition": "A non-ferroelectric material showing BPVE/APVE effects due to stacking faults.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_property",
+          "related_term": "stacking faults",
+          "verified": false
+        }
+      ],
+      "pages": [
+        16
+      ],
+      "source_papers": [
+        "10.1002_adma.201807376.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "16 addition, if \u03c3ph+\u03c3d is insensitive to the light intensity, or the change in \u03c3ph is small in comparison to the magnitude of \u03c3d, then this condition will also contribute towards the BPVE/APVE. In general, for most of the ferroelectric materials the case of Jsc>>\u03c3ph>>\u03c3d exists and hence the Voc",
+          "source_paper": "10.1002_adma.201807376.pdf",
+          "page": 16
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Zinc Sulfide (ZnS)",
+      "definition": "A non-ferroelectric material exhibiting BPVE/APVE effects due to internal depolarization fields.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_property",
+          "related_term": "internal depolarization fields",
+          "verified": false
+        }
+      ],
+      "pages": [
+        16
+      ],
+      "source_papers": [
+        "10.1002_adma.201807376.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "16 addition, if \u03c3ph+\u03c3d is insensitive to the light intensity, or the change in \u03c3ph is small in comparison to the magnitude of \u03c3d, then this condition will also contribute towards the BPVE/APVE. In general, for most of the ferroelectric materials the case of Jsc>>\u03c3ph>>\u03c3d exists and hence the Voc",
+          "source_paper": "10.1002_adma.201807376.pdf",
+          "page": 16
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "pyroelectric materials",
+      "definition": "Materials exhibiting pyroelectric properties, capable of generating electric charge in response to temperature changes.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "has_application",
+          "related_term": "thermal detection and energy harvesting",
+          "verified": false
+        }
+      ],
+      "pages": [
+        22
+      ],
+      "source_papers": [
+        "10.1002_adma.201807376.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "22 In order to characterize enhanced pyroelectric energy conversion various figures of merit (FOMs) have been developed for the selection of appropriate pyroelectric materials depending on the thermal system and electrical circuits employed202.",
+          "source_paper": "10.1002_adma.201807376.pdf",
+          "page": 22
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Thermoelectric Material",
+      "definition": "A material capable of converting temperature differences into electrical energy or vice versa, utilizing effects like the Seebeck and Peltier effects.",
+      "category": "Material",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "energy_level",
+          "related_term": "Seebeck coefficient (S)",
+          "verified": true
+        },
+        {
+          "relation": "electrical conductivity",
+          "related_term": "\u03c3",
+          "verified": false
+        },
+        {
+          "relation": "thermal conductivity",
+          "related_term": "\u03ba",
+          "verified": false
+        },
+        {
+          "relation": "quantifiable",
+          "related_term": "true",
+          "verified": true
+        }
+      ],
+      "pages": [
+        26
+      ],
+      "source_papers": [
+        "10.1002_adma.201807376.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "26 time, there exists a mechanism which utilizes a thermal gradient to harvest electrical energy, as discussed in the next section. 6. Perovskites for Thermoelectrics 6.1. Ferroelectric-Thermoelectrics Thermoelectric generators are devices which convert temperature differences into electrical energy. The principal phenomenon which underpins this energy conversion are the Seebeck effect",
+          "source_paper": "10.1002_adma.201807376.pdf",
+          "page": 26
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Organic Thin-Film Transistors (OTFTs)",
+      "definition": "A type of transistor that uses an organic semiconductor in its channel.",
+      "category": "OFET",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "channel_material",
+          "related_term": "organic semiconductors",
+          "verified": true
+        }
+      ],
+      "pages": [
+        15
+      ],
+      "source_papers": [
+        "10.1002_adma.201501826.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "15 [19] J. Liu, Y. Zhang, H. Phan, A. Sharenko, P. Moonsin, B. Walker, V. Promarak, T.-Q. Nguyen, Adv. Mater. 2013, 25, 3645. [20] Z. Li, X. Zhang, Y. Zhang, C. F. Woellner, M. Kuik, J. H. Liu, T. Q. Nguyen, G. Lu, J. Phys. Chem. C 2013, 117, 6730.",
+          "source_paper": "10.1002_adma.201501826.pdf",
+          "page": 15
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "DPP(TBFu)2",
+      "definition": "A conjugated polymer used in organic electronics.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "device_type",
+          "related_term": "bulk heterojunction",
+          "verified": true
+        }
+      ],
+      "pages": [
+        17
+      ],
+      "source_papers": [
+        "10.1002_adma.201501826.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(a) shows the best case J-V curves for devices prepared with a DPP(TBFu)2:PC61BM blend at a ratio of 3:2 and added FL- DPP(TBFu)2.",
+          "source_paper": "10.1002_adma.201501826.pdf",
+          "page": 17
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PC61BM",
+      "definition": "A fullerene derivative used as an acceptor material in organic photovoltaics.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "acceptor",
+          "verified": true
+        }
+      ],
+      "pages": [
+        17
+      ],
+      "source_papers": [
+        "10.1002_adma.201501826.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(a) shows the best case J-V curves for devices prepared with a DPP(TBFu)2:PC61BM blend at a ratio of 3:2 and added FL- DPP(TBFu)2.",
+          "source_paper": "10.1002_adma.201501826.pdf",
+          "page": 17
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "FL-DPP(TBFu)2",
+      "definition": "A variant of DPP-based polymer used for its electronic properties.",
+      "category": "ChemicalEntity",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "material_type",
+          "related_term": "donor-acceptor copolymer",
+          "verified": true
+        }
+      ],
+      "pages": [
+        17
+      ],
+      "source_papers": [
+        "10.1002_adma.201501826.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "17 Figure 3. Bulk heterojunction device performance. (a) shows the best case J-V curves for devices prepared with a DPP(TBFu)2:PC61BM blend at a ratio of 3:2 and added FL- DPP(TBFu)2. (b) shows the average power conversion efficiency as a function of the annealing time at 100\u00b0C. Figure 4. Bulk heterojunction",
+          "source_paper": "10.1002_adma.201501826.pdf",
+          "page": 17
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "PPV",
+      "definition": "Poly(p-phenylene vinylene), a conjugated polymer used in organic electronics.",
+      "category": "ConjugatedPolymer",
+      "formula": "C8H6",
+      "formula_validation": {
+        "input": "C8H6",
+        "canonical": "H6 C8",
+        "mp_hits": 0,
+        "status": "corrected",
+        "error": null
+      },
+      "relations": [
+        {
+          "relation": "MaterialProcessedBy",
+          "related_term": "annealing",
+          "verified": false
+        },
+        {
+          "relation": "MaterialProcessedBy",
+          "related_term": "spin coating",
+          "verified": false
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "0704.0572v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Conclusions We summarize our findings as follows: (i) Annealing of PPV films causes ordering of polymer chains and, as a result, change in the luminescence intensity and spectra.",
+          "source_paper": "0704.0572v1.pdf",
+          "page": 6
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:60581",
+        "name": "poly(p-phenylenevinylene) polymer",
+        "definition": "A poly(phenylenevinylene) polymer composed of poly(p-phenylenevinylene) macromolecules.",
+        "synonyms": [
+          "PPV",
+          "poly(p-phenylene acetylene)",
+          "poly(p-phenylenevinylene)",
+          "poly(p-phenylene vinylene)",
+          "poly(p-phenyleneacetylene)"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:60577"
+        ],
+        "relationships": {
+          "has_part": [
+            "CHEBI:53261"
+          ]
+        },
+        "xrefs": {},
+        "all_attributes": {
+          "name": "poly(p-phenylenevinylene) polymer",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A poly(phenylenevinylene) polymer composed of poly(p-phenylenevinylene) macromolecules.\" []",
+          "synonym": [
+            "\"PPV\" RELATED [ChEBI]",
+            "\"poly(p-phenylene acetylene)\" RELATED [ChEBI]",
+            "\"poly(p-phenylenevinylene)\" RELATED [ChEBI]",
+            "\"poly(p-phenylene vinylene)\" RELATED [ChEBI]",
+            "\"poly(p-phenyleneacetylene)\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:60577"
+          ],
+          "relationship": [
+            "has_part CHEBI:53261"
+          ]
+        }
+      },
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "Atomic Force Microscopy (AFM)",
+      "definition": "An experimental technique used for surface characterization and topographical measurements of materials.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "PropertyMeasuredBy",
+          "related_term": "PPV film thickness",
+          "verified": false
+        }
+      ],
+      "pages": [
+        4
+      ],
+      "source_papers": [
+        "0704.0572v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "4 -100 0 100 200 300 400 500 600 700 -20 0 20 40 60 80 100 87 nm thickness nm distance \u00b5m -100 0 100 200 300 400 500 600 700 -10 0 10 20 30 40 50 Thickness (nm) Distance (\u00b5m) Figure 3.PPV film thickness before annealing Figure",
+          "source_paper": "0704.0572v1.pdf",
+          "page": 4
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "annealing",
+      "definition": "A thermal processing method used to order polymer chains and modify material properties.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "process_parameters",
+          "related_term": "heating speed (slow or quick)",
+          "verified": true
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "0704.0572v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "Conclusions We summarize our findings as follows: (i) Annealing of PPV films causes ordering of polymer chains and, as a result, change in the luminescence intensity and spectra.",
+          "source_paper": "0704.0572v1.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "spin coating",
+      "definition": "A deposition technique used to fabricate thin films, resulting in amorphous PPV films.",
+      "category": "ProcessingMethod",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "process_parameters",
+          "related_term": "amorphous film formation",
+          "verified": true
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "0704.0572v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "(vi) We get amorphous films in spin coating deposition.",
+          "source_paper": "0704.0572v1.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    },
+    {
+      "term": "UV-VIS spectroscopy",
+      "definition": "An experimental technique used to measure the optical properties of materials.",
+      "category": "ExperimentalTechnique",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "measured_property",
+          "related_term": "optical properties of PPV films",
+          "verified": true
+        }
+      ],
+      "pages": [
+        6
+      ],
+      "source_papers": [
+        "0704.0572v1.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "6 4. Conclusions We summarize our findings as follows: (i) Annealing of PPV films causes ordering of polymer chains and, as a result, change in the luminescence intensity and spectra. (ii) spectral characteristics of the converted PPV-precursor strongly dependent on the preparation condition of the precursor (iii) the thickness of",
+          "source_paper": "0704.0572v1.pdf",
+          "page": 6
+        }
+      ],
+      "properties": [],
+      "importance": "low"
+    }
+  ]
+}

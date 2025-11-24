@@ -18,7 +18,7 @@ import logging
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Set, Tuple, Union
+from typing import Any, Dict, Iterable, List, Set, Tuple
 
 # Precompile regex pattern for performance
 _CLEAN_PATTERN = re.compile(r"[^A-Za-z0-9\-]")
@@ -120,6 +120,27 @@ def build_graph(
     return {"things": list(nodes.values()), "associations": edges}
 
 
+def convert_terms_to_graph(input_json: Path, output_json: Path) -> Dict[str, Any]:
+    """
+    Convert extracted_terms JSON into MatKG graph JSON.
+
+    Args:
+        input_json: Path to input terms JSON
+        output_json: Path where graph JSON will be written
+
+    Returns:
+        The constructed graph dict
+    """
+    with input_json.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    terms = data.get("terms") if isinstance(data, dict) and "terms" in data else data
+    graph = build_graph(terms)
+
+    output_json.write_text(json.dumps(graph, indent=2, ensure_ascii=False), encoding="utf-8")
+    return graph
+
+
 def parse_args() -> argparse.Namespace:
     """Parse and return command-line arguments."""
     parser = argparse.ArgumentParser(
@@ -209,7 +230,7 @@ def test_build_graph_minimal(tmp_path):
 def test_cli(tmp_path, capsys):
     in_json = tmp_path / "in.json"
     out_json = tmp_path / "out.json"
-    data = {"terms": [{"term": "X"}]} 
+    data = {"terms": [{"term": "X"}]}
     in_json.write_text(json.dumps(data))
     sys.argv = ["json2kg.py", str(in_json), str(out_json)]
     main()

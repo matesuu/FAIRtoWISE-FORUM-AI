@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Neon Knowledge Graph</title>
+  <style>
+    body { margin: 0; font-family: monospace; background: #111; color: #eee; }
+    svg { width: 100vw; height: 100vh; cursor: grab; background: #111; }
+    .node { stroke: #000; stroke-width: 1.5px; cursor: pointer; transition: r 0.2s; }
+    .link { stroke: #0ff; stroke-opacity: 0.3; cursor: pointer; }
+    #controls {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(20,20,20,0.9); color: #0ff;
+      padding: 10px; border-radius: 6px;
+      font-size: 14px; z-index: 10; border: 1px solid #0ff;
+    }
+    #searchBox { width: 180px; background:#000; color:#0ff; border:1px solid #0ff; }
+    #suggestions {
+      position:absolute; top:40px; left:10px; 
+      background:#000; border:1px solid #0ff; color:#0ff;
+      max-height:200px; overflow-y:auto; display:none;
+      width:180px; z-index:20;
+    }
+    #suggestions div { padding:4px; cursor:pointer; }
+    #suggestions div:hover { background:#0ff; color:#000; }
+    button { background:#000; color:#0ff; border:1px solid #0ff; margin-top:4px; cursor:pointer; }
+    button:hover { background:#0ff; color:#000; }
+    .tooltip {
+      position: absolute; padding: 10px;
+      background: rgba(0,0,0,0.9); color: #0ff;
+      border: 1px solid #0ff; border-radius: 6px;
+      pointer-events: none; font-size: 12px;
+      max-width: 400px; line-height: 1.4em;
+      box-shadow: 0 0 8px #0ff;
+    }
+    .path-highlight {
+      stroke: url(#pathGradient);
+      stroke-width: 4px;
+      stroke-dasharray: 10 5;
+      animation: dashmove 2s linear infinite;
+    }
+    @keyframes dashmove { to { stroke-dashoffset: -30; } }
+  </style>
+</head>
+<body>
+<div id="controls">
+  <input type="text" id="searchBox" placeholder="Find node...">
+  <div id="suggestions"></div>
+  <button id="resetBtn">Reset View</button>
+  <button id="toggleWeakBtn">Toggle Weakly Connected</button>
+  <p style="margin-top:6px;font-size:12px;">
+    <b>Path Finder:</b> Click two nodes to highlight shortest path.<br>
+    <b>Tip:</b> Double-click a node to isolate its neighbors.
+  </p>
+</div>
+<div class="tooltip" style="display:none;"></div>
+<svg>
+  <defs>
+    <linearGradient id="pathGradient" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0f" />
+      <stop offset="100%" stop-color="#ff0" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+(async function() {
+  const raw = await fetch("matkg_qwen3_235b_580papers.json").then(r => r.json());
+
+  const nodes = raw.things.map(t => ({
+    id: t.id,
+    label: t.name,
+    category: t.category,
+    description: t.description,
+    context_snippets: t.context_snippets || [],
+    source_papers: t.source_papers || [],
+    formula: t.formula || "",
+    properties: t.properties || []
+  }));
+
+  const links = raw.associations.map(a => ({
+    source: a.subject,
+    target: a.object,
+    label: a.predicate
+  }));
+
+  const width = window.innerWidth, height = window.innerHeight;
+  const svg = d3.select("svg");
+  const tooltip = d3.select(".tooltip");
+
+  const degree = {};
+  nodes.forEach(n => { degree[n.id] = 0; });
+  links.forEach(l => { degree[l.source]++; degree[l.target]++; });
+
+  const neonColors = d3.scaleSequential(d3.interpolateRainbow)
+    .domain([0, d3.max(Object.values(degree)) || 1]);
+
+  const g = svg.append("g");
+
+  let link = g.append("g")
+    .selectAll("line")
+    .data(links)
+    .join("line")
+      .attr("class", "link")
+      .attr("stroke-width", 1);
+
+  let node = g.append("g")
+    .selectAll("circle")
+    .data(nodes)
+    .join("circle")
+      .attr("class", "node")
+      .attr("r", 6)
+      .attr("fill", d => neonColors(degree[d.id] || 0))
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 0.5)
+      .call(drag(simulation()));
+
+  // Node tooltips
+  node.on("mouseover", (e,d) => {
+    d3.select(e.currentTarget)
+      .transition().duration(200)
+      .attr("r", 12)
+      .attr("stroke", "#f0f")
+      .attr("stroke-width", 2);
+
+    const props = d.properties.map(p => `<li>${p.property}: ${p.value||'?'}</li>`).join("");
+    const snippets = d.context_snippets.map(s => `<li>${s.text}</li>`).join("");
+    const papers = d.source_papers.map(s => `<li>${s}</li>`).join("");
+
+    tooltip.style("display","block")
+      .style("left",(e.pageX+10)+"px")
+      .style("top",(e.pageY+10)+"px")
+      .html(`
+        <strong>${d.label}</strong><br>
+        <em>${d.category}</em><br>
+        <small>ID: ${d.id}</small><br>
+        Degree: ${degree[d.id]}<br>
+        <p>${d.description || ""}</p>
+        ${d.formula ? `<p><b>Formula:</b> ${d.formula}</p>` : ""}
+        ${props ? "<b>Properties:</b><ul>"+props+"</ul>" : ""}
+        ${papers ? "<b>Source Papers:</b><ul>"+papers+"</ul>" : ""}
+        ${snippets ? "<b>Snippets:</b><ul>"+snippets+"</ul>" : ""}
+      `);
+  }).on("mouseout", (e,d) => {
+    d3.select(e.currentTarget)
+      .transition().duration(200)
+      .attr("r", 6)
+      .attr("fill", neonColors(degree[d.id] || 0))
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 0.5);
+    tooltip.style("display","none");
+  });
+
+  // Edge tooltips
+  link.on("mouseover", (e,d) => {
+    tooltip.style("display","block")
+      .style("left",(e.pageX+10)+"px")
+      .style("top",(e.pageY+10)+"px")
+      .html(`
+        <strong>Relation:</strong> ${d.label}<br>
+        <b>Source:</b> ${(d.source.label||d.source.id||d.source)}<br>
+        <b>Target:</b> ${(d.target.label||d.target.id||d.target)}
+      `);
+    d3.select(e.currentTarget).attr("stroke","#ff0").attr("stroke-width",3);
+  }).on("mouseout", (e,d) => {
+    tooltip.style("display","none");
+    d3.select(e.currentTarget).attr("stroke","#0ff").attr("stroke-width",1);
+  });
+
+  // Simulation
+  function simulation() {
+    return d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+      .force("charge", d3.forceManyBody().strength(-80))
+      .force("center", d3.forceCenter(width/2, height/2))
+      .on("tick", ticked);
+  }
+  function ticked() {
+    link.attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+    node.attr("cx", d => d.x).attr("cy", d => d.y);
+  }
+
+  function drag(sim) {
+    function dragstarted(event,d) {
+      if (!event.active) sim.alphaTarget(0.3).restart();
+      d.fx = d.x; d.fy = d.y;
+    }
+    function dragged(event,d) { d.fx = event.x; d.fy = event.y; }
+    function dragended(event,d) {
+      if (!event.active) sim.alphaTarget(0);
+      d.fx = null; d.fy = null;
+    }
+    return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+  }
+
+  // Zoom/pan
+  const zoom = d3.zoom().scaleExtent([0.1,5]).on("zoom", e => {
+    g.attr("transform", e.transform);
+  });
+  svg.call(zoom);
+
+  // --- SEARCH with suggestions ---
+  const searchBox = document.getElementById("searchBox");
+  const suggestions = document.getElementById("suggestions");
+
+  searchBox.addEventListener("input", () => {
+    const val = searchBox.value.toLowerCase();
+    suggestions.innerHTML = "";
+    if (!val) { suggestions.style.display="none"; return; }
+    const matches = nodes.filter(n => (n.label||"").toLowerCase().includes(val));
+    matches.slice(0,20).forEach(m => {
+      const div = document.createElement("div");
+      div.textContent = m.label;
+      div.onclick = () => {
+        highlightNode(m);
+        suggestions.style.display="none";
+        searchBox.value = m.label;
+      };
+      suggestions.appendChild(div);
+    });
+    suggestions.style.display = matches.length ? "block":"none";
+  });
+
+  function highlightNode(target) {
+    node.attr("stroke", d => d.id === target.id ? "#ff0":"#fff")
+        .attr("stroke-width", d => d.id === target.id ? 3:0.5);
+
+    const scale = 2;
+    const transform = d3.zoomIdentity
+      .translate(width/2 - target.x * scale, height/2 - target.y * scale)
+      .scale(scale);
+
+    svg.transition().duration(750).call(zoom.transform, transform);
+  }
+
+  // Reset
+  document.getElementById("resetBtn").onclick = () => {
+    resetGraph();
+    node.attr("stroke","#fff").attr("stroke-width",0.5);
+    link.attr("class","link").attr("stroke","#0ff").attr("stroke-width",1);
+    selected = [];
+    svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+  };
+
+  // Toggle weakly connected
+  let hideWeak = false;
+  document.getElementById("toggleWeakBtn").onclick = () => {
+    hideWeak = !hideWeak;
+    node.attr("display", d => hideWeak && degree[d.id] < 2 ? "none":"block");
+    link.attr("display", d => hideWeak &&
+      (degree[d.source.id||d.source] < 2 || degree[d.target.id||d.target] < 2) ? "none":"block");
+  };
+
+  // Double click isolate neighbors
+  let isolated = false;
+  node.on("dblclick", (event, d) => {
+    event.stopPropagation();
+    isolateNode(d);
+  });
+  svg.on("click", () => { if (isolated) resetGraph(); });
+
+  function isolateNode(center) {
+    const neighbors = new Set();
+    links.forEach(l => {
+      if (l.source.id === center.id || l.source === center.id) neighbors.add(l.target.id||l.target);
+      if (l.target.id === center.id || l.target === center.id) neighbors.add(l.source.id||l.source);
+    });
+    neighbors.add(center.id);
+
+    node.attr("display", n => neighbors.has(n.id) ? "block":"none");
+    link.attr("display", l => (neighbors.has(l.source.id||l.source) && neighbors.has(l.target.id||l.target)) ? "block":"none");
+    isolated = true;
+  }
+
+  function resetGraph() {
+    node.attr("display","block");
+    link.attr("display","block");
+    isolated = false;
+  }
+
+  // Path Finder
+  let selected = [];
+  node.on("click", (event, d) => {
+    if (selected.length < 2) {
+      selected.push(d);
+      d3.select(event.currentTarget).attr("stroke","#ff0").attr("stroke-width",3);
+      if (selected.length === 2) highlightPath(selected[0], selected[1]);
+    }
+    event.stopPropagation();
+  });
+
+  function highlightPath(source, target) {
+    const adj = {};
+    nodes.forEach(n => { adj[n.id] = []; });
+    links.forEach(l => {
+      adj[l.source.id || l.source].push(l.target.id || l.target);
+      adj[l.target.id || l.target].push(l.source.id || l.source);
+    });
+
+    const queue = [[source.id]];
+    const visited = new Set([source.id]);
+    let path = null;
+
+    while (queue.length) {
+      const curr = queue.shift();
+      const nodeId = curr[curr.length-1];
+      if (nodeId === target.id) { path = curr; break; }
+      for (let neigh of adj[nodeId]) {
+        if (!visited.has(neigh)) {
+          visited.add(neigh);
+          queue.push([...curr, neigh]);
+        }
+      }
+    }
+
+    if (!path) return;
+
+    node.attr("stroke", d => path.includes(d.id) ? "#f0f":"#333")
+        .attr("stroke-width", d => path.includes(d.id) ? 3:0.5);
+
+    link.attr("class", l => isConsecutive(path, l.source.id||l.source, l.target.id||l.target) ? "path-highlight" : "link");
+  }
+
+  function isConsecutive(path,a,b) {
+    for (let i=0;i<path.length-1;i++) {
+      if ((path[i]===a && path[i+1]===b) || (path[i]===b && path[i+1]===a)) return true;
+    }
+    return false;
+  }
+
+})();
+</script>
+</body>
+</html>

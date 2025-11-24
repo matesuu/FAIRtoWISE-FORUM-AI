@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "extraction_date": "2025-09-08T20:13:32.343200Z",
+    "processed_files": 0,
+    "processed_pages_total": 6,
+    "processed_pages_with_terms": 0,
+    "version": "2.1"
+  },
+  "terms": [
+    {
+      "term": "Conjugated polymer",
+      "definition": "A type of polymer with conjugated double bonds or overlapping p-orbitals along its backbone, allowing for unique electronic properties due to delocalized electrons.",
+      "category": "Polymer",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        2
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "2 L. N. Glanzmann et al.: Modelling of Polymers from Oligomers h\u03c9 e\u2212 Figure 1 Cartoon of a polymer-SWNT hybrid system as the photoactive layer in a bulk hetero junction (BHJ). The polymer absorbs light \u210f\u03c9 and transfers an electron e\u2212to the SWNT. putational costs su\ufb03ciently to subsequently model com-",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 2
+        }
+      ],
+      "chebi": {
+        "chebi_id": "CHEBI:61422",
+        "name": "conjugated polymer",
+        "definition": "A polymer, composed of conjugated macromolecules.",
+        "synonyms": [
+          "conjugated polymers"
+        ],
+        "formula": null,
+        "mass": null,
+        "charge": null,
+        "inchi": null,
+        "inchikey": null,
+        "smiles": null,
+        "roles": [
+          "\u2014"
+        ],
+        "parents": [
+          "CHEBI:60027"
+        ],
+        "relationships": {
+          "has_part": [
+            "CHEBI:53710"
+          ]
+        },
+        "xrefs": {},
+        "all_attributes": {
+          "name": "conjugated polymer",
+          "subset": [
+            "3_STAR"
+          ],
+          "def": "\"A polymer, composed of conjugated macromolecules.\" []",
+          "synonym": [
+            "\"conjugated polymers\" RELATED [ChEBI]"
+          ],
+          "is_a": [
+            "CHEBI:60027"
+          ],
+          "relationship": [
+            "has_part CHEBI:53710"
+          ]
+        }
+      },
+      "properties": []
+    },
+    {
+      "term": "Density functional theory (DFT)",
+      "definition": "A computational quantum mechanical method used in physics and chemistry to investigate the electronic structure of many-body systems by solving the Schr\u00f6dinger equation using a self-consistent field approximation.",
+      "category": "Thing",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [
+        {
+          "relation": "used_for",
+          "related_term": "calculating optical absorption spectra",
+          "verified": false
+        }
+      ],
+      "pages": [
+        2
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "2 Methodology All density functional theory (DFT) calculations were performed with the real-space projector augmented wavefunction (PAW) method code gpaw [22].",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 2
+        }
+      ],
+      "properties": []
+    },
+    {
+      "term": "Optical absorption spectrum",
+      "definition": "A graph or data representation of the absorbance versus wavelength that shows how a material absorbs light across different wavelengths, often measured using techniques like DFT calculations.",
+      "category": "Property",
+      "formula": null,
+      "formula_validation": {
+        "status": "missing"
+      },
+      "relations": [],
+      "pages": [
+        2
+      ],
+      "source_papers": [
+        "10.1002_pssb.201451171.pdf"
+      ],
+      "context_snippets": [
+        {
+          "text": "2 L. N. Glanzmann et al.: Modelling of Polymers from Oligomers h\u03c9 e\u2212 Figure 1 Cartoon of a polymer-SWNT hybrid system as the photoactive layer in a bulk hetero junction (BHJ). The polymer absorbs light \u210f\u03c9 and transfers an electron e\u2212to the SWNT. putational costs su\ufb03ciently to subsequently model com-",
+          "source_paper": "10.1002_pssb.201451171.pdf",
+          "page": 2
+        }
+      ],
+      "properties": []
+    }
+  ]
+}
