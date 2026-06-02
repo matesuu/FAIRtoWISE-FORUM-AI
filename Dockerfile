@@ -28,7 +28,7 @@ RUN mkdir -p .cache/pystow storage/knowledge_gaps storage/ontologies
 
 EXPOSE 11435
 
-CMD ["python3", "app/modules/kg_rag_ollama_api.py", "--api"]
+CMD ["python3", "app/modules/kg_rag_api.py", "--api"]
 
 LABEL Name="FAIRtoWISE-FORUM-AI" \
       Version="1.0" \

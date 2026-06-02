@@ -5,7 +5,7 @@ You are working in the repository at `/Users/mateo/Desktop/f2wlocal`.
 This repo builds materials science knowledge graphs from research paper PDFs. The pipeline is:
 1. Extract terms from PDFs → `app/modules/extract_terms.py`
 2. Convert terms to KG → `app/modules/json2kg.py`
-3. Query via KG-RAG chat → `app/modules/kg_rag_ollama_api.py`
+3. Query via KG-RAG chat → `app/modules/kg_rag_api.py`
 
 The LinkML schema is at `storage/schema/matkg_schema.yaml`. It defines classes (`Thing`, `Material`, `ExperimentalTechnique`, `ProcessingMethod`, etc.) and slots. The extraction script `app/modules/extract_terms.py` reads this schema via `SchemaView` and uses it to guide LLM-based extraction from PDFs.
 

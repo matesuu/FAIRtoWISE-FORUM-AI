@@ -17,9 +17,9 @@ Make KG-RAG CLI chat use CBORG like term extraction. Do not hardwire chat to Oll
 ### 1. CBORG connectivity fixed
 
 - `CBORG_BASE_URL` in `.env` was pointing to `api-local.cborg.lbl.gov` (internal/VPN-only) — times out externally. Changed to `https://api.cborg.lbl.gov`.
-- Model name `lbl/cborg-chat:latest` rejected by CBORG API. Correct name is `lbl/cborg-chat` (no `:latest`). Fixed in `.env`, `Dockerfile`, `scripts/.env.example`, and code default fallback in `kg_rag_ollama_api.py`.
+- Model name `lbl/cborg-chat:latest` rejected by CBORG API. Correct name is `lbl/cborg-chat` (no `:latest`). Fixed in `.env`, `Dockerfile`, `scripts/.env.example`, and code default fallback in `kg_rag_api.py`.
 - `load_dotenv()` → `load_dotenv(override=True)` in all three entry points so `.env` always wins over stale shell env vars:
-  - `app/modules/kg_rag_ollama_api.py`
+  - `app/modules/kg_rag_api.py`
   - `app/modules/extract_terms.py`
   - `app/run_pipeline_cborg.py`
 
@@ -35,7 +35,7 @@ from modules.extract_terms import run_extraction
 ### 3. KG-RAG one-shot verified working
 
 ```bash
-KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_ollama_api.py \
+KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_api.py \
   --timeout 60 --question "What is P3HT?"
 ```
 
@@ -48,7 +48,7 @@ Output:
 ### 4. KG-RAG API server running on 11435
 
 ```bash
-python3 app/modules/kg_rag_ollama_api.py --api
+python3 app/modules/kg_rag_api.py --api
 ```
 
 - PID 20518 (as of 2026-06-02 session)
@@ -150,36 +150,36 @@ Untracked (not committed, not ignored):
 
 Default CBORG one-shot:
 ```bash
-python3 app/modules/kg_rag_ollama_api.py --question "What is P3HT?"
+python3 app/modules/kg_rag_api.py --question "What is P3HT?"
 ```
 
 Interactive REPL:
 ```bash
-python3 app/modules/kg_rag_ollama_api.py
+python3 app/modules/kg_rag_api.py
 ```
 
 Reduced context (faster):
 ```bash
-KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_ollama_api.py \
+KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_api.py \
   --timeout 60 --question "What is P3HT?"
 ```
 
 Ollama override:
 ```bash
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --backend ollama --model llama3.1:8b \
   --question "What is P3HT?"
 ```
 
 Baseline + KG-RAG:
 ```bash
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --show-baseline --question "What is P3HT?"
 ```
 
 Start API server:
 ```bash
-python3 app/modules/kg_rag_ollama_api.py --api
+python3 app/modules/kg_rag_api.py --api
 ```
 
 Term extraction pipeline:
@@ -195,7 +195,7 @@ python3 app/run_pipeline_cborg.py
 cd /Users/mateo/Desktop/f2wlocal
 
 # KG-RAG API
-python3 app/modules/kg_rag_ollama_api.py --api &
+python3 app/modules/kg_rag_api.py --api &
 
 # Open WebUI (installed at system Python 3.12)
 /Users/mateo/Library/Python/3.12/bin/open-webui serve --host 127.0.0.1 --port 8080 &
@@ -212,7 +212,7 @@ curl http://localhost:11435/api/tags
 
 | File | Change |
 |---|---|
-| `app/modules/kg_rag_ollama_api.py` | `load_dotenv(override=True)`, model default fixed, code default fixed |
+| `app/modules/kg_rag_api.py` | `load_dotenv(override=True)`, model default fixed, code default fixed |
 | `app/modules/extract_terms.py` | `load_dotenv(override=True)` |
 | `app/run_pipeline_cborg.py` | Bad import fixed, `load_dotenv(override=True)` |
 | `scripts/analyze_kgs.py` | Duplicate body removed |

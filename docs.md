@@ -9,7 +9,7 @@ This repository builds materials-science knowledge graphs from research papers. 
 1. Download or collect PDFs in `polymer_papers/`.
 2. Extract schema-aligned terminology from PDFs with an LLM in `app/modules/extract_terms.py`.
 3. Convert extracted terms JSON into MatKG graph JSON with `app/modules/json2kg.py`.
-4. Query graph plus PDF evidence through KG-RAG in `app/modules/kg_rag_ollama_api.py`.
+4. Query graph plus PDF evidence through KG-RAG in `app/modules/kg_rag_api.py`.
 5. Evaluate generated graph files with scripts in `scripts/`.
 
 ## Top-level structure
@@ -32,7 +32,7 @@ This repository builds materials-science knowledge graphs from research papers. 
 | `app/modules/__init__.py` | Empty package marker for `modules`. |
 | `app/modules/extract_terms.py` | Main schema-aware PDF term extraction engine. Defines LLM client abstraction, Ollama and CBORG clients, LinkML schema helper, retry logic, PDF/page processing, JSON parsing, term merge/postprocessing, chemical formula validation, ChEBI enrichment, physical property extraction/normalization, thread-safe incremental saving, and `run_extraction(...)` wrapper. |
 | `app/modules/json2kg.py` | Converts extracted terms JSON into MatKG graph JSON with `things` nodes and `associations` edges. Builds stable `matkg:` IDs, preserves provenance/formula/properties fields, creates placeholder nodes for edge targets, de-duplicates edges, provides CLI, and includes inline pytest tests. |
-| `app/modules/kg_rag_ollama_api.py` | KG-RAG chat system using Ollama. Loads graph JSON, builds SentenceTransformer embeddings and FAISS index, retrieves nodes via semantic search plus weighted BFS, pulls PDF snippets as evidence, builds grounded prompts, provides terminal REPL, one-shot question mode, competency-question evaluation, missing-node logging, and FastAPI endpoints compatible with OpenWebUI (`/api/chat`, `/api/tags`, `/api/ps`). |
+| `app/modules/kg_rag_api.py` | KG-RAG chat system using Ollama. Loads graph JSON, builds SentenceTransformer embeddings and FAISS index, retrieves nodes via semantic search plus weighted BFS, pulls PDF snippets as evidence, builds grounded prompts, provides terminal REPL, one-shot question mode, competency-question evaluation, missing-node logging, and FastAPI endpoints compatible with OpenWebUI (`/api/chat`, `/api/tags`, `/api/ps`). |
 
 ## Application agents
 
@@ -236,7 +236,7 @@ Evidence of past CBORG-backed runs:
 
 | API | Location | Purpose |
 | --- | --- | --- |
-| Ollama `/api/chat` | `app/modules/extract_terms.py`, `app/modules/kg_rag_ollama_api.py`, legacy files | Local LLM extraction and KG-RAG answer generation. |
+| Ollama `/api/chat` | `app/modules/extract_terms.py`, `app/modules/kg_rag_api.py`, legacy files | Local LLM extraction and KG-RAG answer generation. |
 | Materials Project | `app/modules/agents/chem_checker.py` | Formula cross-check using `MP_API_KEY`. |
 
 ## Environment notes

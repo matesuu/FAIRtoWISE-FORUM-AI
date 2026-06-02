@@ -197,14 +197,14 @@ python3 app/modules/json2kg.py \
 
 ---
 
-## Step 4 — [KG-RAG LLM Chat](app/modules/kg_rag_ollama_api.py)
+## Step 4 — [KG-RAG LLM Chat](app/modules/kg_rag_api.py)
 
 Query the knowledge graph via retrieval-augmented generation. Supports CLI, one-shot, competency evaluation, and an Open WebUI-compatible FastAPI server.
 
 ### CLI — interactive REPL
 
 ```bash
-python3 app/modules/kg_rag_ollama_api.py
+python3 app/modules/kg_rag_api.py
 ```
 
 Prompt appears:
@@ -216,14 +216,14 @@ Ask (exit to quit):
 ### CLI — one-shot question
 
 ```bash
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --question "What is the role of P3HT crystallinity in OPV performance?"
 ```
 
 With a shorter timeout:
 
 ```bash
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --timeout 60 \
   --question "What is P3HT?"
 ```
@@ -231,7 +231,7 @@ python3 app/modules/kg_rag_ollama_api.py \
 Reduce context size if responses are slow:
 
 ```bash
-KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_ollama_api.py \
+KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_api.py \
   --timeout 60 \
   --question "What is P3HT?"
 ```
@@ -240,17 +240,17 @@ KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_ollama_api.py \
 
 ```bash
 # CBORG (default)
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --model lbl/cborg-chat \
   --question "What is P3HT?"
 
 # Nova Micro (cheaper/faster)
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --model nova-micro \
   --question "What is P3HT?"
 
 # Ollama (local)
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --backend ollama \
   --model deepseek-r1:70b \
   --question "What is P3HT?"
@@ -259,7 +259,7 @@ python3 app/modules/kg_rag_ollama_api.py \
 ### CLI — use a specific KG
 
 ```bash
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --graph storage/kg/matkg_lbl_cborg-chat_latest_100_20251008_010852.json \
   --question "What materials show high PCE?"
 ```
@@ -267,7 +267,7 @@ python3 app/modules/kg_rag_ollama_api.py \
 ### CLI — show baseline (non-RAG) answer alongside KG-RAG
 
 ```bash
-python3 app/modules/kg_rag_ollama_api.py \
+python3 app/modules/kg_rag_api.py \
   --show-baseline \
   --question "What is P3HT?"
 ```
@@ -275,7 +275,7 @@ python3 app/modules/kg_rag_ollama_api.py \
 ### CLI — competency question evaluation
 
 ```bash
-python3 app/modules/kg_rag_ollama_api.py --competency
+python3 app/modules/kg_rag_api.py --competency
 ```
 
 Runs the full question set from `storage/competency_questions/thomas_f.txt`. Results saved incrementally to `storage/competency_questions/competency_results_qwen3_235b_580papers.json`.
@@ -352,7 +352,7 @@ In a separate terminal (outside the Open WebUI venv):
 
 ```bash
 cd /path/to/FAIRtoWISE-FORUM-AI
-python3 app/modules/kg_rag_ollama_api.py --api
+python3 app/modules/kg_rag_api.py --api
 ```
 
 This starts FastAPI on `http://0.0.0.0:11435`. Verify it is running:
@@ -435,7 +435,7 @@ docker run --rm \
   -e CBORG_API_KEY=your-cborg-api-key \
   -v $(pwd)/storage:/app/storage \
   kg-rag-api \
-  python3 app/modules/kg_rag_ollama_api.py \
+  python3 app/modules/kg_rag_api.py \
     --question "What is P3HT?" \
     --timeout 60
 ```
@@ -532,7 +532,7 @@ Tests live in `_tests/`. The `json2kg.py` module also has inline pytest tests th
 │   │   │   └── properties.py
 │   │   ├── extract_terms.py
 │   │   ├── json2kg.py
-│   │   ├── kg_rag_ollama_api.py
+│   │   ├── kg_rag_api.py
 │   │   └── legacy
 │   │       ├── build_onto.py
 │   │       ├── extract_terms_linkml_jun3.py
