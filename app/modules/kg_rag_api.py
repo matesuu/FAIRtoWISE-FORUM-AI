@@ -51,7 +51,7 @@ def _load_kg_deps() -> None:
     torch = _torch
     SentenceTransformer = _SentenceTransformer
 
-# ───────────────────── optional noun‑phrase extraction ─────────────────────
+# ───────────────────── optional noun-phrase extraction ─────────────────────
 try:
     import nltk
     from nltk import word_tokenize, pos_tag
@@ -100,7 +100,7 @@ CTX_SOFT_LIMIT = int(CONTEXT_CHAR_BUDGET * 0.75)
 FORCE_CPU = bool(os.environ.get("KG_RAG_FORCE_CPU"))
 MAX_TEXT_CHARS = int(os.environ.get("KG_RAG_MAX_TEXT_CHARS", "1024"))
 
-#  Retrieval & ranking
+#  Retrieval & ranking
 ENABLE_BFS = bool(int(os.environ.get("KG_RAG_ENABLE_BFS", "1")))
 BFS_SEED_TOPK = int(os.environ.get("KG_RAG_BFS_TOPK", str(DEFAULT_K * 2)))
 MAX_BFS_HOPS = int(os.environ.get("KG_RAG_MAX_HOPS", "1"))
@@ -119,7 +119,7 @@ GENERIC_PENALTY = float(os.environ.get("KG_RAG_GENERIC_PENALTY", "0.8"))
 CTX_VOLUME_TRIPLES = int(os.environ.get("KG_RAG_CONTEXT_VOLUME", "150"))
 STRUCT_CTX = bool(int(os.environ.get("KG_RAG_STRUCT_CTX", "1")))
 
-#  Misc
+#  Misc
 DEBUG = bool(int(os.environ.get("KG_RAG_DEBUG", "0")))
 MAX_PDF_CACHE = int(os.environ.get("KG_RAG_PDF_CACHE", "256"))
 
@@ -139,7 +139,7 @@ logger = logging.getLogger("kg_rag_ollama")
 logger.addHandler(_hdl)
 logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
 
-#  Terminal colours
+#  Terminal colours
 colorama_init(autoreset=True)
 
 
@@ -286,7 +286,7 @@ def _noun_phrases(text: str) -> List[str]:
 
 # @annotate('extract_query_entities')
 def extract_query_entities(q: str) -> List[str]:
-    """Return deduplicated noun phrases + ≥3‑char tokens."""
+    """Return deduplicated noun phrases + ≥3-char tokens."""
     ents: List[str] = []
     ents.extend([np for np in _noun_phrases(q) if len(np) >= 3])
     ents.extend([tok for tok in _tokenize(q) if len(tok) >= 3])
@@ -321,7 +321,7 @@ def cuda_warmup(device: str) -> None:
             a = torch.empty((4096, 4096), device=device).normal_()
             _ = a @ a.t()
         except Exception as exc:  # pragma: no cover
-            logger.warning("CUDA warm‑up failed: %s", exc)
+            logger.warning("CUDA warm-up failed: %s", exc)
 
 
 # @annotate('snippet_text')
@@ -359,17 +359,30 @@ class NodeInfo:
     depth: int
     lexical_overlap: float
     evidence_ct: int
+    publication_year: int | None = None
 
     @property
     # @annotate('NodeInfo::score_prp')
     def score_prp(self) -> float:
         depth_fac = 1.0 / (1.0 + self.depth)
         evid = math.tanh(self.evidence_ct / 5.0)
+        # Recency boost: papers from last 3 years get up to 0.1 bonus,
+        # decaying linearly for older papers. No penalty for missing year.
+        recency = 0.0
+        if self.publication_year:
+            age = max(0, 2026 - self.publication_year)
+            recency = max(0.0, 0.1 * (1.0 - age / 10.0))
+        # CodeSnippet bonus: ensures code nodes rank above their XRay parent
+        # nodes when code is in the result set — prevents crowding out by
+        # identically-scored XRayScatteringAnalysis siblings.
+        snippet_bonus = 0.15 if self.category == "CodeSnippet" else 0.0
         return (
             PRP_W_SEM * self.score_sem
             + PRP_W_DEPTH * depth_fac * self.score_graph
             + PRP_W_LEX * self.lexical_overlap
             + PRP_W_EVID * evid
+            + recency
+            + snippet_bonus
         )
 
 
@@ -387,7 +400,7 @@ def load_pdf_text(path: str) -> str:
     try:
         doc = fitz.open(path)
     except Exception as exc:  # pragma: no cover
-        logger.debug("PDF open failed %s – %s", path, exc)
+        logger.debug("PDF open failed %s - %s", path, exc)
         return ""
     try:
         txt = "".join(pg.get_text() for pg in doc)
@@ -400,7 +413,7 @@ def load_pdf_text(path: str) -> str:
 class KnowledgeGraph:
     # @annotate('KnowledgeGraph::__init__')
     def __init__(self, graph_file: str, embed_model: str = EMBED_MODEL) -> None:  # noqa: D401
-        logger.info(Fore.YELLOW + "Loading KG…" + Style.RESET_ALL)
+        logger.info(Fore.YELLOW + "Loading KG..." + Style.RESET_ALL)
         with open(graph_file, "r") as fh:
             data = json.load(fh)
         self.nodes: Dict[str, Dict[str, Any]] = {n["id"]: n for n in data["things"]}
@@ -415,7 +428,9 @@ class KnowledgeGraph:
 
         texts, self.ids = [], []
         for nid, n in self.nodes.items():
-            txt = f"{n.get('name','')} {n.get('description','')}".strip()[:MAX_TEXT_CHARS]
+            src = " ".join(n.get("source_papers") or [])
+            title = n.get("paper_title") or ""
+            txt = f"{n.get('name','')} {n.get('description','')} {src} {title}".strip()[:MAX_TEXT_CHARS]
             texts.append(txt)
             self.ids.append(nid)
 
@@ -437,7 +452,7 @@ class KnowledgeGraph:
         _load_kg_deps()
         device = auto_device()
         cuda_warmup(device)
-        logger.info("Loading embedding model %s on %s…", embed_model, device)
+        logger.info("Loading embedding model %s on %s...", embed_model, device)
         self.embed_model = SentenceTransformer(embed_model, device=device)
 
         try:
@@ -447,13 +462,13 @@ class KnowledgeGraph:
                 show_progress_bar=False,
             )
         except Exception as exc:
-            logger.error("Initial encode failed on %s (%s) – switching to CPU", device, exc)
+            logger.error("Initial encode failed on %s (%s) - switching to CPU", device, exc)
             self.embed_model = SentenceTransformer(embed_model, device="cpu")
             device = "cpu"
 
         self.batch_size = int(USER_BATCH_OVERRIDE or (16 if device == "cuda" else 32))
         logger.info("Encode batch size = %d", self.batch_size)
-        logger.info("Encoding %d nodes (≤%d chars)…", len(texts), MAX_TEXT_CHARS)
+        logger.info("Encoding %d nodes (≤%d chars)...", len(texts), MAX_TEXT_CHARS)
         embs: List[np.ndarray] = []
         for i in range(0, len(texts), self.batch_size):
             chunk = texts[i: i + self.batch_size]
@@ -466,7 +481,7 @@ class KnowledgeGraph:
                 )
             except Exception as exc:
                 if device == "cuda":
-                    logger.error("GPU encode failed (%s) → retry CPU…", exc)
+                    logger.error("GPU encode failed (%s) → retry CPU...", exc)
                     self.embed_model = SentenceTransformer(embed_model, device="cpu")
                     vecs = self.embed_model.encode(
                         chunk,
@@ -481,12 +496,12 @@ class KnowledgeGraph:
         self._build_faiss_index(self._emb)
         self.id_map = np.asarray(self.ids)
 
-    #  FAISS index ----------------------------------------------------------
+    #  FAISS index ----------------------------------------------------------
     # @annotate('KnowledgeGraph::_build_faiss_index')
     def _build_faiss_index(self, emb: np.ndarray) -> None:  # noqa: D401
         dim, N = emb.shape[1], emb.shape[0]
         nlist = max(64, int(np.sqrt(N) * 2))
-        logger.info("Building IVF‑Flat: dim=%d nlist=%d vectors=%d", dim, nlist, N)
+        logger.info("Building IVF-Flat: dim=%d nlist=%d vectors=%d", dim, nlist, N)
         cpu_index = faiss.index_factory(dim, f"IVF{nlist},Flat", faiss.METRIC_INNER_PRODUCT)
         use_gpu = (not FORCE_CPU) and faiss.get_num_gpus() > 0
         if use_gpu:
@@ -501,7 +516,7 @@ class KnowledgeGraph:
                 self.index.nprobe = min(32, nlist // 4)
                 return
             except Exception as exc:
-                logger.error("GPU FAISS build failed (%s) → CPU.", exc)
+                logger.error("GPU FAISS build failed (%s) → CPU.", exc)
         try:
             cpu_index.train(emb)
         except faiss.FaissException:
@@ -511,7 +526,7 @@ class KnowledgeGraph:
         if hasattr(self.index, "nprobe"):
             self.index.nprobe = min(32, nlist // 4)  # type: ignore[attr-defined]
 
-    #  Semantic search ------------------------------------------------------
+    #  Semantic search ------------------------------------------------------
     # @annotate('KnowledgeGraph::_norm')
     def _norm(self, d: np.ndarray) -> np.ndarray:
         return np.clip((d + 1.0) * 0.5, 0.0, 1.0)
@@ -525,7 +540,7 @@ class KnowledgeGraph:
             NodeScore(self.id_map[i], float(s), depth=0)
             for i, s in zip(idx[0], self._norm(dists[0]))
         ]
-        #  canonical de‑dup
+        #  canonical de-dup
         seen: set[str] = set()
         uniq: List[NodeScore] = []
         for h in hits:
@@ -562,7 +577,7 @@ class KnowledgeGraph:
             return self._semantic_search(q, topk)
         return self._lexical_search(q, topk)
 
-    #  Weighted BFS ---------------------------------------------------------
+    #  Weighted BFS ---------------------------------------------------------
     # @annotate('KnowledgeGraph::weighted_bfs')
     def weighted_bfs(self, seeds: Sequence[NodeScore], hops: int) -> List[NodeScore]:
         if not seeds:
@@ -594,7 +609,7 @@ class KnowledgeGraph:
             reverse=True,
         )
 
-    #  NodeInfo build -------------------------------------------------------
+    #  NodeInfo build -------------------------------------------------------
     # @annotate('KnowledgeGraph::build_nodeinfo')
     def build_nodeinfo(
         self, sem: Sequence[NodeScore], graph: Sequence[NodeScore], q_tokens: Sequence[str]
@@ -628,11 +643,12 @@ class KnowledgeGraph:
                     depth=depth,
                     lexical_overlap=lex,
                     evidence_ct=evid,
+                    publication_year=raw.get("publication_year"),
                 )
             )
         return out
 
-    #  Context assembly -----------------------------------------------------
+    #  Context assembly -----------------------------------------------------
     # @annotate('KnowledgeGraph::build_context')
     def build_context(
         self,
@@ -670,6 +686,30 @@ class KnowledgeGraph:
                 lines.append(f"Description: {ni.description}")
             if raw.get("formula"):
                 lines.append(f"Formula: {raw['formula']}")
+            # publication provenance - shown for all nodes
+            if raw.get("paper_title"):
+                lines.append(f"Paper_Title: {raw['paper_title']}")
+            if raw.get("publication_year"):
+                lines.append(f"Publication_Year: {raw['publication_year']}")
+            if raw.get("doi"):
+                lines.append(f"DOI: {raw['doi']}")
+            if raw.get("authors"):
+                lines.append(f"Authors: {', '.join(raw['authors'])}")
+            if raw.get("journal"):
+                lines.append(f"Journal: {raw['journal']}")
+            if raw.get("source_papers"):
+                lines.append(f"Source_Papers: {', '.join(raw['source_papers'][:3])}")
+            if raw.get("category") == "CodeSnippet":
+                if not (raw.get("code_snippet") or "").strip():
+                    continue
+                if raw.get("function_name"):
+                    lines.append(f"Function: {raw['function_name']}")
+                if raw.get("code_domain"):
+                    lines.append(f"Domain: {raw['code_domain']}")
+                if raw.get("paper_authors"):
+                    lines.append(f"Paper_Authors: {', '.join(raw['paper_authors'])}")
+                lang = raw.get("code_language") or ""
+                lines.append(f"Code ({lang}):\n```{lang}\n{raw['code_snippet']}\n```")
             for pdf in raw.get("source_papers", [])[:3]:
                 path = str(Path(PDF_DIR) / pdf)
                 txt = load_pdf_text(path)
@@ -707,7 +747,7 @@ def retrieve_nodes(q: str, kg: KnowledgeGraph) -> List[NodeInfo]:
         for sub in decompose(q)[:STEPWISE_MAX_STEPS]:
             seeds.extend(kg.semantic_search(sub)[:DEFAULT_K])
 
-    #  keep highest score per node
+    #  keep highest score per node
     s_map: Dict[str, NodeScore] = {}
     for ns in seeds:
         cur = s_map.get(ns.id)
@@ -724,13 +764,42 @@ def retrieve_nodes(q: str, kg: KnowledgeGraph) -> List[NodeInfo]:
 
     infos = kg.build_nodeinfo(sem, graph, ents)
     ranked = sorted(infos, key=lambda x: x.score_prp, reverse=True)
-    #  evidence‑aware trimming
+    #  evidence-aware trimming
     ranked = sorted(
         ranked,
         key=lambda x: (x.score_prp, x.evidence_ct),
         reverse=True,
     )[:DEFAULT_K]
-    return ranked
+
+    # Inject CodeSnippet nodes linked via has_code_snippet from any node
+    # in the top-K — ensures code always reaches context.
+    ranked_ids = {ni.id for ni in ranked}
+    injected: List[NodeInfo] = []
+    for ni in ranked:
+        for e in kg.out_edges.get(ni.id, []):
+            if e["predicate"] != "rel:has_code_snippet":
+                continue
+            snip_id = e["object"]
+            if snip_id in ranked_ids:
+                continue
+            snip_raw = kg.nodes.get(snip_id, {})
+            if not (snip_raw.get("code_snippet") or "").strip():
+                continue
+            ranked_ids.add(snip_id)
+            injected.append(NodeInfo(
+                id=snip_id,
+                name=snip_raw.get("name", snip_id),
+                category="CodeSnippet",
+                description=snip_raw.get("description", ""),
+                score_sem=ni.score_sem,
+                score_graph=ni.score_graph,
+                depth=ni.depth + 1,
+                lexical_overlap=ni.lexical_overlap,
+                evidence_ct=ni.evidence_ct,
+                publication_year=snip_raw.get("publication_year"),
+            ))
+
+    return ranked + injected
 
 # ───────────────────── Ask QCs ─────────────────────
 
@@ -888,11 +957,11 @@ class Conversation:
 
 
 BASELINE_SYSTEM = (
-    "You are an expert materials‑science assistant. Answer clearly and concisely. "
+    "You are an expert materials-science assistant. Answer clearly and concisely. "
     "If unsure, say so."
 )
 # RAG_SYSTEM = (
-#     "You are an expert materials‑science assistant with access to a retrieved KG context. "
+#     "You are an expert materials-science assistant with access to a retrieved KG context. "
 #     "Use it as evidence, but flag gaps if context is missing or noisy."
 # )
 
@@ -908,12 +977,16 @@ RAG_SYSTEM = (
     "Guidelines:\n"
     "1) Start by answering the question directly, in clear scientific language. "
     "2) Use information from the Retrieved Context when relevant, citing it inline as [KG: NodeName] or [PDF: file.pdf]. "
-    "When citing a KG node, use the entity’s name as it appears, "
+    "When citing a KG node, use the entity's name as it appears, "
     "not a placeholder like [KG: NodeName]. "
     "3) If the context adds important details, weave them naturally into your explanation. "
     "4) If something is missing, briefly note the gap or add minimal domain knowledge, marked as [Domain Knowledge]. "
     "5) Avoid rigid templates—write as you would in a scientific review article, with a mix of paragraphs and short lists. "
     "6) If sources disagree, mention the discrepancy briefly. "
+    "7) When listing or comparing multiple papers/sources, rank them by relevance to the "
+    "question first, then by recency (most recent first). Always include the publication "
+    "year when known (e.g., 'Smith et al., 2023'). If the user asks about papers, "
+    "include title, authors, year, and DOI when available in the context. "
 )
 
 
@@ -990,7 +1063,7 @@ async def answer(
 
     if SHOW_BASELINE:
         print(Fore.GREEN + "\n[Baseline]\n" + base_resp + Style.RESET_ALL)
-    print(Fore.GREEN + "\n[KG‑RAG]\n" + rag_resp + Style.RESET_ALL)
+    print(Fore.GREEN + "\n[KG-RAG]\n" + rag_resp + Style.RESET_ALL)
 
     missing: List[MissingNode] = []
     if all(ni.evidence_ct == 0 for ni in infos):
@@ -1009,7 +1082,7 @@ async def answer(
 async def main_async(args) -> None:
     # ap = argparse.ArgumentParser()
     # ap.add_argument("--graph", type=Path, default=GRAPH_FILE)
-    # ap.add_argument("--question", type=str, help="One‑shot question, then exit")
+    # ap.add_argument("--question", type=str, help="One-shot question, then exit")
     # ap.add_argument("--competency", action="store_true", help="Run full competency Q set")
     # ap.add_argument("--api", action="store_true", help="Run as FastAPI server")
 
@@ -1054,7 +1127,7 @@ def main(args) -> None:  # pragma: no cover
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--graph", type=Path, default=GRAPH_FILE)
-    ap.add_argument("--question", type=str, help="One‑shot question, then exit")
+    ap.add_argument("--question", type=str, help="One-shot question, then exit")
     ap.add_argument("--competency", action="store_true", help="Run full competency Q set")
     ap.add_argument("--api", action="store_true", help="Run as FastAPI server")
     ap.add_argument(

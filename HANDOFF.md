@@ -1,204 +1,129 @@
 # HANDOFF
 
-Date: 2026-06-03
+Date: 2026-06-05
 Repo: `/Users/mateo/Desktop/f2wlocal`
-Mode: caveman terse
 
 ---
 
 ## User Goal
 
-Make KG-RAG CLI chat use CBORG like term extraction. Do not hardwire chat to Ollama. Make CBORG default. Fix dependency/env/runtime issues blocking CLI chat. Keep Open WebUI pointed at KG-RAG on `11435`.
-
-Latest user goal: collect SAXS/WAXS/GISAXS/GIWAXS algorithm/code resources as PDFs, extract terms/snippets from those PDFs, and create new KG JSON outputs.
+Make KG-RAG CLI chat use CBORG as default backend. Fix all dependency/env/runtime issues blocking CLI chat. Keep Open WebUI pointed at KG-RAG on port `11435`. Extend the pipeline to extract x-ray scattering peak-finding code snippets from PDFs and build a dedicated xray KG. Ensure both code snippets AND publication/domain terms are correctly retrieved in chat.
 
 ---
 
-## Completed This Session
+## Completed
 
-### 1. CBORG connectivity fixed
+### Backend & Connectivity
+- Fixed `CBORG_BASE_URL` from internal `api-local.cborg.lbl.gov` → `https://api.cborg.lbl.gov`
+- Removed invalid `:latest` suffix from model name — `lbl/cborg-chat` everywhere
+- `load_dotenv()` → `load_dotenv(override=True)` in all three entry points so `.env` always wins over stale shell env vars: `kg_rag_api.py`, `extract_terms.py`, `run_pipeline_cborg.py`
 
-- `CBORG_BASE_URL` in `.env` was pointing to `api-local.cborg.lbl.gov` (internal/VPN-only) — times out externally. Changed to `https://api.cborg.lbl.gov`.
-- Model name `lbl/cborg-chat:latest` rejected by CBORG API. Correct name is `lbl/cborg-chat` (no `:latest`). Fixed in `.env`, `Dockerfile`, `scripts/.env.example`, and code default fallback in `kg_rag_api.py`.
-- `load_dotenv()` → `load_dotenv(override=True)` in all three entry points so `.env` always wins over stale shell env vars:
-  - `app/modules/kg_rag_api.py`
-  - `app/modules/extract_terms.py`
-  - `app/run_pipeline_cborg.py`
+### Bug Fixes
+- Fixed bad import in `run_pipeline_cborg.py`: `extract_terms_cborg` → `extract_terms`
+- Deduplicated `scripts/analyze_kgs.py` — double execution would have silently produced misleading partial results
+- Renamed `kg_rag_ollama_api.py` → `kg_rag_api.py` — all references updated
+- Fixed `chebi.py`: missing OBO file now raises catchable `FileNotFoundError` instead of `sys.exit(1)`
 
-### 2. run_pipeline_cborg.py bad import fixed
+### Schema Extensions (`storage/schema/matkg_schema.yaml`)
+- Added `CodeSnippet` class (`is_a: Thing`) with slots: `code_snippet`, `code_language`, `code_description`, `function_name`, `code_domain`
+- Added `has_code_snippet` slot (range: `CodeSnippet`) and `code_domain` slot
+- Added `XRayScatteringAnalysis` class (subclass of `ExperimentalTechnique`) with slots: `scattering_technique`, `peak_positions`, `d_spacing`, `peak_assignments`, `has_code_snippet`
+  - Code fields removed from `XRayScatteringAnalysis` — now live on `CodeSnippet`
+- Added 10 publication metadata slots to `Thing` base class: `paper_title`, `authors`, `institutions`, `doi`, `journal`, `volume`, `issue`, `pages_range`, `abstract_text`, `keywords`
+- Added `publication_year` slot (`integer`, `dcterms:date`) to `Thing` — all entities inherit it
 
-```python
-# was:
-from modules.extract_terms_cborg import run_extraction
-# fixed:
-from modules.extract_terms import run_extraction
-```
+### Term Extraction (`app/modules/extract_terms.py`)
 
-### 3. KG-RAG one-shot verified working
+#### Code Snippet Extraction
+- Added `extract_xray_code_snippets()` — LLM-based extraction of peak-finding code blocks per page
+- Added `_collect_xray_code_snippets()` — dedup + thread-safe save, called every page
+- Snippets stamped with full pub metadata: `paper_title`, `doi`, `paper_authors`, `publication_year`, `source_paper`, `page`
+- `function_name` extracted: LLM value → regex `def`/`class` fallback → first called function
+- `publication_year` explicitly stamped onto each snippet from `pub_meta` so recency boost fires
 
-```bash
-KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_api.py \
-  --timeout 60 --question "What is P3HT?"
-```
+#### Regex Fallback
+- Post-LLM pass after every LLM call — finds named `def`/`class` blocks missed by LLM
+- Only adds what LLM missed (compares against `llm_fn_names`)
+- Tags recovered snippets: `"(recovered via regex fallback)"` in `code_description`
 
-Output:
-- KG loaded (15815 nodes, retrieval=lexical)
-- 12 nodes selected
-- CBORG responded with full grounded answer citing KG nodes
-- No segfault, no PDF warnings, no timeout
+#### Publication Metadata
+- `_extract_pub_metadata()` with 4-priority year extraction
+- Both `paper_authors` (from pub_meta) and `authors` (library attribution from LLM) kept separate
 
-### 4. KG-RAG API server running on 11435
+### KG Conversion (`app/modules/json2kg.py`)
+- `make_xray_node()` builds `XRayScatteringAnalysis` KG nodes
+- `make_code_snippet_node()` builds `CodeSnippet` KG nodes; MD5 hash of code body in ID prevents collisions
+- `build_graph()` wires `rel:has_code_snippet` edge between `XRayScatteringAnalysis` → `CodeSnippet`
+- Fragment filter: snippets with `len(code) < 150` or no `def`/`class`/`import` anchor are skipped — prevents math formulas, bare function names, partial captures from entering KG
+- Ghost node guard: terms mis-categorized as `CodeSnippet` by LLM are **demoted to `Unknown`** (not dropped) so their relations are preserved; real `CodeSnippet` nodes come exclusively from `xray_code_snippets`
+- All 10 pub metadata fields + `publication_year` carried into all KG nodes
 
-```bash
-python3 app/modules/kg_rag_api.py --api
-```
+### KG-RAG Retrieval (`app/modules/kg_rag_api.py`)
+- `NodeInfo` gains `publication_year` and `category` fields
+- `score_prp` applies recency boost: up to +0.1 for recent papers, decaying over 10 years
+- `CodeSnippet` score bonus: +0.15 added to `score_prp` — ensures code nodes rank above their `XRayScatteringAnalysis` parents when both are in result set, preventing code from being crowded out
+- `retrieve_nodes()` injects linked `CodeSnippet` nodes after top-K ranking — guarantees code always reaches context even if parent fills the K budget
+- `build_context()` renders `CodeSnippet` nodes: `Function`, `Domain`, `Library_Authors`, `Paper_Authors`, full fenced code block; skips nodes with empty `code_snippet`
+- `build_context()` renders for ALL nodes: `Paper_Title`, `Publication_Year`, `DOI`, `Authors`, `Journal`, `Source_Papers`
+- `RAG_SYSTEM` prompt guideline: rank by relevance then recency; include year in citations; include title/authors/year/DOI when available
 
-- PID 20518 (as of 2026-06-02 session)
-- `curl http://localhost:11435/api/tags` returns `kg-rag:latest`
-- Open WebUI connected at `http://127.0.0.1:8080` (PID 20542)
+### Build Script (`scripts/build_kg.sh`)
+- Safe rebuild: writes to `.tmp` files, promotes on success only, backs up as `.bak`
+- `trap cleanup EXIT`, `set -euo pipefail`
 
-### 5. scripts/analyze_kgs.py deduplicated
+### Verified Extraction Results (2026-06-05, latest run)
+- **118 unique terms**, 7 PDFs, 36 pages, 34 pages with terms
+- **25 code snippets** in KG (13 fragments/noise filtered out)
+- **197 total nodes** (33 `XRayScatteringAnalysis`, 25 `CodeSnippet`, remainder materials/terms/techniques)
+- **160 edges**
+- 0 orphan `CodeSnippet` nodes, 0 empty code nodes
 
-File had entire script body duplicated. First copy had incomplete 12-file list; second had complete 30-file list. Running unchanged would:
-- Execute twice silently
-- Write CSV/JSON twice (second overwrites first)
-- First pass produce misleading partial comparative summary
-Fixed by keeping only the complete second copy.
-
-### 6. requirements.txt completed
-
-All runtime deps added with `>=` version floors. Split into runtime/dev sections. `pip check` clean.
-
-### 7. README rewritten
-
-Full comprehensive setup guide:
-- Prerequisites, clone, install, `.env` config
-- ChEBI download note
-- Full CLI arg + env var reference tables
-- Open WebUI setup and troubleshooting table
-- Docker steps (build, run, one-shot, pipeline, overrides, ChEBI mount, logs, stop)
-- All `python` → `python3`, all `pip` → `pip3`
-
-### 8. Dockerfile updated
-
-- `KG_RAG_CBORG_MODEL=lbl/cborg-chat` (no `:latest`)
-- Added `CBORG_BASE_URL=https://api.cborg.lbl.gov`
-- Added `KG_RAG_CTX_CHARS=6000`
-- `CMD python` → `CMD python3`
-- `mkdir` now includes `storage/ontologies`
-
-### 9. docs.md added (renamed from ref.md)
-
-Repo reference document renamed `ref.md` → `docs.md`. All references in `HANDOFF.md` updated. Last updated note added.
-
-### 10. Git committed (cd89460)
-
-All changes committed to `main`. Push blocked by missing GitHub auth (HTTPS remote, no PAT/SSH configured). Commit is ready — just needs auth to push.
-
-### 11. Algorithm/resource PDFs added
-
-New PDFs in `polymer_papers/`:
-
-| File | Purpose |
-|---|---|
-| `polymer_papers/2111.08645.pdf` | ArXiv paper from `resources.txt`: "Machine Learning-Assisted Analysis of Small Angle X-ray Scattering". Downloaded from listed arXiv URL. |
-| `polymer_papers/resources_code_snippets.pdf` | Generated PDF from repo-local `resources_code_snippets.md`; contains algorithm/code snippets from resources/libs listed in `resources.txt` plus maintained docs for scattering/peak workflows. |
-| `polymer_papers/scipy_docs.pdf` | Generated PDF compiling SciPy 1D peak-finding algorithms and snippets: `find_peaks`, `find_peaks_cwt`, `peak_prominences`, `peak_widths`, `argrelextrema`, `argrelmax`, `argrelmin`. |
-
-Also added:
-
-| File | Purpose |
-|---|---|
-| `resources_code_snippets.md` | Markdown source used to generate `resources_code_snippets.pdf`. |
-
-Blocked downloads:
-- IUCr GISAXS CNN page from `resources.txt` returned HTTP 403.
-- ScienceDirect peak-detection page from `resources.txt` returned HTTP 403.
-- User clarified: only use information from `resources.txt`; do not use outside mirrors.
-
-### 12. Targeted extraction outputs
-
-Successful/partial extraction files:
-
-| File | Status |
-|---|---|
-| `storage/terminology/extracted_terms_resources_saxs_algorithms_20260603_181341.json` | Successful for `2111.08645.pdf`: 11 terms, 5/6 pages yielded terms. `resources_code_snippets.pdf` did not complete before user interruption. |
-| `storage/terminology/extracted_terms_resources_code_snippets_20260603_182046.json` | Partial/ongoing at interruption: page 1 yielded 1 `xray_code_snippets` item; page 2 was running when interrupted. |
-| `storage/terminology/extracted_terms_resources_saxs_algorithms_20260603_181120.json` | Failed sandbox run: CBORG connection errors, 0 terms. Ignore/delete later if desired. |
-| `storage/kg/matkg_resources_saxs_algorithms_20260603_181120.json` | Empty KG from failed sandbox run. Ignore/delete later if desired. |
-
-Terms confirmed from `2111.08645.pdf` include:
-- Small angle X-ray scattering (SAXS)
-- Wide angle X-ray scattering (WAXS)
-- SCAN
-- SASView
-- Debye-Anderson-Brumberger (DAB) Model
-- Polymer Excluded Volume model
-- Teubner-Strey model
-- Random Forest
-- XGBoost
-
-### 13. Runtime fix made during extraction
-
-`app/modules/agents/chebi.py` changed so missing optional `storage/ontologies/chebi.obo` raises `FileNotFoundError` instead of calling `sys.exit(1)`.
-
-Reason: `extract_terms.py` already catches exceptions and disables ChEBI lookup, but `sys.exit(1)` killed extraction before fallback.
-
-### 14. README KG command fixed
-
-README had wrong `json2kg.py` CLI:
-
-```bash
-python3 app/modules/json2kg.py --input INPUT --output OUTPUT
-```
-
-Actual CLI uses positional args:
-
-```bash
-python3 app/modules/json2kg.py INPUT OUTPUT
-```
-
-README now reflects actual `app/modules/json2kg.py` parser.
+### Fragment Filter — What Gets Dropped
+Skipped at KG-build time (not extracted to KG):
+- Math formulas: `q = 4π/λ sin(θ)`, loss equations, scattering vector components
+- Bare identifiers: `XGBClassifier`, `RandomForestClassifier`, `scipy.signal.find_peaks`
+- Partial captures: argument lists without function definition, incomplete code blocks
 
 ---
 
 ## Current State
 
 ### Services
+```bash
+# Restart API
+cd /Users/mateo/Desktop/f2wlocal
+python3 app/modules/kg_rag_api.py --api &
 
-| Service | PID | URL | Status |
-|---|---|---|---|
-| KG-RAG API | 20518 | `http://localhost:11435` | Running |
-| Open WebUI | 20542 | `http://127.0.0.1:8080` | Running |
+# Verify
+curl http://localhost:11435/api/tags
+```
+
+Last run: API PID 11436, started 2026-06-05 ~14:50
+
+### Active KG
+```
+storage/kg/matkg_xray_papers_cborg_chat.json
+197 nodes | 160 edges | 25 CodeSnippet | 33 XRayScatteringAnalysis
+```
 
 ### .env (current values, no secrets)
-
 ```env
 CBORG_BASE_URL=https://api.cborg.lbl.gov
 KG_RAG_BACKEND=cborg
 KG_RAG_CBORG_MODEL=lbl/cborg-chat
-KG_RAG_GRAPH=storage/kg/matkg_qwen3_235b_580papers.json
+KG_RAG_GRAPH=storage/kg/matkg_xray_papers_cborg_chat.json
 KG_RAG_RETRIEVAL_BACKEND=lexical
 KG_RAG_LLM_TIMEOUT=120
 KG_RAG_SHOW_BASELINE=0
 PYSTOW_HOME=.cache/pystow
 ```
 
-> Note: `KG_RAG_CTX_CHARS` not yet in `.env` — set via shell or add manually. Recommend `6000`.
-
 ### Git state
-
 ```
 branch: main
-last commit: cd89460
-push: pending (no GitHub auth configured)
+last commit: 1964c82
+push: pending — no PAT or SSH key configured
 ```
-
-Untracked (not committed, not ignored):
-- `.venv-open-webui/` — Open WebUI venv, large, should stay untracked
-- `instructions.md` — local doc
-- `schema.md` — local doc
-- `storage/knowledge_gaps/` — generated artifacts
 
 ---
 
@@ -207,137 +132,25 @@ Untracked (not committed, not ignored):
 | # | Issue | Priority |
 |---|---|---|
 | 1 | `KG_RAG_CTX_CHARS` not in `.env` | Low — add `KG_RAG_CTX_CHARS=6000` |
-| 2 | ChEBI `.obo` missing | Low — enrichment silently disabled; download ~500MB if needed |
+| 2 | ChEBI `.obo` missing | Low — enrichment silently disabled; ~500MB download to enable |
 | 3 | Test coverage shallow | Low — `_tests/` only has dummy `add()` test |
-| 4 | GitHub push blocked | Medium — needs PAT or SSH key configured |
-| 5 | Ctrl+C on API server throws error | Low — `KeyboardInterrupt` not caught in `--api` path; wrap `uvicorn.run()` in `try/except KeyboardInterrupt: sys.exit(0)` |
+| 4 | GitHub push blocked | Medium — needs PAT or SSH key |
+| 5 | Ctrl+C on API server throws error | Low — wrap `uvicorn.run()` in `try/except KeyboardInterrupt: sys.exit(0)` |
+| 6 | Regex-recovered snippets lack real `code_description` | Low — second-pass LLM call on regex-only entries to fill description/authors/technique |
+| 7 | `MP_API_KEY` placeholder in `.env` causes silent formula validation failures | Non-critical |
 
 ---
 
-## CLI Usage
+## Key Files
 
-Default CBORG one-shot:
-```bash
-python3 app/modules/kg_rag_api.py --question "What is P3HT?"
-```
-
-Interactive REPL:
-```bash
-python3 app/modules/kg_rag_api.py
-```
-
-Reduced context (faster):
-```bash
-KG_RAG_CTX_CHARS=3000 python3 app/modules/kg_rag_api.py \
-  --timeout 60 --question "What is P3HT?"
-```
-
-Ollama override:
-```bash
-python3 app/modules/kg_rag_api.py \
-  --backend ollama --model llama3.1:8b \
-  --question "What is P3HT?"
-```
-
-Baseline + KG-RAG:
-```bash
-python3 app/modules/kg_rag_api.py \
-  --show-baseline --question "What is P3HT?"
-```
-
-Start API server:
-```bash
-python3 app/modules/kg_rag_api.py --api
-```
-
-Term extraction pipeline:
-```bash
-python3 app/run_pipeline_cborg.py
-```
-
-Extract terms from all PDFs in `polymer_papers/` into one combined JSON:
-
-```bash
-cd /Users/mateo/Desktop/f2wlocal && python3 -c 'from pathlib import Path; import os, sys; from dotenv import load_dotenv; sys.path.insert(0, str(Path("app").resolve())); load_dotenv(dotenv_path=Path(".env"), override=True); from modules.extract_terms import run_extraction; print(run_extraction(Path("polymer_papers"), Path("storage/terminology/extracted_terms_all_pdfs.json"), model=os.environ.get("KG_RAG_CBORG_MODEL") or "lbl/cborg-chat", backend="cborg", cborg_base=os.environ.get("CBORG_BASE_URL") or "https://api.cborg.lbl.gov", cborg_api_key=os.environ.get("CBORG_API_KEY"), schema_path="storage/schema/matkg_schema.yaml", temperature=0.0, context_length=80, max_workers=1))'
-```
-
-Create KG from combined extraction JSON:
-
-```bash
-python3 app/modules/json2kg.py \
-  storage/terminology/extracted_terms_all_pdfs.json \
-  storage/kg/matkg_all_pdfs.json
-```
-
-Create KG from latest extraction JSON:
-
-```bash
-TERMS=$(ls -t storage/terminology/extracted_terms_*.json | head -1)
-KG="storage/kg/matkg_manual.json"
-python3 app/modules/json2kg.py "$TERMS" "$KG"
-```
-
-Check extraction success:
-
-```bash
-python3 - <<'PY'
-import json
-data = json.load(open("storage/terminology/extracted_terms_all_pdfs.json"))
-print("terms:", len(data.get("terms", [])))
-print("xray_code_snippets:", len(data.get("xray_code_snippets", [])))
-print("processed_files:", data.get("metadata", {}).get("processed_files"))
-print("processed_pages_total:", data.get("metadata", {}).get("processed_pages_total"))
-print("processed_pages_with_terms:", data.get("metadata", {}).get("processed_pages_with_terms"))
-PY
-```
-
-Use new KG in KG-RAG:
-
-```bash
-KG_RAG_GRAPH=storage/kg/matkg_all_pdfs.json python3 app/modules/kg_rag_api.py \
-  --question "What peak finding algorithms are available for SAXS or WAXS data?"
-```
-
----
-
-## Restart Services (if terminals closed)
-
-```bash
-cd /Users/mateo/Desktop/f2wlocal
-
-# KG-RAG API
-python3 app/modules/kg_rag_api.py --api &
-
-# Open WebUI (installed at system Python 3.12)
-/Users/mateo/Library/Python/3.12/bin/open-webui serve --host 127.0.0.1 --port 8080 &
-```
-
-Verify:
-```bash
-curl http://localhost:11435/api/tags
-```
-
----
-
-## Files Changed This Session
-
-| File | Change |
+| File | Role |
 |---|---|
-| `app/modules/kg_rag_api.py` | `load_dotenv(override=True)`, model default fixed, code default fixed |
-| `app/modules/extract_terms.py` | `load_dotenv(override=True)` |
-| `app/modules/agents/chebi.py` | Missing optional ChEBI OBO now raises catchable `FileNotFoundError` instead of exiting extraction |
-| `app/run_pipeline_cborg.py` | Bad import fixed, `load_dotenv(override=True)` |
-| `scripts/analyze_kgs.py` | Duplicate body removed |
-| `requirements.txt` | All runtime deps added with version floors |
-| `README.md` | Full rewrite — comprehensive setup, CLI/env tables, Docker, ChEBI; later fixed `json2kg.py` CLI docs to positional args |
-| `Dockerfile` | Model name, base URL, CTX_CHARS, python3, storage/ontologies |
-| `.env` | CBORG_BASE_URL and KG_RAG_CBORG_MODEL corrected |
-| `scripts/.env.example` | Model name fixed, KG_RAG_CTX_CHARS added |
-| `.env.example` | Root copy synced with scripts/.env.example |
-| `.gitignore` | Added `.webui_secret_key` |
-| `.dockerignore` | New file |
-| `docs.md` | New file (renamed from ref.md) |
-| `resources_code_snippets.md` | New markdown source for algorithm/code-snippet PDF |
-| `polymer_papers/2111.08645.pdf` | New SAXS ML paper from `resources.txt` |
-| `polymer_papers/resources_code_snippets.pdf` | New generated snippets PDF for extraction/KG |
-| `polymer_papers/scipy_docs.pdf` | New generated SciPy peak-finding docs PDF for extraction/KG |
+| `app/modules/kg_rag_api.py` | API server, retrieval, context builder, LLM chat |
+| `app/modules/extract_terms.py` | PDF → terms + code snippets via LLM + regex |
+| `app/modules/json2kg.py` | terms JSON → KG graph JSON |
+| `storage/schema/matkg_schema.yaml` | Schema: 19 classes, 60 slots |
+| `storage/kg/matkg_xray_papers_cborg_chat.json` | Active KG |
+| `storage/terminology/extracted_terms_xray_papers_cborg_chat.json` | Latest extraction output |
+| `xray_papers/` | Source PDFs: MISC_DOCS, PYFAI_DOCS, SCIPY_DOCS, XRAY_MISC1, XRAY1, XRAY2, XRAY3 |
+| `scripts/build_kg.sh` | Safe extract + rebuild script |
+| `docs.md` | Full repo reference |

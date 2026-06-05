@@ -4,10 +4,11 @@
 
 This repository builds materials-science knowledge graphs from research papers (PDFs). The main workflow is:
 
-1. Collect PDFs into `polymer_papers/`
-2. Extract schema-aligned terminology with an LLM → `storage/terminology/`
+1. Collect PDFs into a domain folder (e.g. `polymer_papers/`, `xray_papers/`)
+2. Extract schema-aligned terminology + publication metadata with an LLM → `storage/terminology/`
 3. Convert extracted terms JSON into a MatKG graph JSON → `storage/kg/`
-4. Query the graph via KG-RAG chat (CLI or Open WebUI)
+4. Point `KG_RAG_GRAPH` in `.env` at the new KG
+5. Query the graph via KG-RAG chat (CLI or Open WebUI)
 
 ---
 
@@ -99,11 +100,13 @@ python3 scripts/download_pdfs.py --help
 
 `extract_terms.py` is a schema-aware, parallel PDF term extraction engine. It produces structured, ontology-aligned JSON output integrating:
 
-- Ollama or CBORG (OpenAI-compatible) LLM backends
+- CBORG or Ollama (OpenAI-compatible) LLM backends
 - LinkML schema enforcement via `SchemaHelper`
 - Chemical formula validation and repair
 - ChEBI ontology enrichment
 - Physical property extraction and normalization
+- X-ray scattering code snippet extraction (`xray_code_snippets`)
+- Publication metadata extraction per PDF (title, authors, DOI, journal, volume, issue, pages, abstract, keywords)
 - Parallel page-level processing with `ThreadPoolExecutor`
 - Thread-safe incremental saving and exponential-backoff retries
 
@@ -121,12 +124,20 @@ curl -L https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.obo \
 
 ### Run extraction (CBORG, default)
 
-Run the extractor directly on any PDF folder:
+Run the extractor on any PDF folder:
 
 ```bash
 python3 app/modules/extract_terms.py \
-  --pdf-dir polymer_papers \
-  --output storage/terminology/extracted_terms.json
+  --pdf-dir polymer_papers/ \
+  --output storage/terminology/extracted_terms_polymer.json
+```
+
+For a dedicated xray KG (or any other domain-specific folder):
+
+```bash
+python3 app/modules/extract_terms.py \
+  --pdf-dir xray_papers/ \
+  --output storage/terminology/extracted_terms_xray_papers_cborg_chat.json
 ```
 
 Defaults:
@@ -135,30 +146,30 @@ Defaults:
 - `--max-workers 4`
 - optional ChEBI path from `--chebi-obo`, `CHEBI_OBO_PATH`, or `storage/ontologies/chebi.obo`
 
-Target one specific PDF by copying it into a small folder first:
+Target a single PDF by isolating it in a temp folder:
 
 ```bash
-mkdir -p /tmp/pyfai_docs_only
-cp polymer_papers/PYFAI_DOCS.pdf /tmp/pyfai_docs_only/
+mkdir -p /tmp/single_pdf
+cp xray_papers/XRAY1.pdf /tmp/single_pdf/
 
 python3 app/modules/extract_terms.py \
-  --pdf-dir /tmp/pyfai_docs_only \
-  --output storage/terminology/extracted_terms_pyfai_docs.json
+  --pdf-dir /tmp/single_pdf/ \
+  --output storage/terminology/extracted_terms_xray1.json
 ```
 
-Show all extraction options:
+Show all options:
 
 ```bash
 python3 app/modules/extract_terms.py --help
 ```
 
-Run the checkpoint evaluation pipeline:
+### Checkpoint evaluation pipeline
+
+Runs extraction at 25 → 50 → 75 → 100% of papers, producing timestamped JSONs in `storage/terminology/` and KG files in `storage/kg/`:
 
 ```bash
 python3 app/run_pipeline_cborg.py
 ```
-
-This runs the checkpoint evaluation pipeline (25 → 50 → 75 → 100 papers), producing timestamped JSON files in `storage/terminology/` and converted KG files in `storage/kg/`.
 
 Options:
 
@@ -178,10 +189,21 @@ python3 app/run_pipeline_cborg.py \
 python3 app/run_pipeline_cborg.py --models google/gemini-flash-lite
 ```
 
+### What gets extracted
+
+Each extracted terms JSON contains two top-level keys:
+
+| Key | Description |
+|---|---|
+| `terms` | List of schema-aligned entities. Each entry carries: `term`, `definition`, `category`, `formula`, `relations`, `pages`, `source_papers`, `context_snippets`, `publication_year`, `paper_title`, `authors`, `institutions`, `doi`, `journal`, `volume`, `issue`, `pages_range`, `abstract_text`, `keywords` |
+| `xray_code_snippets` | List of peak-finding / scattering analysis code blocks extracted per page. Each entry carries: `code_snippet`, `code_language`, `code_description`, `scattering_technique`, `peak_positions`, `d_spacing`, `peak_assignments`, `source_paper`, `page` |
+
+Publication metadata (`paper_title`, `authors`, `doi`, etc.) is extracted from PDF metadata fields first, then from first-page text via regex. Fields not found are `null` or `[]`.
+
 ### Implementation details
 
 - Pages processed in parallel with configurable workers (`--max-workers`, default `4`)
-- Terms saved after every page (crash-safe)
+- Terms saved incrementally after every page (crash-safe)
 - `SchemaHelper` fuzzy-matches LLM output to LinkML classes/slots
 - `ChemicalFormulaValidator` validates and LLM-repairs invalid formulas
 - ChEBI lookup enriches chemicals with SMILES, InChI, charge, roles
@@ -193,27 +215,44 @@ python3 app/run_pipeline_cborg.py --models google/gemini-flash-lite
 
 ## Step 3 — [Convert to Knowledge Graph](app/modules/json2kg.py)
 
-Converts the extracted terms JSON into a MatKG-compatible JSON graph with `things` (nodes) and `associations` (edges).
+Converts an extracted terms JSON into a MatKG-compatible JSON graph with `things` (nodes) and `associations` (edges). All publication metadata fields (`paper_title`, `authors`, `doi`, `journal`, etc.) and `xray_code_snippets` are carried into the graph.
+
+### Polymer papers KG
 
 ```bash
 python3 app/modules/json2kg.py \
-  storage/terminology/extracted_terms_<run>.json \
-  storage/kg/matkg_<run>.json
+  storage/terminology/extracted_terms_polymer.json \
+  storage/kg/matkg_polymer.json
 ```
 
-With verbose output:
+### Xray papers KG
 
 ```bash
 python3 app/modules/json2kg.py \
-  storage/terminology/extracted_terms_<run>.json \
-  storage/kg/matkg_<run>.json \
+  storage/terminology/extracted_terms_xray_papers_cborg_chat.json \
+  storage/kg/matkg_xray_papers_cborg_chat.json
+```
+
+With verbose output (node/edge counts, xray node count):
+
+```bash
+python3 app/modules/json2kg.py \
+  storage/terminology/extracted_terms_xray_papers_cborg_chat.json \
+  storage/kg/matkg_xray_papers_cborg_chat.json \
   --verbose
+```
+
+Point KG-RAG at the new KG by setting `KG_RAG_GRAPH` in `.env`:
+
+```env
+KG_RAG_GRAPH=storage/kg/matkg_xray_papers_cborg_chat.json
 ```
 
 ### Implementation details
 
 - Stable canonical IDs via `matkg:` prefix + regex-cleaned term name
-- Full metadata preserved: formula, validation, properties, provenance
+- Full publication metadata preserved on every node: `paper_title`, `authors`, `institutions`, `doi`, `journal`, `volume`, `issue`, `pages_range`, `abstract_text`, `keywords`
+- `xray_code_snippets` converted to `XRayScatteringAnalysis` nodes
 - Missing edge targets auto-stubbed to prevent dangling edges
 - Edges carry optional evidence strings
 - Duplicate `(subject, predicate, object)` edges de-duplicated

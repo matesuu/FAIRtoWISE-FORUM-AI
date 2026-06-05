@@ -682,11 +682,8 @@ as "{term}"?  If none match, respond with `None`.
 
     def _prepare_prompt(self, schema_ctx: str, filename: str, page_num: int, text: str) -> str:
         """
-        Build prompt with:
-          - Schema context (no 'description'/'category' relations)
-          - Few‐shot example
-          - Truncated page text (~last 8000 chars)
-          - JSON template
+        Build terms extraction prompt. Extracts materials-science entities and
+        publication metadata. Code extraction is handled separately by regex.
         """
         max_len = 8000
         page_text = text[-max_len:] if len(text) > max_len else text
@@ -695,7 +692,8 @@ as "{term}"?  If none match, respond with `None`.
 ### EXAMPLE
 Input:
 CONTENT:
-"Poly(3-hexylthiophene) (P3HT) is a conjugated polymer used in organic photovoltaics."
+"Poly(3-hexylthiophene) (P3HT) is a conjugated polymer used in organic photovoltaics.
+Published: March 2021. DOI: 10.1021/jacs.1c00001. Authors: Smith J, Lee K."
 
 Output:
 {
@@ -703,8 +701,12 @@ Output:
     {
       "term": "Poly(3-hexylthiophene) (P3HT)",
       "definition": "A conjugated polymer used in organic photovoltaics.",
-      "category": "Polymer",
+      "category": "ConjugatedPolymer",
       "formula": "C10H14S",
+      "publication_year": 2021,
+      "paper_title": "Machine Learning for Organic Photovoltaics",
+      "authors": ["Smith J", "Lee K"],
+      "doi": "10.1021/jacs.1c00001",
       "relations": [
         {
           "relation": "has_application",
@@ -730,17 +732,33 @@ CONTENT:
 {text}
 
 INSTRUCTIONS:
-1. Extract key materials-science terms + their relations using ONLY schema slots.
-2. Do NOT output relations named 'description' or 'category'.
-3. Output JSON exactly in this structure:
+1. Extract ALL key materials-science entities from this page: materials, chemical
+   entities, experimental techniques, processing methods, devices, and properties.
+   Use ONLY schema entity types and relation names.
+2. Do NOT extract code snippets — code is handled separately. Do NOT output
+   relations named 'description' or 'category'.
+3. On EVERY term, stamp publication metadata found anywhere on this page
+   (headers, footers, copyright lines, citation blocks):
+   - "publication_year": integer year (e.g. 2023). Required — always extract if present.
+   - "paper_title": full title of the paper this page is from.
+   - "authors": list of author names in "Surname Initial" format (e.g. ["Smith J", "Lee K"]).
+   - "doi": DOI string if present (e.g. "10.1021/jacs.3c00001").
+   - "journal": journal name if present.
+   Publication metadata should be the SAME on all terms from the same page.
+4. Output JSON exactly:
 
 {{
   "terms": [
     {{
       "term": "exact term from text",
-      "definition": "brief but rich technical definition",
+      "definition": "brief technical definition",
       "category": "exact_entity_type_from_schema",
       "formula": "valid chemical formula or null",
+      "publication_year": 2023,
+      "paper_title": "Full paper title or null",
+      "authors": ["Surname I", "..."],
+      "doi": "10.xxxx/xxxxx or null",
+      "journal": "Journal name or null",
       "relations": [
         {{
           "relation": "exact_predicate_name_from_schema",
@@ -802,102 +820,47 @@ INSTRUCTIONS:
 
     def _prepare_xray_code_prompt(self, page_text: str) -> str:
         """
-        Build a prompt asking the LLM to extract code blocks related to
-        x-ray scattering peak-finding/analysis (SAXS, WAXS, GIWAXS, GISAXS).
+        Prompt for scattering CONTEXT only (technique, peaks, d-spacing).
+        Code bodies are extracted by regex — not by LLM.
+        Returns JSON with "snippets" keyed by function_name → scattering metadata.
         """
-        max_len = 8000
+        max_len = 6000
         text = page_text[-max_len:] if len(page_text) > max_len else page_text
 
-        few_shot = r"""
-### EXAMPLE
-Input:
-CONTENT:
-"GIWAXS data were reduced and the lamellar peak at q = 0.38 A^-1 (d = 16.5 A)
-located with the following Python routine:
-    from scipy.signal import find_peaks
-    peaks, _ = find_peaks(intensity, height=0.1)
-    q_peaks = q[peaks]
-The (010) pi-pi stacking peak appeared near q = 1.7 A^-1."
-
-Output:
-{
-  "snippets": [
-    {
-      "scattering_technique": "GIWAXS",
-      "peak_positions": ["q = 0.38 A^-1", "q = 1.7 A^-1"],
-      "d_spacing": ["d = 16.5 A"],
-      "peak_assignments": ["(100) lamellar peak", "(010) pi-pi stacking"],
-      "code_snippet": "from scipy.signal import find_peaks\npeaks, _ = find_peaks(intensity, height=0.1)\nq_peaks = q[peaks]",
-      "code_language": "python",
-      "code_description": "Finds scattering peaks in the intensity vs q profile using scipy."
-    }
-  ]
-}
-### END-EXAMPLE
-"""
-
-        template = r"""
-=== X-RAY SCATTERING CODE EXTRACTION TASK ===
-Identify any CODE BLOCKS in the content below that relate to:
-- x-ray scattering data analysis (SAXS, WAXS, GIWAXS, GISAXS)
-- peak-finding or peak detection in 1D/2D scattering profiles
-- scattering data reduction, azimuthal integration, or calibration
-- tools commonly used for the above (scipy.signal, pyFAI, SASView, etc.)
-
-IMPORTANT: Do NOT require SAXS/WAXS/GIWAXS/GISAXS to be named. As long as a code
-block has a clear code application to peak-finding, specifically when relating to
-a math/science library, extract it. This is the primary rule — technique names
-are optional and irrelevant to the extraction decision.
-
-Any code that does any of the following is fair game:
-- Detects, locates, finds, or identifies peaks in a signal
-- Filters, ranks, scores, or selects peaks by height, prominence, width, or distance
-- Smooths or preprocesses a signal before peak detection
-- Uses wavelet transforms, CWT, or convolution for peak detection
-- Integrates, reduces, or calibrates scattering data
-- Uses scipy.signal, pyFAI, SASView, or any peak-finding library
-
-PYTHON CODE: Comb over every Python code block with extra care. If it is Python
-and has a clear code application to peak-finding via a math/science library — extract it. Do not
-skip any Python snippet when in doubt.
-
-DESCRIPTION CHECK: If unsure whether a code block qualifies, read its surrounding
-description or docstring. If the description mentions peaks, signals, maxima,
-local maxima, detection, prominence, or filtering — extract the code.
-
-Set scattering_technique to null if SAXS/WAXS/GIWAXS/GISAXS is not explicitly
-stated. Do not leave out a snippet just because the technique is unnamed.
-Code may appear as monospaced blocks, algorithm listings, or inline code.
+        return f"""=== SCATTERING CONTEXT EXTRACTION ===
+This page may contain x-ray scattering analysis (SAXS, WAXS, GIWAXS, GISAXS).
+Extract scattering metadata for any code functions mentioned or used on this page.
+Do NOT extract code bodies — only the surrounding scientific context.
 
 CONTENT:
 {text}
 
-INSTRUCTIONS:
-1. Extract ALL code that has a clear code application to peak-finding, specifically
-   when relating to a math/science library (e.g. scipy, numpy, pyFAI, SASView).
-   Check the code AND its surrounding description before deciding to skip.
-   When in doubt, extract it.
-2. Copy the code verbatim into "code_snippet".
-3. Only return {{"snippets": []}} if the page contains zero code whatsoever.
-4. Output JSON exactly in this structure:
+For each function name or code block referenced on this page, extract:
+- "function_name": the Python/MATLAB function name (e.g. "find_scattering_peaks"), or null
+- "scattering_technique": one of SAXS, WAXS, GIWAXS, GISAXS, or null
+- "peak_positions": list of observed peak positions (e.g. ["q = 0.38 A^-1"]) or []
+- "d_spacing": list of d-spacing values (e.g. ["d = 16.5 A"]) or []
+- "peak_assignments": list of crystallographic assignments (e.g. ["(100) lamellar"]) or []
+- "authors": authors of the library/code (e.g. ["Virtanen P"]) or []
+- "code_description": one-sentence plain-English description of what the function does
 
+Return {{"snippets": []}} if page has no scattering analysis or code references.
+
+Output JSON:
 {{
   "snippets": [
     {{
-      "scattering_technique": "one of SAXS, WAXS, GIWAXS, GISAXS or null",
-      "peak_positions": ["observed peak positions e.g. q = 0.38 A^-1"],
-      "d_spacing": ["d-spacing values e.g. d = 16.5 A"],
-      "peak_assignments": ["crystallographic assignments e.g. (100) lamellar peak"],
-      "code_snippet": "verbatim code block",
-      "code_language": "programming language e.g. python or matlab",
-      "code_description": "plain-English description of what the code does"
+      "function_name": "function name or null",
+      "scattering_technique": "SAXS/WAXS/GIWAXS/GISAXS or null",
+      "peak_positions": [],
+      "d_spacing": [],
+      "peak_assignments": [],
+      "authors": [],
+      "code_description": "what this function does"
     }}
   ]
-}}
-"""
-        return f"{template.format(text=text)}\n{few_shot}"
+}}"""
 
-    @retry_on_exception((Exception,), retries=2, delay_seconds=1.0)
     def extract_xray_code_snippets(
         self,
         page_text: str,
@@ -908,55 +871,103 @@ INSTRUCTIONS:
         page: int = 0,
     ) -> List[Dict]:
         """
-        Prompt the LLM to identify code blocks in `page_text` related to x-ray
-        scattering peak analysis (SAXS, WAXS, GIWAXS, GISAXS).
+        Extract code snippets from a page.
 
-        Returns a list of dicts with keys: scattering_technique, peak_positions,
-        d_spacing, peak_assignments, code_snippet, code_language, code_description,
-        page, source_paper. Returns an empty list if no relevant code is found.
+        Strategy:
+          1. Regex extracts ALL named code blocks (def/class/function) deterministically.
+          2. LLM extracts scattering context (technique, peaks, d-spacing, description,
+             authors) keyed by function_name — enriches regex results.
+          3. Merge: regex provides code body, LLM provides scientific context.
+
+        Returns list of snippet dicts. Empty list if no code found.
         """
         if not page_text or len(page_text.split()) < 20:
             return []
 
-        prompt = self._prepare_xray_code_prompt(page_text)
-        try:
-            response = client.chat(prompt, temperature=self.temperature, timeout=240)
-        except Exception as e:
-            logger.error(f"LLM failed for xray code extraction ({source_paper} page {page}): {e}")
-            return []
+        # ── Step 1: Regex extracts all named code blocks ──────────────────────
+        named_block_re = re.compile(
+            r"((?:(?:import|from|library|require|using)\s+\S[^\n]*\n)*"  # optional leading imports
+            r"(?:def|class|function|func)\s+(\w+)\s*[\(\[{]"             # named block keyword
+            r"[^\n]*\n"                                                    # rest of header
+            r"(?:[ \t]+[^\n]+\n){1,})",                                   # ≥1 indented body lines
+            re.MULTILINE,
+        )
 
-        try:
-            data = self.extract_xray_json_from_text(response)
-        except Exception as e:
-            logger.error(f"JSON parsing failed for xray code extraction ({source_paper} page {page}): {e}")
-            return []
+        regex_results: List[Dict] = []
+        seen_fn_names: set = set()
+        seen_bodies: set = set()
 
-        results: List[Dict] = []
-        for snip in data.get("snippets", []):
-            if not isinstance(snip, dict):
+        for dm in named_block_re.finditer(page_text):
+            fn_name = dm.group(2)
+            code_body = dm.group(1).rstrip()
+            if fn_name.lower() in seen_fn_names or code_body.strip() in seen_bodies:
                 continue
-            code = (snip.get("code_snippet") or "").strip()
-            if not code:
-                continue
-            results.append({
-                "scattering_technique": snip.get("scattering_technique"),
-                "peak_positions": snip.get("peak_positions", []) or [],
-                "d_spacing": snip.get("d_spacing", []) or [],
-                "peak_assignments": snip.get("peak_assignments", []) or [],
-                "code_snippet": code,
-                "code_language": snip.get("code_language"),
-                "code_description": snip.get("code_description"),
+            seen_fn_names.add(fn_name.lower())
+            seen_bodies.add(code_body.strip())
+
+            lang = "python"
+            if re.search(r"\bfunction\b", code_body) and not re.search(r"\bdef\b", code_body):
+                lang = "matlab" if re.search(r"\bend\b", code_body) else "r"
+
+            regex_results.append({
+                "scattering_technique": None,
+                "peak_positions": [],
+                "d_spacing": [],
+                "peak_assignments": [],
+                "function_name": fn_name,
+                "authors": [],
+                "code_snippet": code_body,
+                "code_language": lang,
+                "code_description": f"{fn_name}: extracted from {source_paper} p.{page}",
                 "page": page,
                 "source_paper": source_paper,
             })
+            logger.debug(f"Regex extracted '{fn_name}' from {source_paper} page {page}")
+
+        # ── Step 2: LLM extracts scattering context (no code bodies) ──────────
+        prompt = self._prepare_xray_code_prompt(page_text)
+        llm_context: Dict[str, Dict] = {}  # function_name.lower() → context dict
+        try:
+            response = client.chat(prompt, temperature=self.temperature, timeout=120)
+            data = self.extract_xray_json_from_text(response)
+            for snip in data.get("snippets", []):
+                if not isinstance(snip, dict):
+                    continue
+                fn = (snip.get("function_name") or "").strip().lower()
+                if fn:
+                    llm_context[fn] = snip
+                else:
+                    # no function name — attach to any unmatched regex result
+                    llm_context["__anonymous__"] = snip
+        except Exception as e:
+            logger.warning(f"LLM context extraction failed ({source_paper} p.{page}): {e} — using regex only")
+
+        # ── Step 3: Merge regex code + LLM context ────────────────────────────
+        results: List[Dict] = []
+        for r in regex_results:
+            fn_key = (r["function_name"] or "").lower()
+            ctx = llm_context.get(fn_key) or llm_context.get("__anonymous__") or {}
+            r["scattering_technique"] = ctx.get("scattering_technique") or None
+            r["peak_positions"]  = ctx.get("peak_positions")  or []
+            r["d_spacing"]       = ctx.get("d_spacing")       or []
+            r["peak_assignments"]= ctx.get("peak_assignments")or []
+            r["authors"]         = ctx.get("authors")         or []
+            if ctx.get("code_description"):
+                r["code_description"] = ctx["code_description"]
+            results.append(r)
 
         if results:
-            logger.info(
-                f"Extracted {len(results)} xray code snippet(s) from {source_paper} page {page}"
-            )
+            logger.info(f"Extracted {len(results)} snippet(s) from {source_paper} page {page} "
+                        f"({len(regex_results)} regex, {len(llm_context)} LLM context matches)")
         return results
 
-    def _collect_xray_code_snippets(self, page_text: str, filename: str, page_num: int) -> bool:
+    def _collect_xray_code_snippets(
+        self,
+        page_text: str,
+        filename: str,
+        page_num: int,
+        pub_meta: Optional[Dict[str, Any]] = None,
+    ) -> bool:
         """
         Run xray code-snippet extraction for one page, dedup into
         `self.xray_code_snippets`, and save (thread-safe). Returns True if new
@@ -969,8 +980,21 @@ INSTRUCTIONS:
             source_paper=filename,
             page=page_num + 1,
         )
+        _pm = pub_meta or {}
         updated = False
         for snip in snippets:
+            # Stamp pub metadata onto snippet — authors from pub_meta only if
+            # LLM didn't attribute to a library author
+            if not snip.get("paper_title"):
+                snip["paper_title"] = _pm.get("paper_title")
+            if not snip.get("doi"):
+                snip["doi"] = _pm.get("doi")
+            # pub_meta authors = paper authors; keep separate from library authors
+            if not snip.get("paper_authors"):
+                snip["paper_authors"] = _pm.get("authors") or []
+            # stamp publication_year so recency boost fires in score_prp
+            if not snip.get("publication_year"):
+                snip["publication_year"] = _pm.get("publication_year")
             key = self._xray_snippet_key(snip)
             if key in self._xray_seen:
                 continue
@@ -983,7 +1007,7 @@ INSTRUCTIONS:
         return updated
 
     @retry_on_exception((Exception,), retries=1, delay_seconds=1.0)
-    def process_page(self, doc: fitz.Document, pdf_path: str, page_num: int) -> bool:
+    def process_page(self, doc: fitz.Document, pdf_path: str, page_num: int, pub_year: Optional[int] = None, pub_meta: Optional[Dict[str, Any]] = None) -> bool:
         """
         Process one page:
         - Extract text
@@ -1038,8 +1062,27 @@ INSTRUCTIONS:
             # Even if no new terms, we may still want to extract properties if existing materials appear
             new_or_updated = self._extract_and_attach_properties(raw_text)
             # Additive: scan for x-ray scattering code snippets regardless of terms
-            xray_updated = self._collect_xray_code_snippets(raw_text, filename, page_num)
+            xray_updated = self._collect_xray_code_snippets(raw_text, filename, page_num, pub_meta)
             return new_or_updated or xray_updated
+
+        # Harvest pub metadata from LLM term responses — fill gaps in pub_meta
+        # LLM now stamps paper_title/authors/doi/journal on every term it extracts.
+        # Use first term that has any of these fields to enrich pub_meta for the page.
+        _pm_enriched = dict(pub_meta or {})
+        for raw_term in data.get("terms", []):
+            llm_year = raw_term.get("publication_year")
+            if not pub_year and isinstance(llm_year, int) and 1990 <= llm_year <= 2026:
+                pub_year = llm_year
+                _pm_enriched.setdefault("publication_year", pub_year)
+                logger.debug(f"Got publication_year {pub_year} from LLM for {filename}")
+            for _f in ("paper_title", "doi", "journal"):
+                if raw_term.get(_f) and not _pm_enriched.get(_f):
+                    _pm_enriched[_f] = raw_term[_f]
+            if raw_term.get("authors") and not _pm_enriched.get("authors"):
+                _pm_enriched["authors"] = raw_term["authors"]
+            if all(_pm_enriched.get(f) for f in ("publication_year", "paper_title", "doi")):
+                break  # have enough
+        pub_meta = _pm_enriched
 
         added_or_updated = False
         page_terms: List[str] = []
@@ -1091,6 +1134,20 @@ INSTRUCTIONS:
                     entry.setdefault("source_papers", []).append(filename)
                     entry.setdefault("context_snippets", []).append(snippet)
                     added_or_updated = True
+                if pub_year and not entry.get("publication_year"):
+                    entry["publication_year"] = pub_year
+                    added_or_updated = True
+                # backfill pub_meta fields on existing entries if not yet set
+                if pub_meta:
+                    for _field in ("paper_title", "doi", "journal", "volume", "issue",
+                                   "pages_range", "abstract_text"):
+                        if pub_meta.get(_field) and not entry.get(_field):
+                            entry[_field] = pub_meta[_field]
+                            added_or_updated = True
+                    for _list_field in ("authors", "institutions", "keywords"):
+                        if pub_meta.get(_list_field) and not entry.get(_list_field):
+                            entry[_list_field] = pub_meta[_list_field]
+                            added_or_updated = True
 
                 ex_rels = entry.setdefault("relations", [])
                 existing_rel_tups = {relation_tuple(r) for r in ex_rels}
@@ -1135,6 +1192,7 @@ INSTRUCTIONS:
 
             else:
                 new_key = self._register_new_term(name)
+                _pm = pub_meta or {}
                 entry: Dict[str, Any] = {
                     "term": name,
                     "definition": validated_term.get("definition", ""),
@@ -1145,6 +1203,17 @@ INSTRUCTIONS:
                     "pages": [page_num + 1],
                     "source_papers": [filename],
                     "context_snippets": [snippet],
+                    "publication_year": pub_year,
+                    "paper_title": _pm.get("paper_title"),
+                    "authors": _pm.get("authors") or [],
+                    "institutions": _pm.get("institutions") or [],
+                    "doi": _pm.get("doi"),
+                    "journal": _pm.get("journal"),
+                    "volume": _pm.get("volume"),
+                    "issue": _pm.get("issue"),
+                    "pages_range": _pm.get("pages_range"),
+                    "abstract_text": _pm.get("abstract_text"),
+                    "keywords": _pm.get("keywords") or [],
                 }
                 # include any ChEBI enrichment
                 for chem_key in ("chebi", "smiles", "charge", "inchi", "inchikey", "mass"):
@@ -1175,7 +1244,7 @@ INSTRUCTIONS:
         prop_updated = self._extract_and_attach_properties(raw_text)
 
         # 6) Additive: scan page for x-ray scattering peak-finding code snippets
-        xray_updated = self._collect_xray_code_snippets(raw_text, filename, page_num)
+        xray_updated = self._collect_xray_code_snippets(raw_text, filename, page_num, pub_meta)
 
         if added_or_updated or prop_updated:
             self._save_terms_threadsafe()
@@ -1226,6 +1295,218 @@ INSTRUCTIONS:
 
         return updated
 
+    def _extract_year_from_pdf(self, doc: fitz.Document, pdf_path: str) -> Optional[int]:
+        """
+        Attempt to extract publication year from PDF metadata or first-page text.
+        Delegates to _extract_pub_metadata for the full date-aware logic.
+        Returns a 4-digit year int or None.
+        """
+        meta = self._extract_pub_metadata(doc, pdf_path)
+        return meta.get("publication_year")
+
+    def _extract_pub_metadata(self, doc: fitz.Document, pdf_path: str) -> Dict[str, Any]:
+        """
+        Extract publication metadata from PDF metadata fields and first-page text.
+        Returns a dict with keys: publication_year, paper_title, authors,
+        institutions, doi, journal, volume, issue, pages_range, abstract_text, keywords.
+        All values are None or [] if not found.
+
+        Year extraction priority:
+          1. Explicit publication/accepted/received date on first page
+          2. PDF metadata creationDate / modDate (only if plausible — not future-dated)
+          3. Most common year in first-page text that appears near a date-like context
+          4. Most common 4-digit year on first page as last resort
+        """
+        import datetime as _dt
+        pdf_meta = doc.metadata or {}
+        filename = os.path.basename(pdf_path)
+        current_year = _dt.datetime.now(_dt.timezone.utc).year
+
+        # Month names for date pattern matching
+        _MONTHS = (
+            r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|"
+            r"Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
+        )
+
+        # --- first page text (primary source for pub dates) ---
+        first_text = doc.load_page(0).get_text() if doc.page_count > 0 else ""
+
+        # --- publication year ---
+        publication_year: Optional[int] = None
+
+        # Priority 1: explicit pub/accepted/received/revised date on first page
+        # Patterns: "Received 14 March 2023", "Accepted: 2023-07-01",
+        #            "Published online 5 Jan 2024", "Available online 2022"
+        explicit_patterns = [
+            # "Published"/"Accepted"/"Received"/"Revised" + full date
+            rf"(?i)(?:published|accepted|received|revised|available\s+online)[^\n]{{0,40}}"
+            rf"(?:{_MONTHS}\s+\d{{1,2}},?\s*((?:19|20)\d{{2}})"
+            rf"|\d{{1,2}}\s+{_MONTHS}\s*((?:19|20)\d{{2}})"
+            rf"|((?:19|20)\d{{2}})\s*[-–]\s*\d{{1,2}}\s*[-–]\s*\d{{1,2}})",
+            # "Published"/"Accepted" + bare year
+            r"(?i)(?:published|accepted|received|revised)[^\n]{0,30}((?:19|20)\d{2})",
+            # ISO date near pub keyword: "2023-03-15"
+            rf"(?i)(?:published|accepted|received|revised)[^\n]{{0,20}}"
+            rf"((?:19|20)\d{{2}})-\d{{2}}-\d{{2}}",
+            # "© 2023" or "Copyright 2023" — weaker signal, use only if nothing else
+        ]
+        for pat in explicit_patterns:
+            m = re.search(pat, first_text)
+            if m:
+                # grab first non-None capture group
+                yr_str = next((g for g in m.groups() if g and re.match(r"(19|20)\d{2}", g)), None)
+                if yr_str:
+                    yr = int(yr_str[:4])
+                    if 1990 <= yr <= current_year:
+                        publication_year = yr
+                        logger.debug(f"Year {yr} from explicit date pattern for {filename}")
+                        break
+
+        # Priority 2: PDF metadata creationDate / modDate — only trust if ≤ current year
+        if not publication_year:
+            for key in ("creationDate", "modDate"):
+                val = (pdf_meta.get(key) or "").strip()
+                m = re.search(r"((?:19|20)\d{2})", val)
+                if m:
+                    yr = int(m.group(1))
+                    if 1990 <= yr <= current_year:
+                        publication_year = yr
+                        logger.debug(f"Year {yr} from PDF metadata '{key}' for {filename}")
+                        break
+
+        # Priority 3: year adjacent to a month name on first page
+        if not publication_year:
+            month_year_m = re.findall(
+                rf"(?:{_MONTHS})\s+(?:\d{{1,2}},?\s*)?((?:19|20)\d{{2}})"
+                rf"|((?:19|20)\d{{2}})\s+{_MONTHS}",
+                first_text,
+            )
+            candidates = []
+            for grp in month_year_m:
+                for g in grp:
+                    if g and re.match(r"(19|20)\d{2}", g):
+                        yr = int(g)
+                        if 1990 <= yr <= current_year:
+                            candidates.append(yr)
+            if candidates:
+                publication_year = max(set(candidates), key=candidates.count)
+                logger.debug(f"Year {publication_year} from month-adjacent pattern for {filename}")
+
+        # Priority 4: most common 4-digit year on first page (last resort)
+        if not publication_year:
+            all_years = [
+                int(y) for y in re.findall(r"\b((?:19|20)\d{2})\b", first_text)
+                if 1990 <= int(y) <= current_year
+            ]
+            if all_years:
+                publication_year = max(set(all_years), key=all_years.count)
+                logger.debug(f"Year {publication_year} from most-common fallback for {filename}")
+
+        if not publication_year:
+            logger.debug(f"Could not determine publication year for {filename}")
+
+        # --- title ---
+        paper_title: Optional[str] = (pdf_meta.get("title") or "").strip() or None
+        if not paper_title and doc.page_count > 0:
+            first_lines = [ln.strip() for ln in first_text.splitlines() if ln.strip()]
+            # Find first substantive line (10–200 chars, not a URL/DOI/journal header)
+            _skip = re.compile(r"(?i)^(https?://|10\.\d{4}|doi|vol|pp\.|©|received|accepted|published|edited|keywords)")
+            for i, ln in enumerate(first_lines[:10]):
+                if 10 <= len(ln) <= 200 and not _skip.search(ln):
+                    # join next line if it looks like title continuation
+                    # (short, no verb, no punctuation ending, not a name/email line)
+                    title_parts = [ln]
+                    for nxt in first_lines[i+1:i+4]:
+                        if (5 <= len(nxt) <= 120
+                                and not _skip.search(nxt)
+                                and not re.search(r"[@,;]", nxt)
+                                and not re.search(r"\.$", nxt)):
+                            title_parts.append(nxt)
+                        else:
+                            break
+                    paper_title = " ".join(title_parts)
+                    break
+
+        # --- authors ---
+        authors: List[str] = []
+        raw_author = (pdf_meta.get("author") or "").strip()
+        if raw_author:
+            parts = re.split(r";| and ", raw_author)
+            authors = [p.strip() for p in parts if p.strip()]
+
+        # --- DOI ---
+        doi: Optional[str] = None
+        for key in ("subject", "keywords", "identifier"):
+            val = pdf_meta.get(key, "") or ""
+            m = re.search(r"10\.\d{4,}/\S+", val)
+            if m:
+                doi = m.group(0).rstrip(".,)")
+                break
+        if not doi:
+            for pn in range(min(2, doc.page_count)):
+                text = doc.load_page(pn).get_text()
+                m = re.search(r"10\.\d{4,}/\S+", text)
+                if m:
+                    doi = m.group(0).rstrip(".,)")
+                    break
+
+        # --- keywords from metadata ---
+        keywords: List[str] = []
+        raw_kw = (pdf_meta.get("keywords") or "").strip()
+        if raw_kw:
+            kw_parts = re.split(r"[;,]", raw_kw)
+            keywords = [k.strip() for k in kw_parts if k.strip()]
+
+        # --- journal / volume / issue / pages_range / abstract ---
+        journal: Optional[str] = None
+        volume: Optional[str] = None
+        issue: Optional[str] = None
+        pages_range: Optional[str] = None
+        abstract_text: Optional[str] = None
+
+        if first_text:
+            jrnl_m = re.search(
+                r"(?i)((?:journal|letters|review|advanced|nature|science|ACS|RSC|wiley|elsevier)[^\n]{0,80})",
+                first_text,
+            )
+            if jrnl_m:
+                journal = jrnl_m.group(1).strip()
+
+            vi_m = re.search(
+                r"(?i)vol(?:ume)?\.?\s*(\d+)[,\s]+(?:no|issue|iss)\.?\s*(\d+)",
+                first_text,
+            )
+            if vi_m:
+                volume = vi_m.group(1)
+                issue = vi_m.group(2)
+
+            pg_m = re.search(r"(?i)pp?\.?\s*(\d+\s*[-–]\s*\d+)", first_text)
+            if pg_m:
+                pages_range = pg_m.group(1).replace(" ", "")
+
+            abs_m = re.search(
+                r"(?i)abstract\s*\n([\s\S]{50,1500}?)(?:\n(?:introduction|keywords|1\.|©))",
+                first_text,
+            )
+            if abs_m:
+                abstract_text = " ".join(abs_m.group(1).split())
+
+        result = {
+            "publication_year": publication_year,
+            "paper_title": paper_title,
+            "authors": authors,
+            "institutions": [],
+            "doi": doi,
+            "journal": journal,
+            "volume": volume,
+            "issue": issue,
+            "pages_range": pages_range,
+            "abstract_text": abstract_text,
+            "keywords": keywords,
+        }
+        logger.debug(f"Pub metadata for {filename}: year={publication_year}, title={paper_title!r}, doi={doi!r}, authors={authors}")
+        return result
+
     def process_pdf(self, pdf_path: str) -> int:
         """
         Open PDF and process all pages in parallel.
@@ -1242,10 +1523,15 @@ INSTRUCTIONS:
         self.metadata["processed_pages_total"] += total_pages
         pages_with_terms = 0
 
+        pub_meta = self._extract_pub_metadata(doc, pdf_path)
+        pub_year = pub_meta.get("publication_year")
+        if pub_year:
+            logger.debug(f"Publication year for {os.path.basename(pdf_path)}: {pub_year}")
+
         logger.debug(f"Processing '{pdf_path}' ({total_pages} pages) with {self.max_workers} workers")
         with ThreadPoolExecutor(max_workers=self.max_workers) as exe:
             futures = {
-                exe.submit(self.process_page, doc, pdf_path, i): i for i in range(total_pages)
+                exe.submit(self.process_page, doc, pdf_path, i, pub_year, pub_meta): i for i in range(total_pages)
             }
             for fut in as_completed(futures):
                 page_i = futures[fut]
@@ -1267,8 +1553,56 @@ INSTRUCTIONS:
 
         self.metadata["processed_files"] += 1
         self.metadata["processed_pages_with_terms"] += pages_with_terms
+
+        # --- Post-process: propagate best pub metadata across all terms from this PDF ---
+        # Threads may have enriched metadata on some pages but not others.
+        # Gather the richest metadata across all terms from this file, then backfill.
+        filename = os.path.basename(pdf_path)
+        best_meta: Dict[str, Any] = dict(pub_meta or {})
+        scalar_fields = ("paper_title", "doi", "journal", "volume", "issue",
+                         "pages_range", "abstract_text", "publication_year")
+        list_fields = ("authors", "institutions", "keywords")
+
+        # First pass: collect best metadata from any term belonging to this PDF
+        for entry in self.terms_dict.values():
+            if filename not in (entry.get("source_papers") or []):
+                continue
+            for f in scalar_fields:
+                if entry.get(f) and not best_meta.get(f):
+                    best_meta[f] = entry[f]
+            for f in list_fields:
+                if entry.get(f) and not best_meta.get(f):
+                    best_meta[f] = entry[f]
+
+        # Second pass: stamp best metadata onto all terms from this PDF
+        backfilled = 0
+        for entry in self.terms_dict.values():
+            if filename not in (entry.get("source_papers") or []):
+                continue
+            for f in scalar_fields:
+                if best_meta.get(f) and not entry.get(f):
+                    entry[f] = best_meta[f]
+                    backfilled += 1
+            for f in list_fields:
+                if best_meta.get(f) and not entry.get(f):
+                    entry[f] = best_meta[f]
+                    backfilled += 1
+
+        # Also backfill xray_code_snippets from this PDF
+        for snip in self.xray_code_snippets:
+            if snip.get("source_paper") != filename:
+                continue
+            for f in scalar_fields:
+                if best_meta.get(f) and not snip.get(f):
+                    snip[f] = best_meta[f]
+            if best_meta.get("authors") and not snip.get("paper_authors"):
+                snip["paper_authors"] = best_meta["authors"]
+
+        if backfilled:
+            logger.debug(f"Backfilled {backfilled} metadata fields across terms from {filename}")
+
         logger.info(
-            f"Finished '{os.path.basename(pdf_path)}': {pages_with_terms}/{total_pages} pages yielded terms or properties"
+            f"Finished '{filename}': {pages_with_terms}/{total_pages} pages yielded terms or properties"
         )
         return pages_with_terms
 

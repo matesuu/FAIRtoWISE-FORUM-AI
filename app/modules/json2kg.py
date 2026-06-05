@@ -48,25 +48,26 @@ def ensure_list(val: Any) -> List[Any]:
     return val if isinstance(val, list) else [val]
 
 
-def make_xray_node(snip: Dict[str, Any]) -> Dict[str, Any]:
+def make_code_snippet_node(snip: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Build an XRayScatteringAnalysis node from an xray_code_snippets entry.
+    Build a CodeSnippet node from an xray_code_snippets entry.
 
-    Node ID is derived from source_paper + page + scattering_technique so each
-    unique extraction gets its own node.
+    Node ID includes MD5 hash of code body to prevent collisions.
     """
-    technique = snip.get("scattering_technique") or "XRayScattering"
+    import hashlib as _hl
+    fn_name = snip.get("function_name") or ""
     paper = snip.get("source_paper", "unknown")
     page = snip.get("page", 0)
-    raw_id = f"{technique}_{paper}_p{page}"
+    code_hash = _hl.md5((snip.get("code_snippet") or "").encode()).hexdigest()[:8]
+    raw_id = f"snippet_{fn_name}_{paper}_p{page}_{code_hash}" if fn_name else f"snippet_{paper}_p{page}_{code_hash}"
     node_id = make_id(raw_id)
-    name = f"{technique} analysis ({paper} p.{page})"
+    name = f"{fn_name} snippet" if fn_name else f"code snippet ({paper} p.{page})"
 
     return {
         "id": node_id,
         "name": name,
-        "category": "XRayScatteringAnalysis",
-        "type": "matkg:XRayScatteringAnalysis",
+        "category": "CodeSnippet",
+        "type": "matkg:CodeSnippet",
         "description": snip.get("code_description") or "",
         "pages": [page] if page else [],
         "source_papers": [paper] if paper else [],
@@ -74,14 +75,21 @@ def make_xray_node(snip: Dict[str, Any]) -> Dict[str, Any]:
         "formula": "",
         "formula_validation": {},
         "properties": [],
-        # XRayScatteringAnalysis-specific slots
+        "publication_year": snip.get("publication_year"),
+        "paper_title": snip.get("paper_title"),
+        "authors": ensure_list(snip.get("authors")),
+        "paper_authors": ensure_list(snip.get("paper_authors")),
+        "doi": snip.get("doi"),
+        "function_name": fn_name or None,
+        "code_snippet": snip.get("code_snippet"),
+        "code_language": snip.get("code_language"),
+        "code_description": snip.get("code_description"),
+        "code_domain": snip.get("code_domain") or "xray",
+        # scattering context from LLM enrichment
         "scattering_technique": snip.get("scattering_technique"),
         "peak_positions": ensure_list(snip.get("peak_positions")),
         "d_spacing": ensure_list(snip.get("d_spacing")),
         "peak_assignments": ensure_list(snip.get("peak_assignments")),
-        "code_snippet": snip.get("code_snippet"),
-        "code_language": snip.get("code_language"),
-        "code_description": snip.get("code_description"),
     }
 
 
@@ -101,15 +109,54 @@ def build_graph(
     edges: List[Dict[str, Any]] = []
     seen: Set[Tuple[str, str, str]] = set()
 
-    # Add XRayScatteringAnalysis nodes from code snippet extraction
+    # Add CodeSnippet nodes from code snippet extraction
+    # Track snippet nodes by (source_paper, page) for wiring to term nodes later
+    snippets_by_paper_page: Dict[Tuple[str, int], List[str]] = {}
     for snip in (xray_code_snippets or []):
-        node = make_xray_node(snip)
-        if node["id"] not in nodes:
-            nodes[node["id"]] = node
+        code_body = (snip.get("code_snippet") or "").strip()
+        if not code_body:
+            continue
+        has_anchor = bool(
+            snip.get("function_name")
+            or re.search(r"\b(def |class |import )", code_body)
+        )
+        if len(code_body) < 150 or not has_anchor:
+            logging.debug("Skipping fragment snippet (len=%d, anchor=%s): %r",
+                          len(code_body), has_anchor, code_body[:60])
+            continue
+        # Reject truncated snippets: unbalanced parens/brackets indicate
+        # the PDF text extraction cut off mid-line (page boundary).
+        balanced = (
+            code_body.count("(") == code_body.count(")")
+            and code_body.count("[") == code_body.count("]")
+        )
+        if not balanced:
+            logging.debug("Skipping truncated snippet (unbalanced delimiters): %s",
+                          snip.get("function_name", code_body[:40]))
+            continue
+
+        snippet_node = make_code_snippet_node(snip)
+        if snippet_node["id"] not in nodes:
+            nodes[snippet_node["id"]] = snippet_node
+        paper = snip.get("source_paper", "")
+        page = snip.get("page", 0)
+        snippets_by_paper_page.setdefault((paper, page), []).append(snippet_node["id"])
+        # Also index by paper-only for broader wiring
+        snippets_by_paper_page.setdefault((paper, 0), []).append(snippet_node["id"])
 
     for term in raw_terms:
         name = term.get("term") or term.get("name") or "UNKNOWN"
         tid = make_id(name)
+
+        # Terms mis-categorized as CodeSnippet by the LLM: demote to Unknown.
+        # Real CodeSnippet nodes come exclusively from xray_code_snippets.
+        # Also remap removed XRayScatteringAnalysis → ExperimentalTechnique.
+        if term.get("category") == "CodeSnippet":
+            term = dict(term)
+            term["category"] = "Unknown"
+        elif term.get("category") == "XRayScatteringAnalysis":
+            term = dict(term)
+            term["category"] = "ExperimentalTechnique"
 
         # Create node if new
         if tid not in nodes:
@@ -124,6 +171,17 @@ def build_graph(
                 "formula": term.get("formula", "") or "",
                 "formula_validation": term.get("formula_validation", {}) or {},
                 "properties": ensure_list(term.get("properties")),
+                "publication_year": term.get("publication_year"),
+                "paper_title": term.get("paper_title"),
+                "authors": ensure_list(term.get("authors")),
+                "institutions": ensure_list(term.get("institutions")),
+                "doi": term.get("doi"),
+                "journal": term.get("journal"),
+                "volume": term.get("volume"),
+                "issue": term.get("issue"),
+                "pages_range": term.get("pages_range"),
+                "abstract_text": term.get("abstract_text"),
+                "keywords": ensure_list(term.get("keywords")),
             }
 
         # Process relations
@@ -161,6 +219,44 @@ def build_graph(
                 "object": rid,
                 "has_evidence": "; ".join(evidence) if evidence else None,
             })
+
+    # Wire has_code_snippet edges: any term node from same paper gets linked
+    # to CodeSnippet nodes from that paper. Prefer same-page match, fall back
+    # to same-paper.
+    wired_snippets: Set[str] = set()
+    for nid, node in nodes.items():
+        if node.get("category") == "CodeSnippet":
+            continue
+        node_papers = node.get("source_papers") or []
+        node_pages = node.get("pages") or []
+        for paper in node_papers:
+            # try same-page first
+            for pg in node_pages:
+                for snip_id in snippets_by_paper_page.get((paper, pg), []):
+                    sig = (nid, "rel:has_code_snippet", snip_id)
+                    if sig not in seen:
+                        seen.add(sig)
+                        edges.append({
+                            "subject": nid,
+                            "predicate": "rel:has_code_snippet",
+                            "object": snip_id,
+                            "has_evidence": None,
+                        })
+                        wired_snippets.add(snip_id)
+            # paper-level fallback for snippets not yet wired
+            for snip_id in snippets_by_paper_page.get((paper, 0), []):
+                if snip_id in wired_snippets:
+                    continue
+                sig = (nid, "rel:has_code_snippet", snip_id)
+                if sig not in seen:
+                    seen.add(sig)
+                    edges.append({
+                        "subject": nid,
+                        "predicate": "rel:has_code_snippet",
+                        "object": snip_id,
+                        "has_evidence": None,
+                    })
+                    wired_snippets.add(snip_id)
 
     return {"things": list(nodes.values()), "associations": edges}
 
@@ -221,9 +317,9 @@ def main() -> None:
         graph = build_graph(terms, xray_code_snippets=xray_snippets)
         args.output_json.write_text(json.dumps(graph, indent=2, ensure_ascii=False), encoding="utf-8")
         logging.info(
-            "Wrote %d nodes (%d xray) and %d edges → %s",
+            "Wrote %d nodes (%d snippets) and %d edges → %s",
             len(graph["things"]),
-            sum(1 for n in graph["things"] if n.get("category") == "XRayScatteringAnalysis"),
+            sum(1 for n in graph["things"] if n.get("category") == "CodeSnippet"),
             len(graph["associations"]),
             args.output_json,
         )
@@ -277,26 +373,38 @@ def test_build_graph_minimal(tmp_path):
     assert edge["has_evidence"] is None
 
 
-def test_xray_code_snippet_node():
-    """XRayScatteringAnalysis nodes are built from xray_code_snippets."""
+def test_code_snippet_node():
+    """CodeSnippet nodes built from xray_code_snippets and wired to term nodes from same paper."""
+    terms = [{
+        "term": "GIWAXS analysis",
+        "category": "ExperimentalTechnique",
+        "definition": "Grazing-incidence wide-angle x-ray scattering",
+        "pages": [3],
+        "source_papers": ["test_paper.pdf"],
+    }]
     snips = [{
         "scattering_technique": "GIWAXS",
         "peak_positions": ["q = 0.38 A^-1"],
-        "d_spacing": ["d = 16.5 A"],
-        "peak_assignments": ["(100) lamellar peak"],
-        "code_snippet": "peaks, _ = find_peaks(intensity)",
+        "function_name": "find_peaks",
+        "code_snippet": "import numpy as np\nfrom scipy.signal import find_peaks\ndef find_peaks_wrapper(intensity):\n    \"\"\"Finds peaks in a 1D intensity profile using scipy.\"\"\"\n    peaks, props = find_peaks(intensity, prominence=0.05 * np.max(intensity))\n    return peaks, props",
         "code_language": "python",
         "code_description": "Finds peaks in intensity profile.",
         "page": 3,
         "source_paper": "test_paper.pdf",
     }]
-    graph = build_graph([], xray_code_snippets=snips)
-    assert len(graph["things"]) == 1
-    node = graph["things"][0]
-    assert node["category"] == "XRayScatteringAnalysis"
-    assert node["scattering_technique"] == "GIWAXS"
-    assert node["code_snippet"] == "peaks, _ = find_peaks(intensity)"
-    assert node["peak_positions"] == ["q = 0.38 A^-1"]
+    graph = build_graph(terms, xray_code_snippets=snips)
+    snippets = [n for n in graph["things"] if n["category"] == "CodeSnippet"]
+    assert len(snippets) == 1
+    snippet = snippets[0]
+
+    assert "find_peaks" in snippet["code_snippet"]
+    assert snippet["code_language"] == "python"
+    assert snippet["function_name"] == "find_peaks"
+
+    # edge wired from term node to snippet
+    has_code_edges = [e for e in graph["associations"] if e["predicate"] == "rel:has_code_snippet"]
+    assert len(has_code_edges) >= 1
+    assert any(e["object"] == snippet["id"] for e in has_code_edges)
 
 
 def test_cli(tmp_path):

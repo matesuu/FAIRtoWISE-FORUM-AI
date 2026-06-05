@@ -155,6 +155,7 @@ storage/knowledge_gaps/
 
 # Local generated/reference notes
 HANDOFF.md
+docs.md
 instructions.md
 ref.md
 schema.md
